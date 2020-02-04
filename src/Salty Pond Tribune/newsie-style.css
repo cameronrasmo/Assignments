@@ -1,0 +1,40 @@
+body{
+    background-color: #fff4ee;
+}
+
+h3{
+    text-align: center;
+    display: block;
+    font-size: 120px;
+    font-family: RM Albion;
+    font-weight: 400;
+    
+    margin: 20px;
+}
+
+h4{
+    text-align: center;
+    display: block;
+    font: 35px;
+    font-family: Avenir;
+    font-weight: 100;
+    font-style: italic;
+}
+
+hr{
+    border: 2px solid #0a0a0a;
+}
+
+main{
+    width: 100%;
+}
+
+.section{
+    display: inline-block;
+    width: 45%;
+    margin: 20px;
+    padding: 20px ;
+    border: 2px solid #494994;
+    
+    background-color: #fff4ee;    
+}

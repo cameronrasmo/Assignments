@@ -1,0 +1,18 @@
+body{
+    background-color: darkgray;
+}
+
+#cube{
+    width: 700px;
+    height: 500px;
+    border-radius: 5px;
+    box-shadow: 0px 10px 50px 10px #2b2b2b;
+
+    margin: auto;
+    position: relative;
+    top: 250px;
+
+    background-color: bisque;
+
+    transition: .2s; 
+}
