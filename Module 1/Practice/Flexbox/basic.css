@@ -1,0 +1,27 @@
+.container > div{
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+    color: #ffffff;
+}
+
+html, body{
+    background-color: #dadada;
+    margin: 0px;
+    height: 99%;
+    box-sizing: border-box;
+
+}
+
+.home{
+    background-color: lightblue;
+}
+.search{
+    background-color: #9fb3b9;
+}
+.logout{
+    background-color: #838b8d;
+}
+.another-button{
+    background-color: #9b6f6f;
+}

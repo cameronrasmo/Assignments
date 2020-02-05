@@ -1,0 +1,27 @@
+.container{
+    border: 3px solid #ffffff;
+    font-family: Avenir;
+    font-size: 7px;
+    display: flex;
+    flex-direction: row;
+}
+
+.home{
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 200px;
+    order: 1;
+}
+.search{
+    flex: 2;
+    order: 2;
+}
+.logout{
+    flex: .5;
+    order: 6;
+
+}
+.another-button{
+    flex: .5;
+    order: 4;
+}
