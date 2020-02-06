@@ -7,9 +7,13 @@ let navbarMobileContainer = document.querySelector(".navbar-mobile-container");
 let navbarMobileMenuIcon = document.getElementById("menu");
 let navbarMobileCloseIcon = document.getElementById("close");
 
+let bodySubHeader = document.querySelector(".body-sub-header");
+let bodyMainHeader = document.querySelector(".body-main-header");
+let bodyIconSection = document.querySelector(".body-icon-section");
+
 function toggle(){
     if(!toggle){
-        navbarDropdownPanel.style.top = "-900px";
+        navbarDropdownPanel.style.top = "-1200px";
 
         navbarDropdownPanelHome.style.color = "#f1f1f1";
         navbarDropdownPanelContact.style.color = "#f1f1f1";
