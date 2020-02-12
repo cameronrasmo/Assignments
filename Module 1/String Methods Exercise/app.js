@@ -21,3 +21,4 @@ function capitalizeHalf(s){
     let secondHalf = s.slice(Math.floor(lenS / 2)).toLowerCase();
     return firstHalf + secondHalf;
 }
+

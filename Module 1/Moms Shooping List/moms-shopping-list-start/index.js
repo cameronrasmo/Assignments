@@ -27,7 +27,7 @@ function add(){
     
         input.value = "";
 
-        deleteElement.addEventListener('click', function(){ del(listElement) });
+        deleteElement.addEventListener('click', () => del(listElement));
     }
 }
 
