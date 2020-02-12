@@ -1,5 +1,8 @@
 let rls = require('readline-sync');
 
+let victory = false;
+let defeat = false; 
+
 let gourd = {
     name: "a healing gourd",
     HP: 50,
@@ -36,7 +39,7 @@ function Player(name){
         for(let i = 0; i < this.inventory.length; i++){
             inventoryNames.push(" " + this.inventory[i].name);
         }
-        console.log(`Player: ${this.name} \nHP: ${this.HP} \nInventory: ${inventoryNames}`);
+        return `Player: ${this.name} \nHP: ${this.HP} \nInventory: ${inventoryNames}`;
     };
 }
 
@@ -60,7 +63,7 @@ function wander(){
     let enemyAppeared = false;
     let continueCounter = 1;
     while(!enemyAppeared){
-        let walk = rls.question(`Enter W to walk one block forward: `);
+        let walk = rls.question(`W: TO WALK / PRINT: FOR PLAYER STATS : `);
     
         if(walk === "w" || walk === "W"){
             let random = Math.random();
@@ -89,6 +92,9 @@ function wander(){
                 }
             }
         }
+        else if(walk === "print"){
+            console.log(player.printStats());
+        }
         else{
             console.log("\nLook at you standing there. Press W if you feel like walking.\n");
         }
@@ -103,6 +109,8 @@ function wander(){
 //// If player attacks or runs, enemy attacks for random amount
 //// Give HP and special items to inventory if enemy is defeated
 //// If enemy kills player, console prints Dark Souls message
+// let victory = false;
+// let defeat = false;
 
 function monsterEvent(){
     let random = Math.random();
@@ -121,14 +129,16 @@ function monsterEvent(){
         enemy = gary;
     }
 
+    victory = false;
+    defeat = false;
+
     console.log(`A wild ${enemy.name} appears! He's got ${enemy.HP} HP. `);
-    let victory = false;
-    let defeat = false;
+   
     while(victory === false && defeat === false){
         let attackScore = parseInt(Math.random() * 100);
         let damageScore = parseInt(Math.random() * 100);
 
-        decision = rls.question(`Will you run or fight?!? \nRUN/FIGHT: `);
+        decision = rls.question(`Will you run or fight?!? \nRUN / FIGHT / PRINT : `);
         if(decision === "fight" || decision === "FIGHT"){
             enemy.HP -= attackScore;
             console.log(`\nYou swipe with the force of a thousand neptunes to deal a whopping ${attackScore} damage! ${enemy.name} now has ${enemy.HP} HP!\n`);
@@ -138,31 +148,23 @@ function monsterEvent(){
             }
         
             if(player.HP <= 0){
-                console.log(`* cue the dark souls music * YOU DIED \n${enemy.name} has prevailed over you.\n`);
+                console.log(`* cue the dark souls music * YOU DIED \n${enemy.name} won.\n`);
                 defeat = true;
             }
             else if(enemy.HP <= 0){
-                console.log(`You really did it oml. ${enemy.name} got c l a p p e d.\n${enemy.name} dropped something!\n`);
+                console.log(`You really did it oml. ${enemy.name} got rekt.\n${enemy.name} dropped something!\n`);
                 let itemSelectRandom = Math.random();
                 if(itemSelectRandom < .25){
-                    player.inventory.push(items[0]);
-                    player.HP += items[0].HP;
-                    console.log(`You got ${items[0].name}! Good for ${items[0].HP} HP\nYour health is now at ${player.HP}!`);
+                    player.addItem(items[0]);
                 }
                 else if(itemSelectRandom > .25 && itemSelectRandom < .5){
-                    player.inventory.push(items[1]);
-                    player.HP += items[1].HP;
-                    console.log(`You got ${items[1].name}! Good for ${items[1].HP} HP\nYour health is now at ${player.HP}!`);
+                    player.addItem(items[1]);
                 }
                 else if(itemSelectRandom > .50 && itemSelectRandom < .75){
-                    player.inventory.push(items[2]);
-                    player.HP += items[2].HP;
-                    console.log(`You got ${items[2].name}! Good for ${items[2].HP} HP\nYour health is now at ${player.HP}!`);
+                    player.addItem(items[2]);
                 }
                 else if(itemSelectRandom > .75 && itemSelectRandom < 1){
-                    player.inventory.push(items[3]);
-                    player.HP += items[3].HP;
-                    console.log(`You got ${items[3].name}! Good for ${items[3].HP} HP\nYour health is now at ${player.HP}!`);
+                    player.addItem(items[3]);
                 }
                 victory = true;
                 wander();
@@ -178,10 +180,13 @@ function monsterEvent(){
                 player.HP -= damageScore;
                 console.log(`${enemy.name} grabs you by the neck and sucker punches you to oblivion! Lost ${damageScore} HP! Your HP is now at ${player.HP}.`);
                 if(player.HP <= 0){
-                    console.log(`* cue the dark souls music * YOU DIED \n${enemy.name} has prevailed over you.\n`);
+                    console.log(`* cue the dark souls music * YOU DIED \n${enemy.name} won.\n`);
                     defeat = true;
                 }
             }
+        }
+        else if(decision === "print"){
+            console.log(player.printStats());
         }
     }
 }
