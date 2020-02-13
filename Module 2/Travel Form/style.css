@@ -1,0 +1,13 @@
+#container{
+    margin: auto;
+    width: 900px;
+    position: relative;
+    top: 250px;
+    font-size: 30px;
+    font-family: SF Pro Display;
+    font-weight: 200;
+}
+
+form input{
+    margin: 20px;
+}

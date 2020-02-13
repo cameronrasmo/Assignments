@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mario Pest Control</title>
+</head>
+<body>
+    <div id="bg-image"></div>
+    <a href="index.html"><h2>Mario Pest Control</h2></a>
+    <div id="sidebar-container">
+        <h1>M</h1>
+        <ul id="enemies">
+            <a href="#goomba"><li>Goomba</li></a>
+            <a href="#bob-ombs"><li>Bob-omb</li></a>
+            <a href="#cheep-cheeps"><li>Cheep-cheep</li></a>
+        </ul>
+        <div id="checkout">Checkout</div>
+    </div>
+
+    <div class="enemy-container goomba">
+        <h1 id="goomba-header">Goomba</h1>
+        <img id="goomba" class="enemy-img" src="goombo.png" alt="">
+        <img class="coin" src="coin.png" alt="">
+        <form id="goomba-form" class="enemy-form" name="goomba-form">
+            <input id="goomba-input" type="number" placeholder="#"><span id="goomba-submit">+ add</span>
+        </form>
+    </div>
+
+    <div class="enemy-container bob-ombs">
+        <h1 id="bob-ombs-header">Bob-omb</h1>
+        <img id="bob-ombs" class="enemy-img" src="boboms.png" alt="">
+        <img class="coin" src="coin.png" alt="">
+        <form id="bob-ombs-form" class="enemy-form" name="bob-ombs-form">
+            <input id="bob-ombs-input" type="number" placeholder="#"><span id="bob-ombs-submit">+ add</span>
+        </form>
+    </div>
+
+    <div class="enemy-container cheep-cheeps">
+        <h1 id="cheep-cheeps-header">Cheep-cheep</h1>
+        <img id="cheep-cheeps" class="enemy-img" src="cheepcheep.png" alt="">
+        <img class="coin" src="coin.png" alt="">
+        <form id="cheep-cheeps-form" class="enemy-form" name="cheepcheep-form">
+            <input id="cheepcheep-input" type="number" placeholder="#"><span id="cheep-cheeps-submit">+ add</span>
+        </form>
+    </div>
+    <div class="checkout-container">
+        <h1 id="exit-checkout">x</h1>
+        <div class="checkout-content">
+            <h1 class="checkout-header">checkout total:</h1>
+            <span class="checkout-header-total"></span>
+            <div class="enemy-totals">
+                <div id="goomba-total-container">Goomba Total
+                    <h3 id="goomba-total"></h3>
+                    <img class="checkout-image" src="goombo.png" alt="">
+                </div>
+                <div id="bob-ombs-total-container">Bob-Omb Total
+                    <h3 id="bob-ombs-total"></h3>
+                    <img class="checkout-image" src="boboms.png" alt="">
+                </div>
+                <div id="cheep-cheeps-total-container">Cheep-Cheep Total
+                    <h3 id="cheep-cheeps-total"></h3>
+                    <img class="checkout-image" src="cheepcheep.png" alt="">
+                </div>
+            </div>
+        </div>
+        <a id="pmt" href="https://www.paypal.com/us/home"><div>checkout now!</div></a>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

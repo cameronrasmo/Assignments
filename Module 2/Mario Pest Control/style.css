@@ -1,0 +1,356 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Super Mario 256";
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body{
+    background-color: #E52521;
+    overflow: visible;
+}
+
+#bg-image{
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    opacity: 1;
+
+    background-image: url(imD41l.jpg);
+    background-position: 10% 70%;
+    
+}
+
+h2{
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    color: #ffffff;
+    z-index: 2;
+}
+
+#sidebar-container{
+    width: 150px;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    opacity: 1;
+    background-color: #FBD000;
+    display: flex;
+    flex-direction: column;
+
+    transition: .5s;
+}
+
+#sidebar-container h1{
+    font-size: 50px;
+    flex: 1;
+    width: 100%;
+    text-align: center;
+    padding-top: 50px;
+}
+
+#enemies{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+}
+#enemies a{
+    text-decoration: none;
+    color: #000000;
+    opacity: 1;
+    transition: .2s;
+}
+#enemies li{
+    flex: 0;
+    width: 100%;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    font-size: 18px;
+    opacity: 1;
+}
+#enemies a:hover{
+    cursor: pointer;
+    opacity: .7;
+}
+
+#checkout{
+    flex: .2;
+    text-align: center;
+    justify-self: flex-start;
+
+    padding-top: 70px;
+    opacity: 1;
+
+    transition: .5s;
+    transition-timing-function: ease;
+}
+
+#checkout:hover{
+    opacity: .7;
+    cursor: pointer;
+}
+
+.enemy-container{
+    width: 1000px;
+    height: 700px;
+
+    position: relative;
+    background-color: #E52521;
+    margin-left: auto;
+    margin-right: 20%;
+    margin-top: 200px;
+    margin-bottom: 200px;
+    opacity: 1;
+
+    transition: .5s;
+}
+
+.enemy-container h1{
+    position: absolute;
+    top: 60%;
+    left: -150px;
+    color: #ffffff;
+}
+
+.coin{
+    position: absolute;
+    width: 75px;
+    right: 340px;
+    top: 70px;
+
+    opacity: 0;
+
+    transition: opacity 0s, top .1s;
+    transition-timing-function: ease-out;
+}
+
+.enemy-form{
+    width: 300px;
+    height: 100px;
+    /* border: 2px solid #ffffff; */
+    position: absolute;
+    top: 200px;
+    right: 100px;
+
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.enemy-form input{
+    width: 300px;
+    background-color: #ffffff00;
+    border: none;
+    border-bottom: 10px solid #ffffff;
+    font-size: 120px;
+    color: #ffffff;
+    outline: none;
+
+    transition: .2s;
+}
+
+.enemy-form input::placeholder{
+    color: #ffffff;
+}
+
+.enemy-form span{
+    position: absolute;
+    left: 0px;
+    bottom: -100px;
+    font-size: 50px;
+}
+
+.enemy-form span:hover{
+    cursor: pointer;
+}
+
+#goomba{
+    position: absolute;
+    top: -100px;
+    left: -70px;
+
+    transition: .5s;
+}
+
+#goomba-header{
+    font-size: 280px;
+}
+
+#bob-ombs{
+    z-index: 1;
+    position: absolute;
+    left: 20px;
+    top: -30px;
+
+    transition: .5s;
+}
+
+#bob-ombs-header{
+    font-size: 280px;
+    position: absolute;
+    width: 1500px;
+    top: 450px;
+    left: -175px;
+}
+
+#cheep-cheeps{
+    z-index: 1;
+    position: absolute;
+    width: 650px;
+    left: -50px;
+    top: -20px;
+
+    transition: .5s;
+}
+
+#cheep-cheeps-header{
+    font-size: 210px;
+    width: 1600px;
+    position: absolute;
+    top: 500px;
+    left: -225px;
+}
+
+.checkout-container{
+    width: 100%;
+    height: 100%;
+
+    top: 100%;
+
+
+    position: fixed;
+    background-color: #E52521;
+    z-index: 1;
+
+    transition: .7s;
+    transition-timing-function: ease;
+}
+
+.checkout-container > h1{
+    color: #ffffff;
+    position: relative;
+    top: 25px;
+    left: 25px;
+    width: 50px;
+    height: 50px;
+    text-align: left;
+    opacity: 1;
+
+    font-size: 50px;
+
+    transition: .2s;
+}
+
+.checkout-container > h1:hover{
+    cursor: pointer;
+
+    opacity: .7;
+}
+
+.checkout-content{
+    width: 80%;
+    height: 700px;
+
+
+    margin: auto;
+    position: relative;
+
+    top: 150px;
+    padding: 50px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-header{
+    font-size: 90px;
+    color: #ffffff;
+    flex: 1;
+
+    transition: .5s;
+    transition: 3s;
+}
+
+.enemy-totals{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex: 2;
+    justify-content: space-evenly;
+    font-size: 30px;
+    color: #ffffff;
+}
+
+.enemy-totals h3{
+    font-size: 100px;
+    margin-top: 10px;
+}
+
+#goomba-total-container{
+    /* border: 2px solid #000000; */
+    flex: 1;
+}
+#goomba-total{
+    opacity: 0;
+    transition: .5s;
+    transition-delay: 1s;
+}
+#bob-ombs-total{
+    opacity: 0;
+    transition: .5s;
+    transition-delay: 1.5s;
+}
+#cheep-cheeps-total{
+    opacity: 0;
+    transition: .5s;
+    transition-delay: 2s;
+}
+#bob-ombs-total-container{
+    /* border: 2px solid #000000; */
+    flex: 1;
+}
+#cheep-cheeps-total-container{
+    /* border: 2px solid #000000; */
+    flex: 1;
+}
+
+.checkout-image{
+    height: 300px;
+    position: absolute;
+    bottom: 0px;
+    margin-left: 200px;
+}
+
+.checkout-header-total{
+    position: absolute;
+    right: 100px;
+    font-size: 90px;
+    color: #ffffff;
+
+}
+
+#pmt{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+
+    color: #ffffff;
+    padding: 25px;
+    font-size: 30px;
+    text-decoration: none;
+
+    opacity: 1;
+    transition: .2s;
+}
+#pmt:hover{
+    cursor: pointer;
+    opacity: .7;
+}
