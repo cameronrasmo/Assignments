@@ -354,3 +354,18 @@ h2{
     cursor: pointer;
     opacity: .7;
 }
+
+.info{
+    position: relative;
+
+    top: 260px;
+    left: 50px;
+    display: inline-block;
+    margin-right: 50px;
+    color: #ffffff;
+}
+
+.info a{
+    color: #ffffff;
+    text-decoration: none;
+}
