@@ -11,40 +11,39 @@ function stringItUp(arr){
 console.log(stringItUp([1, 4, 6]));
 
 function capitalizeNames(arr){
-    let names = arr.map(name => name);
-    let newNames = [];
-    console.log(names);
-    for(let i = 0; i < names.length; i++){
-        let firstChar = names[i][0].toUpperCase();
-        let rest = names[i].slice(1).toLowerCase();
+    let names = arr.map(function(name){
+        let newNames = [];
+        let firstChar = name[0].toUpperCase();
+        let rest = name.slice(1).toLowerCase();
         newNames.push(firstChar + rest);
-    }
-    return newNames;
+        return newNames;
+    });
+    return names;
 }
 
 console.log(capitalizeNames(["sPoNgEbOb", "pAtRiCk"]));
 
 function namesOnly(arr){
-    let objects = arr.map(person => person);
-    let names = [];
-    for(let i = 0; i < objects.length; i++){
-        names.push(objects[i].name);
-    }
-    return names;
+    let objects = arr.map(function(person){
+        let names = [];
+        names.push(person.name);
+        return names;
+    });
+    return objects;
 }
 
 function makeStrings(arr){
-    let objects = arr.map(person => person);
-    let approval = [];
-    for(let i = 0; i < objects.length; i++){
-        if(objects[i].age < 18){
-            approval.push(objects[i].name + " is too young to go into the Matrix!");
+    let objects = arr.map(function(person){
+        let approval = [];
+        if(person.age < 18){
+            approval.push(person.name + " is too young to go into the Matrix!");
         }
         else{
-            approval.push(objects[i].name + " can go into the Matrix why not")
+            approval.push(person.name + " can go into the Matrix why not")
         }
-    }
-    return approval;
+        return approval;
+    });
+    return objects;
 }
 
 let peoples = [
@@ -67,12 +66,13 @@ let peoples = [
 ]
 
 function readyToPutInTheDOM(arr){
-    let objects = arr.map(person => person);
-    let stringsToAdd = [];
-    for(let i = 0; i < objects.length; i++){
-        stringsToAdd.push(`<h1>${objects[i].name}</h1><h2>${objects[i].age}</h2>`);
-    }
-    return stringsToAdd;
+    let objects = arr.map(person => {
+        let stringsToAdd = [];
+        stringsToAdd.push(`<h1>${person.name}</h1><h2>${person.age}</h2>`);
+
+        return stringsToAdd;
+    });
+    return objects;
 }
 
 console.log(namesOnly(peoples));

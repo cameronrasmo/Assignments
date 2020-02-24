@@ -1,0 +1,410 @@
+@font-face{
+    font-family: 'JuliusSansone';
+    src: url('https://fonts.gstatic.com/s/juliussansone/v8/1Pt2g8TAX_SGgBGUi0tGOYEga5WOwnsXy6KHHg.woff2') format('woff');
+}
+@font-face{
+    font-family: 'VERDE';
+    src: url('verdemoderna.woff') format('woff');
+}
+@font-face{
+    font-family: 'librebaskervilleREG';
+    src: url('https://fonts.gstatic.com/s/librebaskerville/v7/kmKnZrc3Hgbbcjq75U4uslyuy4kn0qNZaxMaC82U.woff2') format('woff');
+}
+@font-face{
+    font-family: 'librebaskervilleITAL';
+    src: url('https://fonts.gstatic.com/s/librebaskerville/v7/kmKhZrc3Hgbbcjq75U4uslyuy4kn0qNcWxEQDO-Wyrs.woff2') format('woff');
+}
+
+body{
+    margin: 0;
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: 195px 80px 26% 20% 19% 200px 150px 300px 250px 0px;
+}
+
+div{
+    /* border: 2px solid #000000; */
+}
+
+#header, #view-designs{
+    background-image: url('contours@2x.png'), url('huntington.jpg');
+}
+
+#header{
+    display: flex;
+    flex-direction: column;
+}
+#header img{
+    width: 60px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    opacity: .4;
+    flex: 0;
+}
+#header h1{
+    font-family: JuliusSansone;
+    font-size: 24px;
+    color: #ffffff;
+    opacity: .9;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#header h2{
+    font-family: librebaskervilleITAL;
+    font-size: 12px;
+    color: #ffffff;
+    opacity: .6;
+    margin: auto;
+    flex: 1;
+}
+
+#view-designs{
+    display: inline-block;
+    font-family: 'JuliusSansone';
+    color: #ffffff;
+    opacity: .8;
+}
+#view-designs-container{
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff13;
+    display: flex;
+    flex-direction: row;
+}
+#view-designs-button{
+    text-align: center;
+    font-size: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 4;
+    transition: .2s;
+}
+#view-designs-button:hover{
+    background-color: #ffffff36;
+    cursor: pointer;
+}
+#view-designs-button > h1{
+    opacity: .7;
+}
+#view-designs-arrow{
+    text-align: center;
+    font-size: 40px;
+    font-weight: 800;
+    background-color: #ffffff13;
+    font-family: 'verdemodera';
+    align-self: center;
+    opacity: .7;
+    flex: .5;
+}
+#view-designs-arrow:hover{
+    opacity: .9;
+    background-color: #ffffff36;
+}
+#preamble p{
+    display: inline;
+}
+
+#preamble div{
+    display: inline;
+    padding: 8px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    font-family: 'JuliusSansone';
+    transition: .2s;
+}
+#preamble div:hover{
+    color: #ffffff;
+    cursor: pointer;
+    background-color: #0d8ba1;
+}
+
+#section-one{
+    padding: 30px 60px 20px 60px;
+}
+#section-one > div{
+    margin-bottom: 10px;
+}
+
+.section{
+    padding-bottom: 30px;
+    color: #325050;
+}
+.section > h1{
+    font-size: 22px;
+    font-family: 'JuliusSansone';
+}
+.section > p{
+    font-size: 14px;
+    font-family: 'librebaskervilleREG';
+    line-height: 1.7;
+}
+
+#section-two{
+    padding: 20px 60px 20px 60px;
+    background-image: url(bamboo.png);
+    background-attachment: fixed;
+    background-color: rgba(138,188,159,0.5);
+}
+#section-three{
+    padding: 30px 60px 20px 60px;
+}
+
+#credits{
+    padding: 45px 60px 20px 60px;
+    display: flex;
+    justify-content: center;
+    background-image: url('huntington.jpg');
+    background-size: cover;
+}
+#credits > div{
+    height: 65px;
+    width: 80%;
+    text-align: center;
+}
+#credits h2{
+    font-family: 'librebaskervilleITAL';
+    position: relative;
+    font-size: 22px;
+    color: rgba(255, 255, 255, 0.411);
+    line-height: 1.5;
+}
+#credits h2 a{
+    color: rgba(255, 255, 255, 0.685);
+    font-family: 'librebaskervilleREG';
+    text-decoration: none;
+}
+#credits h2 a:hover{
+    text-decoration: underline;
+}
+
+
+
+#links{
+    padding: 20px 60px 20px 60px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background-color: #134347;
+}
+#links > div{
+    display: flex;
+    width: 60%;
+    position: relative;
+    top: 20px;
+    left: 4%;
+}
+#links a{
+    font-size: 60px;
+    flex: 1;
+    font-family: 'VERDE';
+    color: rgba(255, 255, 255, 0.486);
+    text-decoration: none;
+}
+#links a:hover{
+    color: rgba(255, 255, 255, 0.795);
+}
+
+#examples{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    background-color: #c0cac3;
+}
+#examples div{
+    padding: 0px 60px 0px 60px;
+    border-bottom: 1px solid #a0b9ad;
+}
+#examples h2{
+    font-family: 'JuliusSansone';
+    font-size: 14px;
+}
+#examples h4{
+    font-family: 'librebaskervilleREG';
+    font-size: 10px;
+}
+
+#etc-one{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    background-image: url(bamboo.png);
+    background-color: rgba(138,188,159,0.5);
+}
+#etc-one > div{
+    padding: 20px 60px 20px 60px;
+    border-bottom: 1px solid #a0b9ad;
+}
+#etc-one h1{
+    font-size: 14px;
+    /* padding: 30px 40px 0px 40px; */
+}
+#etc-two{
+    visibility: hidden;
+    position: absolute;
+    background-color: rgba(138,188,159,0.5);
+}
+
+@media(max-width: 800px){
+    body{
+        grid-template-rows: 195px 80px 24% 18% 21% 250px 150px 550px 380px 0px;
+    }
+    #examples{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    #etc-one{
+        grid-template-columns: repeat(1, 1fr);
+    }
+    #view-designs-arrow{
+        height: 100%;
+    }
+    #arrow{
+        position: relative;
+        bottom: 39px;        
+    }
+}
+
+@media(min-width: 800px) and (max-width: 1130px){
+    #header img{
+        width: 100px;
+        position: relative;
+        top: 45px;
+        margin: auto;
+        margin-left: 200px;
+        opacity: .9;
+    }
+    #header h1{
+        position: relative;
+        font-size: 45px;
+        top: -50px;
+        margin-left: 330px;
+    }
+    #header h2{
+        position: relative;
+        font-size: 25px;
+        top: -60px;
+        margin-left: 330px;
+    }
+    #view-designs-arrow{
+        height: 100%;
+    }
+    #arrow{
+        position: relative;
+        bottom: 39px;        
+    }
+}
+
+@media(min-width: 1130px){
+    body{
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 295px 800px 600px 600px 200px 150px;
+    }
+    #header{
+        display: inline-block;
+    }
+    #header img{
+        width: 100px;
+        position: relative;
+        top: 70px;
+        margin-left: 100px;
+        opacity: .9;
+    }
+    #header h1{
+        position: relative;
+        font-size: 45px;
+        top: -45px;
+        margin-left: 230px;
+    }
+    #header h2{
+        position: relative;
+        font-size: 25px;
+        top: -45px;
+        margin-left: 230px;
+    }
+    #view-designs-container{
+        width: 70%;
+        height: 70px;
+        margin: auto;
+        position: relative;
+        top: 115px;
+    }
+    #view-designs-arrow{
+        height: 70px;
+    }
+
+    #arrow{
+        position: relative;
+        bottom: 43px;        
+    }
+
+    #examples{
+        grid-row: 2/3;
+        grid-column: 2/3;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+        padding: 50px;
+    }
+    #examples h2{
+        font-size: 19px;
+    }
+    #examples h4{
+        font-size: 13px;
+    }
+    #etc-one{
+        grid-row: 3/4;
+        grid-column: 2/3;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        padding: 0px 60px 100px 30px;
+        background-attachment: fixed;
+    }
+    #etc-one > div{
+        padding: 30px 0px 0px 60px;
+    }
+    #etc-one h1{
+        font-size: 19px;
+    }
+    #etc-two{
+        grid-row: 4/5;
+        grid-column: 2/3;
+        visibility: visible;
+        position: relative;
+    }
+    #credits{
+        grid-row: 5/6;
+        grid-column: 1/3;
+    }
+    #links{
+        grid-row: 6/7;
+        grid-column: 1/3;
+    }
+}
+
+@media(min-width: 1500px){
+    body{
+        grid-template-rows: 295px 800px 600px 600px 200px 150px;
+    }
+    .section > h1{
+        font-size: 25px;
+    }
+    .section > p{
+        font-size: 16px;
+        line-height: 1.7;
+    }
+    #section-one{
+        padding: 30px 120px 20px 120px;
+    }
+    #section-two{
+        padding: 30px 120px 20px 120px;
+    }
+    #section-three{
+        padding: 30px 120px 20px 120px;
+    }
+    #credits h2{
+        top: 25px;
+    }
+
+}

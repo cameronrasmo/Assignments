@@ -1,0 +1,79 @@
+*{
+    box-sizing: border-box;
+}
+
+#container{
+    width: 800px;
+    height: 800px;
+    margin: auto;
+    position: relative;
+    top: 150px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+#one{
+    background-color: turquoise;
+    width: initial;
+    transition: .5s;
+}
+#one:hover{
+    background-color: lightcoral;
+}
+
+#two{
+    background-color: violet;
+    width: initial;
+    border: 0px solid #000000;
+    transition: .5s;
+}
+#two:hover{
+    border: 5px dashed #f2f2f2;
+}
+
+
+#three{
+    background-color: teal;
+    width: initial;
+    border-radius: 0px;
+    transition: .5s;
+}
+#three:hover{
+    border-radius: 50px;
+}
+
+#four{
+    background-color: tan;
+    width: initial;
+    box-shadow: 0px 0px 0px 0px #000000;
+    opacity: 1;
+    transition: .5s;
+}
+#four:hover{
+    box-shadow: 0px 20px 50px 10px #505050;
+    opacity: .5;
+}
+
+#five{
+    background-color: thistle;
+    padding: 0px;
+    height: 100px;
+    transition: .5s;
+}
+#five:hover{
+    height: 500px;
+    padding: 50px;
+}
+
+#six{
+    background-color: antiquewhite;
+    position: relative;
+    top: 0px;
+    width: initial;
+    transition: .5s;
+}
+#six:hover{
+    top: 100px;
+}
