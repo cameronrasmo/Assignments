@@ -1,0 +1,71 @@
+{
+    "data":{
+        "appetizers": [
+            {
+                "name": "calamari",
+                "ingredients": ["squid", "batter", "marinara"],
+                "description": "a delicious basket of fried squid, served with a side of marinara"
+            },
+
+            {
+                "name": "mozzerella sticks",
+                "ingredients": ["mozzerella cheese", "batter", "marinara"],
+                "description": "crunchy, stretchy mozzerella cheese dippied in batter, served with a side of marinara"
+            }
+        ],
+        
+        "cold sandwiches": [
+            {
+                "name": "the jimmy",
+                "ingredients": ["french bread", "cold ham", "lettuce", "mayo"],
+                "description": "did not steal this at all from jimmy johns, why would yo-"
+            },
+            {
+                "name": "way of the sub",
+                "ingredients": ["italian herbs and cheese bread", "provolone", "mayo"],
+                "description": "not at all my order at subway stop accusing me STOP-"
+            }
+        ],
+
+        "hot sandwiches": [
+            {
+                "name": "au jus",
+                "ingredients": ["steak", "bread?", "whatever the au jus is idk"],
+                "description": "a delicious french delicacy? never had one in france though, so"
+            },
+            {
+                "name": "grilled cheese",
+                "ingredients": ["crispy sourdough", "cheeeeeeeeeeese"],
+                "description": "the only thing that really makes sense in this cruel dark world"
+            }
+            
+        ],
+
+        "desserts": [
+            {
+                "name": "ice cream",
+                "ingredients": ["wouldn't you like to know", "not a chance"],
+                "description": "surprise it's all vegan gotcha good ha"
+            },
+            {
+                "name": "brownie",
+                "ingredients": ["CHOCLATE", "MORE CHOCOLATE"],
+                "description": "heat this baby up in the oven and ohhhhhhhh boy it's just nirvana"
+            }
+            
+        ],
+
+        "drinks": [
+            {
+                "name": "kombuch",
+                "ingredients": ["fermented tea, i think?", "the floaties that come in kombucha"],
+                "description": "are you visiting SF and want to blend in like a real silicon valley hipster? look no further than our buch"
+            },
+            {
+                "name": "coffee",
+                "ingredients": ["coffee", "water?"],
+                "description": "nectar of the gods, really"
+            }
+        ]
+    }
+}
