@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>To-Do.</title>
+</head>
+<body>
+    <div id="left-container">
+        <div id="list-container">
+
+        </div>
+        <div id="add-item-container">
+            <div id="add">+</div>
+        </div>
+        <div id="edit-pane">
+            <div id="edit-pane-header-container">
+                <div id="pulldown-container"><div id="pulldown"><i class="material-icons">expand_more</i></div></div>
+                <h1><input id="edit-pane-header" placeholder="Title" type="text"></h1>
+            </div>
+            <div id="edit-pane-section-container">
+                <div id="edit-pane-section">
+                    <input id="edit-pane-input" placeholder="Description" type="text">
+                    <input id="edit-pane-img" type="text" placeholder="Image URL">
+                </div>
+            </div>
+            <div id="edit-pane-footer">
+                <div class="save">
+                    <div id="save-icon-container">
+                        <i class="material-icons">save</i>
+                        <p>save</p>
+                    </div>
+                </div>
+                <div class="save">
+                    <div id="add-icon-container">
+                        <i class="material-icons">+</i>
+                        <p>save</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="right-container">
+        <div id="right-header-container">
+            <i class="material-icons">check</i>
+            <h1>To-do.</h1>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
