@@ -1,0 +1,29 @@
+body{
+    font-family: SF Pro Display;
+}
+#card-container{
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 50px;
+    /* border: 2px solid #000000; */
+    box-shadow: 0px 20px 20px 0px #00000038;
+
+    border-radius: 10px;
+}
+
+.pet-header{
+    font-size: 30px;
+    font-weight: 500;
+}
+.pet-name, .pet-breed{
+    font-size: 17px;
+    font-weight: 200;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.friend-header{
+    font-size: 50px;
+}
