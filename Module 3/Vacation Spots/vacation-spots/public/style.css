@@ -1,0 +1,130 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+body{
+    background-color: #020202;
+}
+#container{
+    z-index: -1;
+}
+
+#sidebar-container{
+    width: 180px;
+    height: 100vh;
+
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+
+    background-color: rgb(0, 0, 0);
+}
+#sidebar-logo-container{
+    width: 100%;
+    height: 140px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#sidebar-logo-container i{
+    color: #f2f2f2;
+    font-size: 50px;
+    padding-left: 5px;
+    /* transform: rotate(deg); */
+}
+#options-container{
+    width: 100%;
+    height: 140px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 350px;
+}
+#options-container i{
+    color: #f2f2f2;
+    font-size: 40px;
+    transform: rotate(90deg);
+}
+
+.location-item{
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 40px;
+
+    text-decoration: none;
+    color: #f2f2f2;
+
+    transition: .2s;
+}
+.location-item:hover{
+    color: #b4b4b4;
+}
+
+.location-item > h4{
+    font-family: Avenir;
+    font-weight: 800;
+    text-transform: lowercase;
+}
+
+.location-container{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: -1;
+    scroll-snap-align: start;
+}
+
+.location-header{
+    font-size: 200px;
+    font-family: Avenir;
+    font-weight: 800;
+    position: absolute;
+    bottom: 230px;
+    left: 400px;
+    color: #f2f2f2;
+    z-index: 1;
+    text-transform: uppercase;
+    line-height: .8;
+}
+
+.img-container{
+    width: 75%;
+    height: 74vh;
+    background-color: bisque;
+    position: absolute;
+    right: 0px;
+}
+.img-container > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.price-icon{
+    color: #f2f2f2;
+    font-size: 25px;
+    font-family: Avenir;
+    font-weight: 100;
+    position: absolute;
+    bottom: 95px;
+    right: 150px;
+}
+
+.time-to-go{
+    color: #f2f2f2;
+    font-size: 20px;
+    font-family: Avenir;
+    font-weight: 100;
+    position: absolute;
+    bottom: 110px;
+    left: 410px;
+    text-transform: lowercase;
+}
