@@ -1,0 +1,114 @@
+*{
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #0f0f0f;
+    box-sizing: border-box;
+}
+
+#container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#header{
+    padding: 20px;
+    padding-left: 60px;
+    font-family: SF Pro Display;
+    font-size: 40px;
+    font-weight: 600;
+    color: #f2f2f2;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+}
+
+#loader{
+    color: #f2f2f2;
+    font-family: SF Pro Display;
+    font-size: 40px;
+    position: relative;
+    top: 475px;
+}
+
+#card-container{
+    margin: auto;
+    position: relative;
+    bottom: 80px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+#name-section{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#name-section h1{
+    font-family: SF Pro Display;
+    font-size: 50px;
+    color: #f2f2f2;
+}
+#name-section h5{
+    color: #9e9e9e;
+    font-size: 16px;
+    font-family: SF Pro Display;
+    font-weight: 500;
+    position: relative;
+    top: 12px;
+    margin-right: 5px;
+}
+
+#image-section{
+    flex: 1.5;
+    z-index: -1;
+    position: relative;
+}
+
+#image-section img{
+    width: 100%;
+    height: 100vh;
+    background-attachment: fixed;
+    background-size: 50% 50%;
+    scroll-snap-align: start;
+    object-fit: cover;
+}
+
+@media(max-width: 1444px){
+    body{
+        background-color: white;
+    }
+    #card-container{
+        display: inline;
+    }
+    #image-section{
+        z-index: -1;
+    }
+    #name-section{
+        background-color: #0f0f0f;
+        width: 400px;
+        height: 150px;
+        padding-bottom: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+        margin-left: auto;
+        margin-right: 5%;
+        z-index: 1;
+        position: relative;
+        bottom: 675px;
+        flex-direction: column;
+    }
+    #name-section h5{
+        position: relative;
+        top: 60px;
+    }
+    
+}
+
+
