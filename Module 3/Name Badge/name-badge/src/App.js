@@ -21,7 +21,7 @@ class App extends React.Component{
     handleChange = (event) => {
         const{name, value} = event.target;
         this.setState({[name]: value});
-        let enabled = this.state.firstName.length > 3 && this.state.lastName.length > 3 && this.state.email.length > 3 && this.state.birthplace.length > 3 && this.state.phone.length > 3 && this.state.favFood.length > 3 && this.state.about.length > 3;
+        const enabled = this.state.firstName.length > 3 && this.state.lastName.length > 3 && this.state.email.length > 3 && this.state.birthplace.length > 3 && this.state.phone.length > 3 && this.state.favFood.length > 3 && this.state.about.length > 3;
         if(enabled){
             document.getElementById('submitBtn').disabled = false;
             this.btnRef.current.style.backgroundColor = 'salmon';
