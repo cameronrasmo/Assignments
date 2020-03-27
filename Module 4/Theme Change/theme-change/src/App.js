@@ -1,8 +1,16 @@
 import React from 'react';
+import { ThemeContextConsumer } from './ThemeContext';
+import TextHeader from './TextHeader.js';
 
 function App(){
     return(
-        <h1>HI bitch</h1>
+        <ThemeContextConsumer>
+            {context => 
+                <div id="container" className={`${context.theme}-theme-container`}>
+                    <TextHeader title={context.theme}/>
+                    <button id="change-theme-button" className={`${context.theme}-theme-color`} onClick={context.toggle}>Clickity clack</button>
+                </div>}  
+        </ThemeContextConsumer>
     )
 }
 
