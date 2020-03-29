@@ -6,6 +6,7 @@ class DCProvider extends React.Component{
         super()
         this.state = {
             list: [],
+            count: 0
         }
     }
 
@@ -14,10 +15,17 @@ class DCProvider extends React.Component{
         let newObject = {
             title: title,
             description: description,
-            imgUrl: imgUrl
+            imgUrl: imgUrl,
+            id: this.state.count
         }
         addArr.push(newObject);
-        this.setState({list: addArr});
+        this.setState(prev => {
+            return{
+                list: addArr,
+                count: prev.count + 1
+            }
+        });
+        console.log(this.state.list)
     }
 
     submit = (count, title, description, imgUrl) => {
@@ -25,6 +33,7 @@ class DCProvider extends React.Component{
         editArr[count - 1].title = title;
         editArr[count - 1].description = description;
         editArr[count - 1].imgUrl = imgUrl;
+        console.log(editArr[count - 1]);
         this.setState(prev => {
             return{
                 list: editArr,
@@ -34,7 +43,7 @@ class DCProvider extends React.Component{
 
     render(){
         return(
-            <Provider value={{list: this.state.list, add: this.add, submit: this.submit, count: this.state.list.length}}>
+            <Provider value={{list: this.state.list, add: this.add, submit: this.submit, count: this.state.count}}>
                 {this.props.children}
             </Provider>
         )

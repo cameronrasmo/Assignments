@@ -2,7 +2,8 @@ import React from 'react';
 
 class Card extends React.Component{
     state = {
-        editToggle: false
+        editToggle: false,
+        id: this.props.count
     }
 
     edit = () => {
@@ -11,7 +12,7 @@ class Card extends React.Component{
 
     capture = (e) => {
         e.preventDefault();
-        this.props.submitMethod(this.props.count, e.target.parentNode[0].value, e.target.parentNode[1].value, e.target.parentNode[2].value);
+        this.props.submitMethod(this.state.id, e.target.parentNode[0].value, e.target.parentNode[1].value, e.target.parentNode[2].value);
         e.target.parentNode[0].value = "";
         e.target.parentNode[1].value = "";
         e.target.parentNode[2].value = "";

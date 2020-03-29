@@ -10,6 +10,11 @@ class Edit extends React.Component{
         e.target.parentNode[2].value = "";
     }
 
+    deleteItem = (e) => {
+        e.preventDefault();
+        console.log("deleted")
+    }
+
     render(){
         return(
             <div>
