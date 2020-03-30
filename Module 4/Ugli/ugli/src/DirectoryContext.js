@@ -25,7 +25,6 @@ class DCProvider extends React.Component{
                 count: prev.count + 1
             }
         });
-        console.log(this.state.list)
     }
 
     submit = (count, title, description, imgUrl) => {
@@ -33,7 +32,6 @@ class DCProvider extends React.Component{
         editArr[count - 1].title = title;
         editArr[count - 1].description = description;
         editArr[count - 1].imgUrl = imgUrl;
-        console.log(editArr[count - 1]);
         this.setState(prev => {
             return{
                 list: editArr,
@@ -41,9 +39,22 @@ class DCProvider extends React.Component{
         });
     }
 
+    delete = (count) => {
+        let deleteArr = this.state.list.map(item => item);
+        if(count > -1){
+            deleteArr.splice(count - 1, 1);
+        }
+        this.setState(prev => {
+            return{
+                list: deleteArr,
+                count: prev.count - 1
+            }
+        });
+    }
+
     render(){
         return(
-            <Provider value={{list: this.state.list, add: this.add, submit: this.submit, count: this.state.count}}>
+            <Provider value={{list: this.state.list, add: this.add, submit: this.submit, delete: this.delete, count: this.state.count}}>
                 {this.props.children}
             </Provider>
         )

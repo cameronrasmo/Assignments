@@ -1,6 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
-import {DCProvider} from './DirectoryContext.js';
+import {DCProvider, DCConsumer} from './DirectoryContext.js';
 
-ReactDOM.render(<DCProvider><App/></DCProvider>, document.getElementById('root'));
+ReactDOM.render(<DCProvider>
+                    <DCConsumer>
+                        {directory => {
+                            return(
+                                <App addMethod={directory.add}/>
+                            )
+                        }}
+                    </DCConsumer>
+                </DCProvider>, document.getElementById('root'));

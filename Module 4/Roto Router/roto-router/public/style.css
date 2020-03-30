@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: SF Pro Display;
+}
+
+body{
+    background-color: #f2f2f2;
+}
+
+#nav{
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    line-height: 60px;
+    display: flex;
+    background-color: #4e9989;
+    cursor: pointer;
+}
+
+#logo{
+    flex: .5;
+    cursor: auto;
+    color: #f2f2f2;
+}
+
+#spacer{
+    flex: 2;
+}
+
+.link{
+    flex: .5;
+    text-decoration: none;
+}
+
+.text > hr{
+    width: 0%;
+    height: 2px;
+    color: #f2f2f2;
+    margin: auto;
+    background-color: #f2f2f2;
+    border: none;
+
+    transition: .2s;
+}
+
+.text:hover hr{
+    width: 80%;
+}
+
+.text{
+    text-decoration: none;
+    font-size: 23px;
+    color: #f2f2f2;
+    font-weight: 500;
+}
+
+#welcome{
+    position: relative;
+    /* border: 2px solid black; */
+    text-align: center;
+    top: 450px;
+    font-size: 40px;
+}
