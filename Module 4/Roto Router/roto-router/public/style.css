@@ -9,20 +9,46 @@ body{
     background-color: #f2f2f2;
 }
 
+.backdrop{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-size: cover;
+    background-position: bottom;
+    height: 100vh;
+    z-index: -1;
+}
+
+#home-bg{
+    background-image: url("https://passfields.com/wp-content/uploads/2016/10/Passfields-Interior-Bathroom-View-High-Resolution.jpg");
+}
+
+#about-bg{
+    background-image: url("https://i.insider.com/5e0a2bcb954bda7a1a0e5e43?width=1100&format=jpeg&auto=webp");
+}
+
+#services-bg{
+    background-image: url("https://media.architecturaldigest.com/photos/574dcad01cd9644b0beb1df4/master/w_1847,h_1436,c_limit/bathroom-designs-003.jpg");
+}
+
 #nav{
     margin: auto;
     text-align: center;
     width: 100%;
     line-height: 60px;
     display: flex;
-    background-color: #4e9989;
+    background-color: #4fc9c3;
+    box-shadow: 0px 5px 10px 0px #2222226c;
     cursor: pointer;
+    z-index: 0;
 }
 
 #logo{
     flex: .5;
     cursor: auto;
     color: #f2f2f2;
+    padding-left: 10px;
 }
 
 #spacer{
@@ -56,10 +82,22 @@ body{
     font-weight: 500;
 }
 
-#welcome{
+.section{
     position: relative;
     /* border: 2px solid black; */
     text-align: center;
-    top: 450px;
+    top: 45vh;
     font-size: 40px;
+    color: #f2f2f2;
+    width: 55%;
+    padding: 40px;
+    background-color: #222222;
+    margin: auto;
+    box-shadow: 0px 5px 10px 0px #2222226c;
+}
+
+.section > p{
+    font-size: 22px;
+    font-weight: 200;
+    color: #f2f2f2c7;
 }
