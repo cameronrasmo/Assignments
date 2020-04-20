@@ -29,8 +29,18 @@ const bounties = [
     },
 ];
 
-bountyRoute.route("/").get((req, res) => {
-    res.send(bounties);
-});
+bountyRoute
+    .route("/")
+    .get((req, res) => {
+        res.send(bounties);
+    })
+    .post((req, res) => {
+        const newBounty = req.body;
+        newBounty._id = uuid();
+        bounties.push(newBounty);
+        res.send(
+            `Successfully added ${newBounty.firstName} ${newBounty.lastName} to database.`
+        );
+    });
 
 module.exports = bountyRoute;
