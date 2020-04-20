@@ -10,38 +10,21 @@ function APICallProvider(props) {
     let [panel, setPanel] = React.useState(false);
 
     function request(query, queryType) {
-        console.log(query, queryType);
+        let url = `https://www.boredapi.com/api/activity`;
         if (queryType === "people") {
-            Axios.get(
-                `https://www.boredapi.com/api/activity?participants=${query}`
-            ).then((response) => {
-                setActivity((prev) => (activity = response.data.activity));
-                setType((prev) => (type = response.data.type));
-                setPrice((prev) => (price = response.data.price));
-                setPeople((prev) => (people = response.data.participants));
-                setPanel((prev) => (panel = true));
-            });
+            url = `https://www.boredapi.com/api/activity?participants=${query}`;
         } else if (query !== "") {
-            Axios.get(
-                `https://www.boredapi.com/api/activity?${queryType}=${query}`
-            ).then((response) => {
-                setActivity((prev) => (activity = response.data.activity));
-                setType((prev) => (type = response.data.type));
-                setPrice((prev) => (price = response.data.price));
-                setPeople((prev) => (people = response.data.participants));
-                setPanel((prev) => (panel = true));
-            });
-        } else {
-            Axios.get("https://www.boredapi.com/api/activity").then(
-                (response) => {
-                    setActivity((prev) => (activity = response.data.activity));
-                    setType((prev) => (type = response.data.type));
-                    setPrice((prev) => (price = response.data.price));
-                    setPeople((prev) => (people = response.data.participants));
-                    setPanel((prev) => (panel = true));
-                }
-            );
+            url = `https://www.boredapi.com/api/activity?${queryType}=${query}`;
         }
+        Axios.get(url).then((response) => {
+            setActivity((prev) => (activity = response.data.activity));
+            setType((prev) => (type = response.data.type));
+            setPrice((prev) =>
+                response.data.price !== "" ? (price = response.data.price) : 0
+            );
+            setPeople((prev) => (people = response.data.participants));
+            setPanel((prev) => (panel = true));
+        });
     }
 
     function close() {
