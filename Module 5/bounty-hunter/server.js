@@ -3,6 +3,11 @@ const app = express();
 
 app.use(express.json());
 
+app.use((req, res, next) => {
+    console.log("Processing");
+    next();
+});
+
 app.use("/bounties", require("./bounty.js"));
 
 app.listen(6000, () => {

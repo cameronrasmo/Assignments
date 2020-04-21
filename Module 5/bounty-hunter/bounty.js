@@ -39,8 +39,36 @@ bountyRoute
         newBounty._id = uuid();
         bounties.push(newBounty);
         res.send(
-            `Successfully added ${newBounty.firstName} ${newBounty.lastName} to database.`
+            `Successfully added bounty: ${newBounty.firstName} ${newBounty.lastName} to database.`
         );
     });
+
+bountyRoute
+    .route("/:bountyId")
+    .get((req, res) => {
+        const id = req.params.bountyId;
+        const found = bounties.find((item) => item._id === id);
+        res.send(found);
+    })
+    .put((req, res) => {
+        const id = req.params.bountyId;
+        const foundIdx = bounties.findIndex((bounty) => bounty._id === id);
+        Object.assign(bounties[foundIdx], req.body);
+        res.send(`Successfully updated bounty.`);
+    })
+    .delete((req, res) => {
+        const id = req.params.bountyId;
+        const foundIdx = bounties.findIndex((bounty) => bounty._id === id);
+        res.send(
+            `Successfully deleted bounty: ${bounties[foundIdx].firstName} ${bounties[foundIdx].lastName} from database.`
+        );
+        bounties.splice(foundIdx, 1);
+    });
+
+bountyRoute.route("/search/type").get((req, res) => {
+    const query = req.query;
+    const found = bounties.filter((item) => item.type === query.type);
+    res.send(found);
+});
 
 module.exports = bountyRoute;
