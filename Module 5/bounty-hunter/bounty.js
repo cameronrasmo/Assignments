@@ -38,9 +38,7 @@ bountyRoute
         const newBounty = req.body;
         newBounty._id = uuid();
         bounties.push(newBounty);
-        res.send(
-            `Successfully added bounty: ${newBounty.firstName} ${newBounty.lastName} to database.`
-        );
+        res.send(newBounty);
     });
 
 bountyRoute
@@ -59,9 +57,7 @@ bountyRoute
     .delete((req, res) => {
         const id = req.params.bountyId;
         const foundIdx = bounties.findIndex((bounty) => bounty._id === id);
-        res.send(
-            `Successfully deleted bounty: ${bounties[foundIdx].firstName} ${bounties[foundIdx].lastName} from database.`
-        );
+        res.send("Successfully deleted bounty.");
         bounties.splice(foundIdx, 1);
     });
 

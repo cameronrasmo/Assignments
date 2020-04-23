@@ -10,6 +10,6 @@ app.use((req, res, next) => {
 
 app.use("/bounties", require("./bounty.js"));
 
-app.listen(6000, () => {
-    console.log("Connected to port 6000.");
+app.listen(9000, () => {
+    console.log("Connected to port 9000.");
 });
