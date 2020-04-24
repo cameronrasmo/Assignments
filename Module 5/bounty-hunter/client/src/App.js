@@ -32,14 +32,14 @@ function App() {
         axios
             .get("/bounties")
             .then((res) => setBounties(res.data))
-            .catch((err) => console.log(err));
+            .catch((err) => alert(err));
     }
 
     function postReq(obj) {
         axios
             .post("/bounties", obj)
             .then((res) => setBounties((prev) => [...prev, res.data]))
-            .catch((err) => console.log(err));
+            .catch((err) => alert(err));
     }
 
     function putReq(obj) {
@@ -55,7 +55,7 @@ function App() {
                     })
                 )
             )
-            .catch((err) => console.log(err));
+            .catch((err) => alert(err.response.data.err));
     }
 
     function deleteReq(id) {
