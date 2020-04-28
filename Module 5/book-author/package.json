@@ -1,11 +1,11 @@
 {
-    "name": "bounty-hunter",
+    "name": "book-author",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "npx nodemon server.js"
+        "start": "npx nodemon server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [],
     "author": "",
@@ -14,7 +14,6 @@
         "express": "^4.17.1",
         "mongoose": "^5.9.10",
         "morgan": "^1.10.0",
-        "nodemon": "^2.0.3",
-        "uuid": "^7.0.3"
+        "nodemon": "^2.0.3"
     }
 }

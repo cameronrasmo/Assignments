@@ -1,44 +1,27 @@
 const express = require("express");
 const bountyRoute = express.Router();
-const uuid = require("uuid/v4");
-
-const bounties = [
-    {
-        firstName: "Sheev",
-        lastName: "Palpatine",
-        living: true,
-        bountyAmount: 6000,
-        type: "Sith",
-        _id: uuid(),
-    },
-    {
-        firstName: "Luke",
-        lastName: "Skywalker",
-        living: true,
-        bountyAmount: 4000,
-        type: "Jedi",
-        _id: uuid(),
-    },
-    {
-        firstName: "Count",
-        lastName: "Dookie",
-        living: true,
-        bountyAmount: 6000,
-        type: "Sith",
-        _id: uuid(),
-    },
-];
+const Bounty = require("./models/bounty.js");
 
 bountyRoute
     .route("/")
-    .get((req, res) => {
-        res.send(bounties);
+    .get((req, res, next) => {
+        Bounty.find((err, bounties) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.status(200).send(bounties);
+        });
     })
-    .post((req, res) => {
-        const newBounty = req.body;
-        newBounty._id = uuid();
-        bounties.push(newBounty);
-        res.status(201).send(newBounty);
+    .post((req, res, next) => {
+        const newBounty = new Bounty(req.body);
+        newBounty.save((err, saved) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.status(201).send(newBounty);
+        });
     });
 
 bountyRoute
@@ -56,36 +39,44 @@ bountyRoute
         res.send(found);
     })
     .put((req, res, next) => {
-        const id = req.params.bountyId;
-        const foundIdx = bounties.findIndex((bounty) => bounty._id === id);
-        if (foundIdx === -1) {
-            const err = new Error(
-                `Could not update specified bounty with ID: ${id}.`
-            );
-            res.status(500);
-            return next(err);
-        }
-        Object.assign(bounties[foundIdx], req.body);
-        res.status(201).send(`Successfully updated bounty.`);
+        Bounty.findOneAndUpdate(
+            { _id: req.params.bountyId },
+            req.body,
+            { new: true },
+            (err, updated) => {
+                if (err) {
+                    res.status(500);
+                    return next(err);
+                }
+                res.status(201).send(
+                    `Updated ${updated.firstName} ${updated.lastName}`
+                );
+            }
+        );
     })
-    .delete((req, res) => {
-        const id = req.params.bountyId;
-        const foundIdx = bounties.findIndex((bounty) => bounty._id === id);
-        res.send("Successfully deleted bounty.");
-        bounties.splice(foundIdx, 1);
+    .delete((req, res, next) => {
+        Bounty.findOneAndDelete(
+            { _id: req.params.bountyId },
+            (err, deleted) => {
+                if (err) {
+                    res.status(500);
+                    return next(err);
+                }
+                res.status(200).send(
+                    `Successfully deleted ${deleted.firstName} ${deleted.lastName}`
+                );
+            }
+        );
     });
 
 bountyRoute.route("/search/type").get((req, res, next) => {
-    const query = req.query;
-    const found = bounties.filter((item) => item.type === query.type);
-    if (found.length === 0) {
-        const err = new Error(
-            `Could not find specified bounty with query: ${query.type}`
-        );
-        res.status(500);
-        return next(err);
-    }
-    res.send(found);
+    Bounty.find({ type: req.query.type }, (err, found) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(200).send(found);
+    });
 });
 
 module.exports = bountyRoute;
