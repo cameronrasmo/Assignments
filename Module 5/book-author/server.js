@@ -21,6 +21,7 @@ mongoose.connect(
 );
 
 app.use("/books", require("./routes/book.js"));
+app.use("/authors", require("./routes/author.js"));
 
 app.use((err, req, res, next) => {
     return res.send({ err: err.message });
