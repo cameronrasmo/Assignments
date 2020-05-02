@@ -11,7 +11,7 @@ const list = [
     },
     {
         name: "Do the dishes",
-        description: "You lazy silly",
+        description: "They're all dirty",
         completed: "false",
         _id: uuid(),
     },
