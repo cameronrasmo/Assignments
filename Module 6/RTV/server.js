@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 const app = express();
@@ -16,16 +17,16 @@ mongoose.connect(
         useUnifiedTopology: true,
     },
     () => {
-        console.log("MongoDB");
+        console.log("Connected to MongoDB");
     }
 );
 
 app.use("/auth", require("./routes/authRouter.js"));
-
+app.use("/api", expressJwt({ secret: process.env.SECRET }));
 app.use((err, req, res, next) => {
     return res.send({ errMsg: err.message });
 });
 
 app.listen(9000, () => {
-    console.log("9000");
+    console.log("Connected to port 9000");
 });
