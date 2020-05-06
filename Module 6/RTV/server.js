@@ -24,6 +24,9 @@ mongoose.connect(
 app.use("/auth", require("./routes/authRouter.js"));
 app.use("/api", expressJwt({ secret: process.env.SECRET }));
 app.use((err, req, res, next) => {
+    if (err.name === "UnauthorizedError") {
+        res.status(err.status);
+    }
     return res.send({ errMsg: err.message });
 });
 
