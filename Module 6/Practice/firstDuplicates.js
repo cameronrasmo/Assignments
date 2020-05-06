@@ -1,33 +1,40 @@
-function firstDuplicate(a) {
-    const objs = [];
-    a.forEach((item, index) => {
-        if (a.indexOf(item) !== index) {
-            objs.push({ item, index });
-        }
-    });
-    if (objs.length === 0) {
-        return -1;
-    } else {
-        let lowest = objs[0].item;
-        for (let i = 0; i < objs.length; i++) {
-            if (objs[i].index <= objs[0].index) {
-                lowest = objs[i].item;
+const firstDuplicate = (a) => {
+    const dupArr = a
+        .map((num, index) => {
+            return { num, index };
+        })
+        .filter((item) => {
+            if (a.indexOf(item.num) !== item.index) {
+                return item;
             }
+        });
+
+    const result = dupArr.length !== 0 ? dupArr[0].num : -1;
+
+    return dupArr.reduce((final, item) => {
+        if (item.index <= result) {
+            final = item.num;
         }
-        return lowest;
-    }
-}
+        return final;
+    }, result);
+};
 
-console.log(firstDuplicate([2, 1, 3, 5, 3, 2]));
+console.log(firstDuplicate([2, 1, 5, 3]));
 
-function adjacentElementsProduct(inputArray) {
-    let largestProduct = 0;
-    for (let i = 0; i < inputArray.length; i++) {
-        if (inputArray[i] * inputArray[i + 1] > largestProduct) {
-            largestProduct = inputArray[i] * inputArray[i + 1];
-        }
-    }
-    return largestProduct;
-}
+// const fizzbuzz = (n) => {
+//     const arr = [];
+//     for (let i = 0; i < n; i++) {
+//         if (i % 3 === 0 && i % 5 === 0) {
+//             arr.push("fizzbuzz");
+//         } else if (i % 3 === 0) {
+//             arr.push("fizz");
+//         } else if (i % 5 === 0) {
+//             arr.push("buzz");
+//         } else {
+//             arr.push(i);
+//         }
+//     }
+//     return arr;
+// };
 
-console.log(adjacentElementsProduct([3, 6, -2, -5, 7, 3]));
+// console.log(fizzbuzz(100));
