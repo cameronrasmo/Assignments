@@ -1,6 +1,44 @@
 import React from "react";
 import styled from "styled-components";
 
+const Buttons = styled.div`
+    width: 80%;
+
+    /* border: 2px solid white; */
+    flex: 1;
+    display: flex;
+
+    & > input {
+        width: 100%;
+        height: 100%;
+
+        border: 2px solid #f5f5f5;
+        flex: 0.25;
+
+        border: 2px solid white;
+    }
+
+    & > label {
+        flex: 0.75;
+    }
+
+    & > div {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        & > button {
+            width: 150px;
+            height: 65px;
+
+            background: linear-gradient(#b1f0d2, #a6fffa);
+            border: none;
+
+            font-size: 25px;
+        }
+    }
+`;
 const Input = styled.div`
     width: 80%;
 
@@ -50,7 +88,7 @@ const Input = styled.div`
     }
 `;
 const Form = styled.form`
-    border: 2px solid white;
+    /* border: 2px solid white; */
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -62,6 +100,7 @@ const Container = styled.div`
     height: 100%;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 `;
@@ -84,14 +123,16 @@ function AuthForm(props) {
                     <hr />
                 </Input>
 
-                <div>
+                <Buttons>
                     <input type='checkbox' />
-                    <label>
+                    <label for='checkbox'>
                         would you like to receive newsletters from rtv? this
                         button does nothing, do what you will
                     </label>
-                    <button>sign up</button>
-                </div>
+                    <div>
+                        <button>sign up</button>
+                    </div>
+                </Buttons>
             </Form>
         </Container>
     );
