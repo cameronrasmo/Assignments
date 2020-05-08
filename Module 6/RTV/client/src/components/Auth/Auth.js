@@ -79,13 +79,13 @@ const AuthContainer = styled.div`
 
     background-color: #f5f5f5;
 
+    transition: 0.2s;
+
     @media (max-width: 990px) {
         width: 100%;
         display: none;
         position: absolute;
-        top: 100vh;
-
-        transition: 0.2s;
+        top: 100%;
     }
 `;
 
@@ -195,15 +195,15 @@ const AuthSection = styled.div`
 
 function Auth() {
     const [authType, setAuthType] = React.useState("signup");
-    const [mobileState, toggleMobileState] = React.useState(true);
+    const [mobileState, toggleMobileState] = React.useState(false);
 
-    function switchAuthType(type) {
+    const switchAuthType = (type) => {
         setAuthType(type);
-    }
+    };
 
-    function toggleMobileAuth() {
+    const toggleMobileAuth = () => {
         toggleMobileState(true);
-    }
+    };
 
     return (
         <AuthSection>

@@ -12,6 +12,10 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    birthDate: {
+        type: String,
+        required: true,
+    },
     regDate: {
         type: Date,
         default: Date.now,
