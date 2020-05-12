@@ -1,5 +1,6 @@
 const express = require("express");
 const Post = require("../models/post.js");
+const Comment = require("../models/comment.js");
 
 const postRouter = express.Router();
 
@@ -65,6 +66,8 @@ postRouter
         });
     });
 
+// Rating
+
 postRouter.route("/upvote/:postID").put((req, res, next) => {
     Post.findOneAndUpdate(
         { _id: req.params.postID },
@@ -93,6 +96,49 @@ postRouter.route("/downvote/:postID").put((req, res, next) => {
             res.status(201).send(updated);
         }
     );
+});
+
+postRouter.route("/:postID/comment").post((req, res, next) => {
+    const newComment = new Comment(req.body);
+    newComment.author = req.user._id;
+    newComment.post = req.params.postID;
+    console.log(newComment.post);
+    Post.findOneAndUpdate(
+        { _id: req.params.postID },
+        { $push: { comments: newComment } },
+        { new: true },
+        (err, updated) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.send(updated);
+        }
+    );
+});
+
+// WORK ON
+postRouter.route("/:postID/comment/:commentID").put((req, res, next) => {
+    Post.findOne({ _id: req.params.postID }, (err, found) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        console.log(found);
+        Comment.findOneAndUpdate(
+            { _id: req.params.commentID },
+            req.body,
+            { new: true },
+            (err, updated) => {
+                if (err) {
+                    res.status(500);
+                    return next(err);
+                }
+                console.log(updated);
+                res.status(201).send(updated);
+            }
+        );
+    });
 });
 
 module.exports = postRouter;
