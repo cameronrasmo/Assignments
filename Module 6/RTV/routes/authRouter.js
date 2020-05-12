@@ -12,13 +12,13 @@ authRouter.route("/signup").post((req, res, next) => {
         }
         if (found) {
             res.status(500);
-            return next(new Error("UN already exists, try another."));
+            return next(new Error("username already exists, try another"));
         }
         const newUser = new User(req.body);
         newUser.save((err, saved) => {
             if (err) {
                 res.status(500);
-                return next(err);
+                return next(new Error("all fields required"));
             }
             const token = jwt.sign(newUser.toObject(), process.env.SECRET);
             res.status(201).send({ token, user: newUser });
@@ -30,15 +30,15 @@ authRouter.route("/login").post((req, res, next) => {
     User.findOne({ username: req.body.username }, (err, found) => {
         if (err) {
             res.status(500);
-            return next(new Error("UN or PW incorrect"));
+            return next(new Error("username or password incorrect"));
         }
         if (!found) {
             res.status(403);
-            return next(new Error("UN or PW incorrect"));
+            return next(new Error("username or password incorrect"));
         }
         if (req.body.password !== found.password) {
             res.status(401);
-            return next(new Error("UN or PW incorrect"));
+            return next(new Error("username or password incorrect"));
         }
         const token = jwt.sign(found.toObject(), process.env.SECRET);
         res.status(200).send({ token, user: found });

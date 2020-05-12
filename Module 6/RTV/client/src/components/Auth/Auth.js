@@ -159,22 +159,8 @@ const WelcomeContainer = styled.div`
 
     color: #222222;
 
-    & > h1 {
-        position: absolute;
-        top: 30px;
-        left: 50px;
-        font-size: 50px;
-    }
-
-    @media (max-width: 1366px) {
+    @media (max-width: 1466px) {
         flex: 1;
-    }
-    @media (max-width: 420px) {
-        & > h1 {
-            font-size: 40px;
-            left: 30px;
-            top: 15px;
-        }
     }
 `;
 const AuthSection = styled.div`
@@ -193,7 +179,7 @@ const AuthSection = styled.div`
     }
 `;
 
-function Auth() {
+const Auth = () => {
     const [authType, setAuthType] = React.useState("signup");
     const [mobileState, toggleMobileState] = React.useState(false);
 
@@ -208,7 +194,6 @@ function Auth() {
     return (
         <AuthSection>
             <WelcomeContainer>
-                <h1>rtv.</h1>
                 <WelcomeInfoContainer>
                     <h1>make your voice heard.</h1>
                     <p>
@@ -279,6 +264,6 @@ function Auth() {
             </AuthContainer>
         </AuthSection>
     );
-}
+};
 
 export default Auth;

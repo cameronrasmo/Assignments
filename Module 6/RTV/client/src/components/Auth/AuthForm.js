@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { AuthContext } from "../../AuthContext.js";
 
 const Greeting = styled.h1`
     width: 80%;
@@ -13,7 +14,15 @@ const Greeting = styled.h1`
         font-size: 35px;
     }
 `;
+const Err = styled.h2`
+    align-self: center;
 
+    color: #f5f5f5;
+    opacity: 0;
+
+    font-weight: 500;
+    transition: opacity 0.2s;
+`;
 const Buttons = styled.div`
     width: 80%;
 
@@ -81,7 +90,7 @@ const Input = styled.div`
         visibility: hidden;
         position: relative;
         bottom: 3px;
-
+        margin: auto;
         border-color: #b1f0d2;
 
         transition: 0.3s;
@@ -130,18 +139,23 @@ const Container = styled.div`
     transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
 `;
 
-function AuthForm(props) {
+const AuthForm = (props) => {
+    const context = React.useContext(AuthContext);
+    const { err } = context.errState;
     const { type } = props;
     const containerRef = React.useRef(null);
-    const [signupState, setSignupState] = React.useState({
+    const errRef = React.useRef(null);
+    const initSignupState = {
         username: "",
         password: "",
         birthDate: "",
-    });
-    const [loginState, setLoginState] = React.useState({
+    };
+    const initLoginState = {
         username: "",
         password: "",
-    });
+    };
+    const [signupState, setSignupState] = React.useState(initSignupState);
+    const [loginState, setLoginState] = React.useState(initLoginState);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -151,24 +165,25 @@ function AuthForm(props) {
     };
     const submit = () => {
         type === "signup"
-            ? console.log(type, signupState)
-            : console.log(type, loginState);
+            ? context.postAuth(type, signupState)
+            : context.postAuth(type, loginState);
+        setSignupState(initSignupState);
+        setLoginState(initLoginState);
     };
 
     React.useEffect(() => {
         const { style } = containerRef.current;
+        errRef.current.textContent = "";
 
         style.left = "-20px";
         setTimeout(() => {
             style.transitionDuration = "0.3s";
-            console.log("mount", type);
             style.opacity = 1;
             style.left = "0px";
         }, 225);
         style.transitionDuration = "0s";
 
         return () => {
-            console.log("unmount", type);
             style.opacity = 0;
             style.left = "20px";
         };
@@ -222,6 +237,12 @@ function AuthForm(props) {
                 ) : null}
 
                 <Buttons>
+                    <Err
+                        style={errRef ? { opacity: 1 } : { opacity: 0 }}
+                        ref={errRef}
+                    >
+                        {err}
+                    </Err>
                     <div>
                         <button
                             onClick={(e) => {
@@ -236,6 +257,6 @@ function AuthForm(props) {
             </Form>
         </Container>
     );
-}
+};
 
 export default AuthForm;
