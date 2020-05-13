@@ -67,7 +67,6 @@ postRouter
     });
 
 // Rating
-
 postRouter.route("/upvote/:postID").put((req, res, next) => {
     Post.findOneAndUpdate(
         { _id: req.params.postID },
@@ -82,7 +81,6 @@ postRouter.route("/upvote/:postID").put((req, res, next) => {
         }
     );
 });
-
 postRouter.route("/downvote/:postID").put((req, res, next) => {
     Post.findOneAndUpdate(
         { _id: req.params.postID },
@@ -98,11 +96,12 @@ postRouter.route("/downvote/:postID").put((req, res, next) => {
     );
 });
 
+// Post comment
 postRouter.route("/:postID/comment").post((req, res, next) => {
     const newComment = new Comment(req.body);
     newComment.author = req.user._id;
     newComment.post = req.params.postID;
-    console.log(newComment.post);
+    newComment.save();
     Post.findOneAndUpdate(
         { _id: req.params.postID },
         { $push: { comments: newComment } },
@@ -117,27 +116,41 @@ postRouter.route("/:postID/comment").post((req, res, next) => {
     );
 });
 
-// WORK ON
-postRouter.route("/:postID/comment/:commentID").put((req, res, next) => {
-    Post.findOne({ _id: req.params.postID }, (err, found) => {
+// Update comments
+postRouter.route("/comment/:commentID").put((req, res, next) => {
+    Comment.findOneAndUpdate(
+        { _id: req.params.commentID },
+        req.body,
+        { new: true },
+        (err, updated) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.status(201).send(updated);
+        }
+    );
+});
+
+// Delete comment
+postRouter.route("/:postID/comment/:commentID").delete((req, res, next) => {
+    Post.findByIdAndUpdate(
+        { _id: req.params.postID },
+        { $pull: { comments: req.params.commentID } },
+        { new: true },
+        (err, deleted) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+        }
+    );
+    Comment.findByIdAndDelete({ _id: req.params.commentID }, (err, deleted) => {
         if (err) {
             res.status(500);
             return next(err);
         }
-        console.log(found);
-        Comment.findOneAndUpdate(
-            { _id: req.params.commentID },
-            req.body,
-            { new: true },
-            (err, updated) => {
-                if (err) {
-                    res.status(500);
-                    return next(err);
-                }
-                console.log(updated);
-                res.status(201).send(updated);
-            }
-        );
+        res.status(200).send(deleted);
     });
 });
 
