@@ -3,7 +3,7 @@ import Auth from "./components/Auth/Auth.js";
 import Home from "./components/Home/Home.js";
 import styled from "styled-components";
 import downarrow from "./img/downarrow.png";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 import { AuthContext } from "./AuthContext.js";
 
 const Navbar = styled.div`
@@ -14,29 +14,26 @@ const Navbar = styled.div`
 
     background-color: #f5f5f5;
 `;
-const AccountOption = styled.button`
-    width: 100%;
-    flex: 1;
+const AccountOption = {
+    width: "100%",
+    flex: 1,
 
-    display: flex;
-    align-items: center;
-    padding-left: 15px;
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "15px",
 
-    color: #f5f5f5;
-    background-color: #222222;
-    border: none;
-    font-size: 16px;
+    color: "#f5f5f5",
+    backgroundColor: "#222222",
+    border: "none",
+    fontSize: "16px",
+    textDecoration: "none",
 
-    transition: 0.2s;
-    transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
+    transition: "0.2s",
+    transitionTimingFunction: " cubic-bezier(0, 0, 0.05, 1)",
 
-    cursor: pointer;
-    z-index: 1;
-
-    &:hover {
-        background-color: #404040;
-    }
-`;
+    cursor: "pointer",
+    zIndex: 1,
+};
 const AccountOptionsContainer = styled.div`
     width: 100%;
     height: 150px;
@@ -114,8 +111,8 @@ const Logo = styled.h1`
 `;
 
 const App = () => {
-    const context = React.useContext(AuthContext);
-    const { token, user } = context.userState;
+    const authcontext = React.useContext(AuthContext);
+    const { token, user } = authcontext.userState;
 
     const [toggleState, setToggleState] = React.useState(false);
 
@@ -144,16 +141,19 @@ const App = () => {
                                       }
                             }
                         >
-                            <AccountOption>home</AccountOption>
-                            <AccountOption>my posts</AccountOption>
-                            <AccountOption
+                            <Link style={AccountOption} to='/home'>
+                                home
+                            </Link>
+                            <Link style={AccountOption}>my posts</Link>
+                            <Link
+                                style={AccountOption}
                                 onClick={() => {
-                                    context.logout();
+                                    authcontext.logout();
                                     window.location.reload();
                                 }}
                             >
                                 logout
-                            </AccountOption>
+                            </Link>
                         </AccountOptionsContainer>
                     </AccountContainer>
                 </Navbar>

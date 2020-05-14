@@ -140,8 +140,8 @@ const Container = styled.div`
 `;
 
 const AuthForm = (props) => {
-    const context = React.useContext(AuthContext);
-    const { err } = context.errState;
+    const authcontext = React.useContext(AuthContext);
+    const { err } = authcontext.errState;
     const { type } = props;
     const containerRef = React.useRef(null);
     const errRef = React.useRef(null);
@@ -165,8 +165,8 @@ const AuthForm = (props) => {
     };
     const submit = () => {
         type === "signup"
-            ? context.postAuth(type, signupState)
-            : context.postAuth(type, loginState);
+            ? authcontext.postAuth(type, signupState)
+            : authcontext.postAuth(type, loginState);
         setSignupState(initSignupState);
         setLoginState(initLoginState);
     };
