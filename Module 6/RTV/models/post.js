@@ -4,7 +4,7 @@ const commentSchema = require("./comment.js");
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-    author: {
+    authorID: {
         type: Schema.Types.ObjectId,
         ref: "Author",
         required: true,

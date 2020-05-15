@@ -1,6 +1,6 @@
 import React from "react";
 import Auth from "./components/Auth/Auth.js";
-import Home from "./components/Home/Home.js";
+import Posts from "./components/Posts/Posts.js";
 import styled from "styled-components";
 import downarrow from "./img/downarrow.png";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
@@ -10,9 +10,10 @@ const Navbar = styled.div`
     width: 100%;
     height: 80px;
 
-    position: absolute;
+    position: fixed;
 
     background-color: #f5f5f5;
+    z-index: 1;
 `;
 const AccountOption = {
     width: "100%",
@@ -118,7 +119,6 @@ const App = () => {
 
     const toggle = () => {
         setToggleState((prev) => !prev);
-        console.log(toggleState);
     };
 
     return (
@@ -144,12 +144,20 @@ const App = () => {
                             <Link style={AccountOption} to='/home'>
                                 home
                             </Link>
-                            <Link style={AccountOption}>my posts</Link>
                             <Link
+                                style={AccountOption}
+                                to={`/${user.username}-profile`}
+                            >
+                                my posts
+                            </Link>
+                            <Link
+                                to='/'
                                 style={AccountOption}
                                 onClick={() => {
                                     authcontext.logout();
-                                    window.location.reload();
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 100);
                                 }}
                             >
                                 logout
@@ -171,9 +179,24 @@ const App = () => {
                     exact
                     path='/home'
                     render={() =>
-                        token ? <Home user={user} /> : <Redirect to='/' />
+                        token ? (
+                            <Posts type='home' user={user} />
+                        ) : (
+                            <Redirect to='/' />
+                        )
                     }
                 />
+                <Route
+                    exact
+                    path={`/${user.username}-profile`}
+                    render={() =>
+                        token ? (
+                            <Posts type='profile' id={user._id} />
+                        ) : (
+                            <Redirect to='/' />
+                        )
+                    }
+                ></Route>
             </Switch>
         </div>
     );

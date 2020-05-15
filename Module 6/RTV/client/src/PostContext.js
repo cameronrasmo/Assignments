@@ -10,19 +10,50 @@ userAxios.interceptors.request.use((config) => {
     return config;
 });
 
+const initPostState = {
+    posts: [],
+};
+
 const PostContextProvider = (props) => {
+    const [postState, setPostState] = React.useState(initPostState);
+    const [authorState, setAuthorState] = React.useState("");
+
     const getAllPosts = () => {
         userAxios
             .get("/api/posts")
             .then((res) => {
-                console.log(res.data);
+                setPostState((prev) => {
+                    return {
+                        posts: res.data,
+                    };
+                });
             })
             .catch((err) => {
                 console.dir(err);
             });
     };
+
+    const getAuthorPosts = (authorID) => {
+        userAxios
+            .get(`/api/posts/${authorID}`)
+            .then((res) => {
+                setPostState((prev) => {
+                    return {
+                        posts: res.data,
+                    };
+                });
+            })
+            .catch((err) => console.dir(err));
+    };
+    //FIND A WAY TO RETRIEVE THE USERNAME BY ID OR INCLUDE IN POST SCHEMA GOD FUCKING DAMMIT
     return (
-        <PostContext.Provider value={{ getAllPosts }}>
+        <PostContext.Provider
+            value={{
+                getAllPosts,
+                getAuthorPosts,
+                postState,
+            }}
+        >
             {props.children}
         </PostContext.Provider>
     );

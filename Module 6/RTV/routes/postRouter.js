@@ -1,6 +1,7 @@
 const express = require("express");
 const Post = require("../models/post.js");
 const Comment = require("../models/comment.js");
+const User = require("../models/user.js");
 
 const postRouter = express.Router();
 
@@ -18,7 +19,7 @@ postRouter
     })
     .post((req, res, next) => {
         const newPost = new Post(req.body);
-        newPost.author = req.user._id;
+        newPost.authorID = req.user._id;
         newPost.save((err, saved) => {
             if (err) {
                 res.status(500);
@@ -30,7 +31,7 @@ postRouter
 
 // Get by author ID
 postRouter.route("/:authorID").get((req, res, next) => {
-    Post.findOne({ author: req.params.authorID }, (err, found) => {
+    Post.find({ authorID: req.params.authorID }, (err, found) => {
         if (err) {
             res.status(500);
             return next(err);
@@ -99,7 +100,7 @@ postRouter.route("/downvote/:postID").put((req, res, next) => {
 // Post comment
 postRouter.route("/:postID/comment").post((req, res, next) => {
     const newComment = new Comment(req.body);
-    newComment.author = req.user._id;
+    newComment.authorID = req.user._id;
     newComment.post = req.params.postID;
     newComment.save();
     Post.findOneAndUpdate(
