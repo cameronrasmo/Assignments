@@ -19,7 +19,6 @@ const Posts = (props) => {
         type === "home" ? getAllPosts() : getAuthorPosts(id);
         // eslint-disable-next-line
     }, [type]);
-
     return (
         <HomeContainer>
             {postState.posts.map((post) => {

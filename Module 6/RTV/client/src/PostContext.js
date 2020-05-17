@@ -16,8 +16,6 @@ const initPostState = {
 
 const PostContextProvider = (props) => {
     const [postState, setPostState] = React.useState(initPostState);
-    const [authorState, setAuthorState] = React.useState("");
-
     const getAllPosts = () => {
         userAxios
             .get("/api/posts")
@@ -45,13 +43,14 @@ const PostContextProvider = (props) => {
             })
             .catch((err) => console.dir(err));
     };
-    //FIND A WAY TO RETRIEVE THE USERNAME BY ID OR INCLUDE IN POST SCHEMA GOD FUCKING DAMMIT
+
     return (
         <PostContext.Provider
             value={{
                 getAllPosts,
                 getAuthorPosts,
                 postState,
+                userAxios,
             }}
         >
             {props.children}

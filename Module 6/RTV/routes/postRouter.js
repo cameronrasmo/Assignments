@@ -155,4 +155,15 @@ postRouter.route("/:postID/comment/:commentID").delete((req, res, next) => {
     });
 });
 
+// Get Post Author
+postRouter.route("/author/:authorID").get((req, res, next) => {
+    User.findOne({ _id: req.params.authorID }, (err, found) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(200).send(found);
+    });
+});
+
 module.exports = postRouter;

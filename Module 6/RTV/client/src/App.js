@@ -104,6 +104,7 @@ const Logo = styled.h1`
     top: 30px;
     left: 50px;
     font-size: 50px;
+    color: #222222;
     & {
         font-size: 40px;
         left: 30px;
