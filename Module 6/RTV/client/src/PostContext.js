@@ -44,6 +44,13 @@ const PostContextProvider = (props) => {
             .catch((err) => console.dir(err));
     };
 
+    const rate = (type, postID) => {
+        userAxios
+            .put(`/api/posts/${type}/${postID}`)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    };
+
     return (
         <PostContext.Provider
             value={{
@@ -51,6 +58,7 @@ const PostContextProvider = (props) => {
                 getAuthorPosts,
                 postState,
                 userAxios,
+                rate,
             }}
         >
             {props.children}

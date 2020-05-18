@@ -168,10 +168,18 @@ const PostContainer = styled.div`
 `;
 
 const Post = (props) => {
-    const { title, postBody, imgSrc, upvotes, downvotes, authorID } = props;
+    const {
+        title,
+        postBody,
+        imgSrc,
+        upvotes,
+        downvotes,
+        authorID,
+        _id,
+    } = props;
     const [authorName, setAuthorName] = React.useState("");
-    const { userAxios } = React.useContext(PostContext);
-    const ratePercentage = Math.round((downvotes / upvotes) * 100);
+    const { userAxios, rate } = React.useContext(PostContext);
+    const ratePercentage = Math.round((upvotes / downvotes) * 1);
 
     const getPostAuthor = (authorID) => {
         userAxios
@@ -213,11 +221,19 @@ const Post = (props) => {
                         <p>comments</p>
                     </CommentsContainer>
                     <ArrowsContainer>
-                        <Vote>
+                        <Vote
+                            onClick={() => {
+                                rate("upvote", _id);
+                            }}
+                        >
                             <img src={upVote} alt='upvote' />
                         </Vote>
 
-                        <Vote>
+                        <Vote
+                            onClick={() => {
+                                rate("downvote", _id);
+                            }}
+                        >
                             <img src={downVote} alt='downvote' />
                         </Vote>
                     </ArrowsContainer>
