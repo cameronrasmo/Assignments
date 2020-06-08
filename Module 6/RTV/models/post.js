@@ -24,6 +24,7 @@ const postSchema = new Schema({
     imgSrc: {
         type: String,
         required: false,
+        default: "",
     },
     upvotes: {
         type: Number,

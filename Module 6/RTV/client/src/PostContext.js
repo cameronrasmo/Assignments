@@ -16,6 +16,7 @@ const initPostState = {
 
 const PostContextProvider = (props) => {
     const [postState, setPostState] = React.useState(initPostState);
+
     const getAllPosts = () => {
         userAxios
             .get("/api/posts")
@@ -51,6 +52,13 @@ const PostContextProvider = (props) => {
             .catch((err) => console.log(err));
     };
 
+    const postComment = (inputs, postID) => {
+        userAxios
+            .post(`/api/posts/${postID}/comment`, inputs)
+            .then((res) => console.log(res))
+            .catch((err) => console.dir(err));
+    };
+
     return (
         <PostContext.Provider
             value={{
@@ -59,6 +67,7 @@ const PostContextProvider = (props) => {
                 postState,
                 userAxios,
                 rate,
+                postComment,
             }}
         >
             {props.children}

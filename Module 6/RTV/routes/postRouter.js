@@ -97,12 +97,27 @@ postRouter.route("/downvote/:postID").put((req, res, next) => {
     );
 });
 
+// Get post comments
+postRouter.route("/:postID/comment").get((req, res, next) => {
+    Comment.find({ post: req.params.postID }, (err, found) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(200).send(found);
+    });
+});
+
 // Post comment
 postRouter.route("/:postID/comment").post((req, res, next) => {
     const newComment = new Comment(req.body);
+    // User.findOne({ _id: req.user._id }, (err, found) => {
+    //     return (newComment.authorUN = found.username);
+    // });
+    // console.log(newComment.authorUN);
+
     newComment.authorID = req.user._id;
     newComment.post = req.params.postID;
-    newComment.save();
     Post.findOneAndUpdate(
         { _id: req.params.postID },
         { $push: { comments: newComment } },
@@ -112,9 +127,15 @@ postRouter.route("/:postID/comment").post((req, res, next) => {
                 res.status(500);
                 return next(err);
             }
-            res.send(updated);
         }
     );
+    newComment.save((err, saved) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(201).send(saved);
+    });
 });
 
 // Update comments
@@ -157,6 +178,16 @@ postRouter.route("/:postID/comment/:commentID").delete((req, res, next) => {
 
 // Get Post Author
 postRouter.route("/author/:authorID").get((req, res, next) => {
+    User.findOne({ _id: req.params.authorID }, (err, found) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(200).send(found);
+    });
+});
+
+postRouter.route("/comment/author/:authorID").get((req, res, next) => {
     User.findOne({ _id: req.params.authorID }, (err, found) => {
         if (err) {
             res.status(500);

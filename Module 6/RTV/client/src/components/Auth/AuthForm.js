@@ -220,6 +220,7 @@ const AuthForm = (props) => {
                                 : loginState.password
                         }
                         placeholder='password'
+                        type='password'
                     />
                     <hr />
                 </Input>

@@ -25,7 +25,7 @@ const AccountOption = {
 
     color: "#f5f5f5",
     backgroundColor: "#222222",
-    border: "none",
+    border: "1px solid #00000025",
     fontSize: "16px",
     textDecoration: "none",
 
