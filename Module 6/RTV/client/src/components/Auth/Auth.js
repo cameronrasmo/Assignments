@@ -3,7 +3,7 @@ import AuthForm from "./AuthForm.js";
 import styled from "styled-components";
 
 const AuthFormContainer = styled.div`
-    border: 2px solid black;
+    border-left: 1px solid black;
     width: 100%;
     flex: 3;
 
@@ -57,6 +57,7 @@ const TypeSelectContainer = styled.div`
     flex: 0.8;
     position: relative;
     padding-top: 15px;
+    border-left: 2px solid white;
 
     & > div {
         position: absolute;
@@ -80,6 +81,7 @@ const AuthContainer = styled.div`
     background-color: #f5f5f5;
 
     transition: 0.2s;
+    box-shadow: -5px 0px 20px 0px #22222250;
 
     @media (max-width: 990px) {
         width: 100%;

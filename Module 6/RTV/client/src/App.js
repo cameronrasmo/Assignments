@@ -14,6 +14,7 @@ const Navbar = styled.div`
 
     background-color: #f5f5f5;
     z-index: 1;
+    box-shadow: 0px 10px 20px 0px #22222250;
 `;
 const AccountOption = {
     width: "100%",
@@ -48,8 +49,9 @@ const AccountOptionsContainer = styled.div`
     overflow: hidden;
 
     background-color: #222222;
+    border-radius: 5px;
 
-    box-shadow: 5px 5px 0px 0px #22222280;
+    box-shadow: 0px 20px 20px 0px #22222250;
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
@@ -78,7 +80,7 @@ const AccountContainer = styled.div`
     }
 
     &:hover > hr {
-        width: 100%;
+        width: 90%;
         visibility: visible;
     }
 

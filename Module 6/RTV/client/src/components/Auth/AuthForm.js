@@ -43,6 +43,7 @@ const Buttons = styled.div`
         & > button {
             width: 150px;
             height: 65px;
+            border-radius: 5px;
 
             border: none;
             background: linear-gradient(#b1f0d2, #a6fffa);

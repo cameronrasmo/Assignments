@@ -12,19 +12,28 @@ const PostImageContainer = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+    background-color: #161616;
+    flex: 2;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+
+    border-radius: 0px 5px 5px 5px;
 
     & > img {
         width: 80%;
         height: 80%;
+        padding-bottom: 50px;
         object-fit: contain;
     }
 `;
 const PostBodyContainer = styled.div`
     color: #e2e2e2;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     flex: 1;
     padding: 30px;
+    padding-top: 75px;
+    border-top: 1px solid black;
 
     @media (max-width: 990px) {
         padding: 20px;
@@ -33,19 +42,18 @@ const PostBodyContainer = styled.div`
 `;
 const PostContentContainer = styled.div`
     width: 100%;
-    min-height: 80vh;
-    padding-top: 200px;
-    padding-bottom: 100px;
     position: relative;
     display: flex;
     flex-direction: row;
     line-height: 1.5;
+    flex: 3;
+
+    position: relative;
 
     @media (max-width: 990px) {
         min-height: 95vh;
         flex-direction: column;
-        padding-top: 200px;
-        padding-bottom: 50px;
+        padding-top: 50px;
     }
 `;
 const InputComponent = styled.input`
@@ -66,12 +74,15 @@ const CommentPanel = styled.div`
     width: 0%;
     height: 100%;
 
+    border-radius: 0px 5px 5px 0px;
+
     background-color: #222222;
     position: absolute;
     top: 0px;
     left: 100%;
     overflow: hidden;
-    box-shadow: 10px 10px 0px 0px #22222280;
+    box-shadow: 0px 20px 20px 0px #22222250;
+    border: 1px solid black;
     border: none;
 
     transition: 0.2s;
@@ -93,6 +104,18 @@ const CommentPanel = styled.div`
 
     & > button > img {
         width: 25px;
+    }
+
+    & > button:hover {
+        background-color: #e5e5e5;
+    }
+
+    & > button:active {
+        background-color: #222222;
+        color: #f5f5f5;
+        & > img {
+            filter: invert(1);
+        }
     }
 
     & > form > button {
@@ -130,7 +153,7 @@ const CommentPanel = styled.div`
     }
 
     & > div {
-        height: 100%;
+        height: 90%;
         padding-bottom: 75px;
         display: flex;
         flex-direction: column;
@@ -138,16 +161,26 @@ const CommentPanel = styled.div`
         padding: 15px;
         padding-left: 30px;
         color: #f2f2f2;
+        font-size: 16px;
     }
 
     & > form {
         width: 100%;
+
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    & > form input {
+        font-size: 16px;
     }
 
     @media (max-width: 1500px) {
         left: 0%;
         right: 0%;
         box-shadow: none;
+        height: 100%;
+        padding-bottom: 5px;
+        border-radius: 5px;
         & > button {
             display: inline-block;
         }
@@ -159,6 +192,7 @@ const CommentPanel = styled.div`
 `;
 const Vote = styled.div`
     background-color: #f5f5f5;
+    border-radius: 5px;
 
     cursor: pointer;
 
@@ -176,10 +210,12 @@ const Vote = styled.div`
 `;
 const ArrowsContainer = styled.div`
     display: flex;
-    height: 100%;
+    height: 80%;
+    border-radius: 5px;
+    padding-right: 5px;
 
     & > div {
-        width: 50px;
+        width: 40px;
 
         display: flex;
         align-items: center;
@@ -191,9 +227,10 @@ const ArrowsContainer = styled.div`
     }
 `;
 const CommentsContainer = styled.div`
-    height: 100%;
+    height: 80%;
     padding-left: 20px;
     padding-right: 20px;
+    border-radius: 5px;
 
     display: flex;
     align-items: center;
@@ -239,6 +276,9 @@ const CTAContainer = styled.div`
     height: 100%;
 
     display: flex;
+    align-items: center;
+
+    border-radius: 5px;
 `;
 const RatingContainer = styled.div`
     height: 100%;
@@ -263,25 +303,42 @@ const OptionsContainer = styled.div`
     position: absolute;
     bottom: 0px;
 
+    border-radius: 0px 0px 5px 5px;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     background-color: #f5f5f5;
+
+    @media (max-width: 990px) {
+        bottom: -5px;
+    }
 `;
 const HeaderContainer = styled.div`
-    width: 100%;
     padding-top: 100px;
-
-    position: absolute;
+    overflow: hidden;
+    position: relative;
     top: 0px;
+    flex: 1;
+
+    border-radius: 5px 0px 0px 5px;
+    border-top: 1px solid white;
+    border-left: 1px solid white;
 
     background-color: #f5f5f5;
+
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
 
     & > h3 {
         position: relative;
         bottom: 10px;
-        left: 30px;
+        padding-left: 30px;
+        padding-bottom: 20px;
         width: 50%;
         color: #222222;
 
@@ -291,8 +348,9 @@ const HeaderContainer = styled.div`
     & > h1 {
         position: relative;
         bottom: 10px;
-        left: 30px;
-        width: 50%;
+        padding-left: 30px;
+        padding-right: 30px;
+        width: 90%;
 
         font-size: 40px;
         color: #222222;
@@ -310,12 +368,16 @@ const HeaderContainer = styled.div`
     }
 
     @media (max-width: 990px) {
+        border-radius: 5px 5px 0px 0px;
+
+        width: 100%;
+
         & > h3 {
-            left: 20px;
+            padding-left: 20px;
         }
         & > h1 {
             font-size: 30px;
-            left: 20px;
+            padding-left: 20px;
         }
         & > hr {
             left: 20px;
@@ -323,30 +385,34 @@ const HeaderContainer = styled.div`
     }
 `;
 const PostContainer = styled.div`
-    width: 60%;
-    min-height: 80vh;
+    width: 80%;
     margin: auto;
+    min-height: 80vh;
     margin-top: 150px;
     margin-bottom: 150px;
+    display: flex;
+
+    border-radius: 5px;
 
     position: relative;
     left: 0%;
 
     background-color: #222222;
 
-    box-shadow: 10px 10px 0px 0px #22222280;
+    box-shadow: 0px 20px 20px 0px #22222250;
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
 
     @media (max-width: 1500px) {
-        width: 80%;
+        width: 90%;
     }
 
     @media (max-width: 990px) {
+        flex-direction: column;
         width: 100%;
         min-height: 95vh;
-        box-shadow: none;
+        /* box-shadow: none; */
     }
 `;
 
@@ -385,14 +451,14 @@ const Post = (props) => {
             setTimeout(() => {
                 if (!commentToggle) {
                     commentRef.current.style.width = "40%";
-                    postRef.current.style.width = "50%";
+                    postRef.current.style.width = "60%";
                     postRef.current.style.left = "-10%";
                 } else {
                     commentRef.current.style.width = "0%";
-                    postRef.current.style.width = "60%";
+                    postRef.current.style.width = "80%";
                     postRef.current.style.left = "0%";
                 }
-            }, 150);
+            }, 10);
         else {
             if (!commentToggle) {
                 commentRef.current.style.width = "100%";
@@ -443,24 +509,76 @@ const Post = (props) => {
     console.log(imgSrc);
     return (
         <PostContainer ref={postRef}>
-            <HeaderContainer>
-                <h3>
+            <HeaderContainer
+                style={
+                    commentToggle
+                        ? { flex: 0, borderLeft: "none" }
+                        : { flex: 1, borderLeft: "1px solid white" }
+                }
+            >
+                <h3
+                    style={
+                        commentToggle
+                            ? {
+                                  display: "none",
+                              }
+                            : null
+                    }
+                >
                     from <strong>{authorName}</strong>
                 </h3>
-                <h1>{title}</h1>
-                <hr />
+                <h1
+                    style={
+                        commentToggle
+                            ? {
+                                  display: "none",
+                              }
+                            : null
+                    }
+                >
+                    {title}
+                </h1>
+                <hr
+                    style={
+                        commentToggle
+                            ? {
+                                  display: "none",
+                              }
+                            : null
+                    }
+                />
             </HeaderContainer>
             <PostContentContainer>
-                <PostBodyContainer>
+                <PostBodyContainer
+                    style={
+                        commentToggle
+                            ? {
+                                  borderRadius: "5px",
+                                  borderLeft: "1px solid black",
+                              }
+                            : { borderRadius: "0px" }
+                    }
+                >
                     <p>{postBody}</p>
                 </PostBodyContainer>
                 {imgSrc !== "" ? (
-                    <PostImageContainer style={{ flex: 2 }}>
+                    <PostImageContainer
+                        style={
+                            ({ flex: 2 },
+                            commentToggle
+                                ? { borderRadius: "0px 0px 5px 0px" }
+                                : null)
+                        }
+                    >
                         <img alt='' src={imgSrc} />
                     </PostImageContainer>
                 ) : null}
             </PostContentContainer>
-            <OptionsContainer>
+            <OptionsContainer
+                style={
+                    commentToggle ? { borderRadius: "0px 0px 0px 5px" } : null
+                }
+            >
                 <RatingContainer>
                     {upvotes === 0 || downvotes === 0 ? null : (
                         <p>
