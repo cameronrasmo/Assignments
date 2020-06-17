@@ -15,6 +15,10 @@ const Navbar = styled.div`
     background-color: #f5f5f5;
     z-index: 1;
     box-shadow: 0px 10px 20px 0px #22222250;
+
+    @media (max-width: 990px) {
+        height: 50px;
+    }
 `;
 const AccountOption = {
     width: "100%",
@@ -67,11 +71,11 @@ const AccountContainer = styled.div`
     cursor: pointer;
 
     & > hr {
-        border: 1px solid #222222;
+        border: 2px solid #b1f0d2;
         width: 0%;
         visibility: hidden;
 
-        margin: auto;
+        /* margin-left: 5px; */
 
         margin-top: 5px;
 
@@ -80,7 +84,7 @@ const AccountContainer = styled.div`
     }
 
     &:hover > hr {
-        width: 90%;
+        width: 100%;
         visibility: visible;
     }
 
@@ -100,17 +104,24 @@ const AccountContainer = styled.div`
     &:hover > img {
         top: 1px;
     }
+
+    @media (max-width: 990px) {
+        font-size: 15px;
+        right: 20px;
+        top: 16px;
+    }
 `;
 const Logo = styled.h1`
     position: absolute;
-    top: 30px;
+    top: 8px;
     left: 50px;
     font-size: 50px;
     color: #222222;
-    & {
-        font-size: 40px;
-        left: 30px;
-        top: 15px;
+
+    @media (max-width: 990px) {
+        left: 20px;
+        top: 5px;
+        font-size: 30px;
     }
 `;
 

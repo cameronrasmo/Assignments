@@ -59,6 +59,27 @@ const PostContextProvider = (props) => {
             .catch((err) => console.dir(err));
     };
 
+    const submitPost = (input) => {
+        userAxios
+            .post("/api/posts/", input)
+            .then((res) => console.log(res))
+            .catch((err) => console.dir(err));
+    };
+
+    const editPost = (input, postID) => {
+        userAxios
+            .put(`/api/posts/${postID}`, input)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    };
+
+    const deletePost = (postID) => {
+        userAxios
+            .delete(`api/posts/${postID}`)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    };
+
     return (
         <PostContext.Provider
             value={{
@@ -68,6 +89,9 @@ const PostContextProvider = (props) => {
                 userAxios,
                 rate,
                 postComment,
+                submitPost,
+                editPost,
+                deletePost,
             }}
         >
             {props.children}

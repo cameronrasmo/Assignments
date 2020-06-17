@@ -4,9 +4,58 @@ import comment from "../../img/comment.svg";
 import upVote from "../../img/upVote.svg";
 import downVote from "../../img/downVote.svg";
 import exit from "../../img/exitButton.svg";
+import edit from "../../img/edit.svg";
 import Comment from "./Comment.js";
 import { PostContext } from "../../PostContext.js";
+import { AuthContext } from "../../AuthContext.js";
+import AddEditPanel from "../../components/Posts/AddEditPanel.js";
 
+const EditPostContainer = styled.div`
+    height: 80%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+    font-weight: 500;
+    color: #222222;
+
+    background-color: #f5f5f5;
+
+    cursor: pointer;
+
+    & > img {
+        height: 55%;
+        margin-right: 17px;
+        position: relative;
+        bottom: 1px;
+    }
+
+    &:hover {
+        background-color: #e5e5e5;
+    }
+
+    &:active {
+        background-color: #222222;
+        color: #f5f5f5;
+        & > img {
+            filter: invert(1);
+        }
+    }
+
+    @media (max-width: 990px) {
+        & > p {
+            display: none;
+        }
+        & > img {
+            margin: auto;
+        }
+    }
+`;
 const PostImageContainer = styled.div`
     display: flex;
     align-items: center;
@@ -33,11 +82,16 @@ const PostBodyContainer = styled.div`
     flex: 1;
     padding: 30px;
     padding-top: 75px;
-    border-top: 1px solid black;
+    padding-bottom: 75px;
+    display: flex;
+
+    & > div {
+        word-wrap: break-word;
+    }
 
     @media (max-width: 990px) {
         padding: 20px;
-        font-size: 18px;
+        font-size: 15px;
     }
 `;
 const PostContentContainer = styled.div`
@@ -51,9 +105,7 @@ const PostContentContainer = styled.div`
     position: relative;
 
     @media (max-width: 990px) {
-        min-height: 95vh;
         flex-direction: column;
-        padding-top: 50px;
     }
 `;
 const InputComponent = styled.input`
@@ -316,6 +368,7 @@ const OptionsContainer = styled.div`
 
     @media (max-width: 990px) {
         bottom: -5px;
+        position: relative;
     }
 `;
 const HeaderContainer = styled.div`
@@ -371,12 +424,14 @@ const HeaderContainer = styled.div`
         border-radius: 5px 5px 0px 0px;
 
         width: 100%;
+        padding-top: 50px;
 
         & > h3 {
             padding-left: 20px;
+            font-size: 15px;
         }
         & > h1 {
-            font-size: 30px;
+            font-size: 25px;
             padding-left: 20px;
         }
         & > hr {
@@ -395,8 +450,9 @@ const PostContainer = styled.div`
     border-radius: 5px;
 
     position: relative;
-    left: 0%;
-
+    left: -20px;
+    opacity: 0;
+    z-index: 0;
     background-color: #222222;
 
     box-shadow: 0px 20px 20px 0px #22222250;
@@ -410,8 +466,8 @@ const PostContainer = styled.div`
 
     @media (max-width: 990px) {
         flex-direction: column;
-        width: 100%;
-        min-height: 95vh;
+        width: 95%;
+        min-height: 35vh;
         /* box-shadow: none; */
     }
 `;
@@ -435,6 +491,17 @@ const Post = (props) => {
     const postRef = React.useRef(null);
     const [commentState, setCommentState] = React.useState({ comment: "" });
     const [comments, setComments] = React.useState({ comments: [] });
+    const [editToggle, setEditToggle] = React.useState(false);
+    const [overlayToggle, setOverlayToggle] = React.useState(false);
+    const {
+        userState: {
+            user: { username },
+        },
+    } = React.useContext(AuthContext);
+
+    const editOverlayToggle = () => {
+        setOverlayToggle((prev) => !prev);
+    };
 
     const getPostAuthor = (authorID) => {
         userAxios
@@ -445,12 +512,17 @@ const Post = (props) => {
             .catch((err) => console.log(err));
     };
 
+    const setEdit = () => {
+        setEditToggle((prev) => !prev);
+        editOverlayToggle();
+    };
+
     const commentPanel = () => {
         setCommentToggle((prev) => !prev);
         if (window.innerWidth > 1500)
             setTimeout(() => {
                 if (!commentToggle) {
-                    commentRef.current.style.width = "40%";
+                    commentRef.current.style.width = "34%";
                     postRef.current.style.width = "60%";
                     postRef.current.style.left = "-10%";
                 } else {
@@ -502,165 +574,191 @@ const Post = (props) => {
     };
 
     React.useEffect(() => {
+        setTimeout(() => {
+            postRef.current.style.left = "0px";
+            postRef.current.style.opacity = 1;
+        }, 50);
+    }, []);
+
+    React.useEffect(() => {
         getPostAuthor(authorID);
         getPostComments(_id);
         // eslint-disable-next-line
     }, [ratedToggle]);
-    console.log(imgSrc);
+
     return (
-        <PostContainer ref={postRef}>
-            <HeaderContainer
-                style={
-                    commentToggle
-                        ? { flex: 0, borderLeft: "none" }
-                        : { flex: 1, borderLeft: "1px solid white" }
-                }
-            >
-                <h3
+        <>
+            <PostContainer ref={postRef}>
+                <HeaderContainer
                     style={
                         commentToggle
-                            ? {
-                                  display: "none",
-                              }
-                            : null
+                            ? { flex: 0, borderLeft: "none" }
+                            : { flex: 1, borderLeft: "1px solid white" }
                     }
                 >
-                    from <strong>{authorName}</strong>
-                </h3>
-                <h1
-                    style={
-                        commentToggle
-                            ? {
-                                  display: "none",
-                              }
-                            : null
-                    }
-                >
-                    {title}
-                </h1>
-                <hr
-                    style={
-                        commentToggle
-                            ? {
-                                  display: "none",
-                              }
-                            : null
-                    }
-                />
-            </HeaderContainer>
-            <PostContentContainer>
-                <PostBodyContainer
-                    style={
-                        commentToggle
-                            ? {
-                                  borderRadius: "5px",
-                                  borderLeft: "1px solid black",
-                              }
-                            : { borderRadius: "0px" }
-                    }
-                >
-                    <p>{postBody}</p>
-                </PostBodyContainer>
-                {imgSrc !== "" ? (
-                    <PostImageContainer
+                    <h3
                         style={
-                            ({ flex: 2 },
                             commentToggle
-                                ? { borderRadius: "0px 0px 5px 0px" }
-                                : null)
+                                ? {
+                                      display: "none",
+                                  }
+                                : null
                         }
                     >
-                        <img alt='' src={imgSrc} />
-                    </PostImageContainer>
-                ) : null}
-            </PostContentContainer>
-            <OptionsContainer
-                style={
-                    commentToggle ? { borderRadius: "0px 0px 0px 5px" } : null
-                }
-            >
-                <RatingContainer>
-                    {upvotes === 0 || downvotes === 0 ? null : (
-                        <p>
-                            <strong>{ratePercentage}%</strong> upvoted
-                        </p>
-                    )}
-                </RatingContainer>
-                <CTAContainer>
-                    <CommentsContainer onClick={commentPanel}>
-                        <img type='image/svg+xml' src={comment} alt='' />
-                        <p>comments</p>
-                    </CommentsContainer>
-                    <ArrowsContainer>
-                        <Vote
-                            style={
-                                ratedToggle
-                                    ? { backgroundColor: "#e5e5e5" }
-                                    : null
-                            }
-                            onClick={() => {
-                                if (!ratedToggle) {
-                                    rate("upvote", _id);
-                                }
-                                setRatedToggle((prev) => true);
-                            }}
-                        >
-                            <img src={upVote} alt='upvote' />
-                        </Vote>
-
-                        <Vote
-                            style={
-                                ratedToggle
-                                    ? { backgroundColor: "#e5e5e5" }
-                                    : null
-                            }
-                            onClick={() => {
-                                if (!ratedToggle) {
-                                    rate("downvote", _id);
-                                }
-                                setRatedToggle((prev) => true);
-                            }}
-                        >
-                            <img src={downVote} alt='downvote' />
-                        </Vote>
-                    </ArrowsContainer>
-                </CTAContainer>
-            </OptionsContainer>
-            <CommentPanel
-                ref={commentRef}
-                style={
-                    commentToggle
-                        ? { borderLeft: "1px solid black" }
-                        : { borderLeft: "none" }
-                }
-            >
-                <button onClick={commentPanel}>
-                    <img src={exit} alt='exit comments' />
-                </button>
-                <div>
-                    {comments.comments.map((comment) => {
-                        return (
-                            <Comment
-                                key={comment._id}
-                                comment={comment.comment}
-                                authorID={comment.authorID}
-                            />
-                        );
-                    })}
-                </div>
-                <form onSubmit={handleSubmit}>
-                    <InputComponent
-                        type='text'
-                        value={commentState.comment}
-                        onChange={handleCommentChange}
-                        name='comment'
+                        from <strong>{authorName}</strong>
+                    </h3>
+                    <h1
+                        style={
+                            commentToggle
+                                ? {
+                                      display: "none",
+                                  }
+                                : null
+                        }
+                    >
+                        {title}
+                    </h1>
+                    <hr
+                        style={
+                            commentToggle
+                                ? {
+                                      display: "none",
+                                  }
+                                : null
+                        }
                     />
-                    <button>
-                        <img src={upVote} alt='upvote' />
+                </HeaderContainer>
+                <PostContentContainer>
+                    <PostBodyContainer
+                        style={
+                            commentToggle
+                                ? {
+                                      borderRadius: "5px 0px 0px 5px",
+                                      borderLeft: "1px solid black",
+                                  }
+                                : { borderRadius: "0px" }
+                        }
+                    >
+                        <div>{postBody}</div>
+                    </PostBodyContainer>
+                    {imgSrc !== "" ? (
+                        <PostImageContainer
+                            style={
+                                ({ flex: 2 },
+                                commentToggle ? { borderRadius: "0px" } : null)
+                            }
+                        >
+                            <img alt='' src={imgSrc} />
+                        </PostImageContainer>
+                    ) : null}
+                </PostContentContainer>
+                <OptionsContainer
+                    style={
+                        commentToggle
+                            ? { borderRadius: "0px 0px 0px 5px" }
+                            : null
+                    }
+                >
+                    <RatingContainer>
+                        {upvotes === 0 || downvotes === 0 ? null : (
+                            <p>
+                                <strong>{ratePercentage}%</strong> upvoted
+                            </p>
+                        )}
+                    </RatingContainer>
+                    <CTAContainer>
+                        {authorName === username ? (
+                            <EditPostContainer onClick={setEdit}>
+                                <img type='image/svg+xml' src={edit} alt='' />
+                                <p>edit</p>
+                            </EditPostContainer>
+                        ) : null}
+                        <CommentsContainer onClick={commentPanel}>
+                            <img type='image/svg+xml' src={comment} alt='' />
+                            <p>comments</p>
+                        </CommentsContainer>
+                        <ArrowsContainer>
+                            <Vote
+                                style={
+                                    ratedToggle
+                                        ? { backgroundColor: "#e5e5e5" }
+                                        : null
+                                }
+                                onClick={() => {
+                                    if (!ratedToggle) {
+                                        rate("upvote", _id);
+                                    }
+                                    setRatedToggle((prev) => true);
+                                }}
+                            >
+                                <img src={upVote} alt='upvote' />
+                            </Vote>
+
+                            <Vote
+                                style={
+                                    ratedToggle
+                                        ? { backgroundColor: "#e5e5e5" }
+                                        : null
+                                }
+                                onClick={() => {
+                                    if (!ratedToggle) {
+                                        rate("downvote", _id);
+                                    }
+                                    setRatedToggle((prev) => true);
+                                }}
+                            >
+                                <img src={downVote} alt='downvote' />
+                            </Vote>
+                        </ArrowsContainer>
+                    </CTAContainer>
+                </OptionsContainer>
+                <CommentPanel
+                    ref={commentRef}
+                    style={
+                        commentToggle
+                            ? { borderLeft: "1px solid black" }
+                            : { borderLeft: "none" }
+                    }
+                >
+                    <button onClick={commentPanel}>
+                        <img src={exit} alt='exit comments' />
                     </button>
-                </form>
-            </CommentPanel>
-        </PostContainer>
+                    <div>
+                        {comments.comments.map((comment) => {
+                            return (
+                                <Comment
+                                    key={comment._id}
+                                    comment={comment.comment}
+                                    authorID={comment.authorID}
+                                />
+                            );
+                        })}
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <InputComponent
+                            type='text'
+                            value={commentState.comment}
+                            onChange={handleCommentChange}
+                            name='comment'
+                        />
+                        <button>
+                            <img src={upVote} alt='upvote' />
+                        </button>
+                    </form>
+                </CommentPanel>
+            </PostContainer>
+            {editToggle ? (
+                <AddEditPanel
+                    type='edit'
+                    editToggle={editToggle}
+                    setEdit={setEdit}
+                    title={title}
+                    postBody={postBody}
+                    imgSrc={imgSrc}
+                    id={_id}
+                />
+            ) : null}
+        </>
     );
 };
 

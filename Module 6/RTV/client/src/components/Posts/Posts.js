@@ -2,24 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Post from "./Post.js";
 import { PostContext } from "../../PostContext.js";
+import AddPanel from "./AddEditPanel.js";
 
-const Overlay = styled.div`
-    width: 100%;
-    height: 100vh;
-
-    position: absolute;
-    background-color: #222222;
-    display: none;
-    opacity: 0;
-    z-index: 1;
-
-    transition: 0.2s;
-    transition-delay: 0.2s;
-    transition-timing-function: cubic-bezier(0, 0, 0.05, 1);
-`;
 const AddPost = styled.div`
-    width: 125px;
-    height: 125px;
+    width: 100px;
+    height: 100px;
     margin: 10px;
 
     display: flex;
@@ -31,8 +18,8 @@ const AddPost = styled.div`
     bottom: 0px;
 
     & > button {
-        width: 75px;
-        height: 75px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
 
         outline: none;
@@ -66,11 +53,6 @@ const AddPost = styled.div`
         margin: 0px;
         width: 100px;
         height: 100px;
-
-        & > button {
-            width: 60px;
-            height: 60px;
-        }
     }
 `;
 const HomeContainer = styled.div`
@@ -84,12 +66,9 @@ const Posts = (props) => {
     const { getAllPosts, getAuthorPosts, postState } = React.useContext(
         PostContext
     );
-    const overlayRef = React.useRef(null);
+    const [addPanelToggle, setAddPanelToggle] = React.useState(false);
     const addToggle = () => {
-        overlayRef.current.style.display = "inline-block";
-        setTimeout(() => {
-            overlayRef.current.style.opacity = ".5";
-        }, 25);
+        setAddPanelToggle((prev) => !prev);
     };
     const { type, id } = props;
     React.useEffect(() => {
@@ -104,7 +83,15 @@ const Posts = (props) => {
             <AddPost>
                 <button onClick={addToggle}>+</button>
             </AddPost>
-            <Overlay ref={overlayRef} />
+
+            {addPanelToggle ? (
+                <AddPanel
+                    type='add'
+                    addPanelToggle={addPanelToggle}
+                    addToggle={addToggle}
+                    getAllPosts={getAllPosts}
+                />
+            ) : null}
         </HomeContainer>
     );
 };

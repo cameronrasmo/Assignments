@@ -2,7 +2,6 @@ const express = require("express");
 const Post = require("../models/post.js");
 const Comment = require("../models/comment.js");
 const User = require("../models/user.js");
-
 const postRouter = express.Router();
 
 // Get all, and new post

@@ -87,12 +87,14 @@ const Input = styled.div`
 
     & > hr {
         width: 0%;
+        height: 3px;
 
         visibility: hidden;
         position: relative;
+        /* margin: auto; */
         bottom: 3px;
-        margin: auto;
-        border-color: #b1f0d2;
+        background-color: #b1f0d2;
+        border: none;
 
         transition: 0.3s;
         transition-timing-function: cubic-bezier(0, 0, 0.05, 1);

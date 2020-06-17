@@ -20,7 +20,7 @@ mongoose.connect(
         console.log("Connected to MongoDB");
     }
 );
-
+app.use(express.static("./uploads"));
 app.use("/auth", require("./routes/authRouter.js"));
 app.use("/api", expressJwt({ secret: process.env.SECRET }));
 app.use("/api/users", require("./routes/authRouter"));
