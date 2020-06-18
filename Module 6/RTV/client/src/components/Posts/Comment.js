@@ -19,7 +19,7 @@ const Comment = (props) => {
     }, []);
 
     return (
-        <div>
+        <div style={{ marginTop: "5px", marginBottom: "5px" }}>
             <p>
                 <strong>{commentAuthor}</strong>: {comment}
             </p>

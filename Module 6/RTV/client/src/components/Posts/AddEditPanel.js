@@ -78,7 +78,7 @@ const CTAContainer = styled.div`
         background: linear-gradient(#b1f0d2, #a6fffa);
         font-size: 20px;
         flex: 1;
-        margin-right: 5px;
+        margin-left: 5px;
 
         color: #222222;
         cursor: pointer;
@@ -112,8 +112,8 @@ const ImgUrl = styled.div`
     left: 0px; */
 
     flex: 1;
-    padding-left: 10px;
-    padding-right: 0px;
+    padding-right: 10px;
+    padding-left: 0px;
     & > input {
         color: #f2f2f2;
         width: 100%;
@@ -436,8 +436,7 @@ const AddEditPanel = (props) => {
                             <img src={exit} alt='exit comments' />
                         </button>
                         <h3>
-                            from
-                            <strong>{userState.user.username}</strong>
+                            from <strong>{userState.user.username}</strong>
                         </h3>
                         <input
                             placeholder='title'
@@ -458,7 +457,15 @@ const AddEditPanel = (props) => {
                         </PostBodyContainer>
                     </PostContentContainer>
                     <CTAContainer>
-                        <button onClick={submit}>submit</button>
+                        <ImgUrl>
+                            <label>Type an image URL</label>
+                            <input
+                                type='text'
+                                onChange={handleChange}
+                                name='imgSrc'
+                                value={postState.imgSrc}
+                            />
+                        </ImgUrl>
                         {editToggle ? (
                             <DeleteButton>
                                 <button
@@ -470,15 +477,7 @@ const AddEditPanel = (props) => {
                                 </button>
                             </DeleteButton>
                         ) : null}
-                        <ImgUrl>
-                            <label>Type an image URL</label>
-                            <input
-                                type='text'
-                                onChange={handleChange}
-                                name='imgSrc'
-                                value={postState.imgSrc}
-                            />
-                        </ImgUrl>
+                        <button onClick={submit}>submit</button>
                     </CTAContainer>
                 </PostContainer>
             </Container>

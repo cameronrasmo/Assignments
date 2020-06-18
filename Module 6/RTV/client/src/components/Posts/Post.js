@@ -224,6 +224,7 @@ const CommentPanel = styled.div`
 
     & > form input {
         font-size: 16px;
+        width: 85%;
     }
 
     @media (max-width: 1500px) {
@@ -481,6 +482,7 @@ const Post = (props) => {
         downvotes,
         authorID,
         _id,
+        getAllPosts,
     } = props;
     const [authorName, setAuthorName] = React.useState("");
     const { userAxios, rate, postComment } = React.useContext(PostContext);
@@ -756,6 +758,7 @@ const Post = (props) => {
                     postBody={postBody}
                     imgSrc={imgSrc}
                     id={_id}
+                    getAllPosts={getAllPosts}
                 />
             ) : null}
         </>

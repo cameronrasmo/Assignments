@@ -73,12 +73,13 @@ const Posts = (props) => {
     const { type, id } = props;
     React.useEffect(() => {
         type === "home" ? getAllPosts() : getAuthorPosts(id);
-        // eslint-disable-next-line
     }, [type]);
     return (
         <HomeContainer>
             {postState.posts.map((post) => {
-                return <Post {...post} key={post._id} />;
+                return (
+                    <Post {...post} key={post._id} getAllPosts={getAllPosts} />
+                );
             })}
             <AddPost>
                 <button onClick={addToggle}>+</button>
