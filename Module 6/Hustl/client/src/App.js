@@ -12,6 +12,11 @@ const App = () => {
                     <Welcome />
                 </Container>
             </Route>
+            <Route path='/dashboard'>
+                <Container>
+                    <div>ya doss cunt</div>
+                </Container>
+            </Route>
         </Switch>
     );
 };

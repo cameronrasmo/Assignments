@@ -1,8 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider.js";
 
 const Welcome = () => {
+    const { authorize } = useContext(AuthContext);
+
     const [authState, setAuthState] = useState("");
     const [authFields, setAuthFields] = useState({
         username: "",
@@ -11,29 +14,18 @@ const Welcome = () => {
 
     const authRef = useRef(null);
     const authCTARef = useRef(null);
-    const pRefLogin = useRef(null);
-    const pRefSignup = useRef(null);
     const unRef = useRef(null);
     const pwRef = useRef(null);
-    const loginRef = useRef(null);
-    const signupRef = useRef(null);
 
     const triggerAuth = () => {
-        pRefLogin.current.style.padding = "20px 30px";
-        pRefSignup.current.style.padding = "20px 30px";
-
         authCTARef.current.style.display = "flex";
         setTimeout(() => {
             authCTARef.current.style.opacity = 1;
             authCTARef.current.style.height = "75px";
-            loginRef.current.style.opacity = 0;
-            signupRef.current.style.opacity = 0;
         }, 25);
 
         unRef.current.style.display = "flex";
         pwRef.current.style.display = "flex";
-        loginRef.current.style.display = "none";
-        signupRef.current.style.display = "none";
         setTimeout(() => {
             unRef.current.style.opacity = 1;
             unRef.current.style.height = "75px";
@@ -42,10 +34,21 @@ const Welcome = () => {
         }, 25);
     };
 
+    const submit = () => {
+        const type = authState === "Sign Up" ? "signup" : "login";
+        console.log(type, authFields);
+        authorize(type, authFields);
+        setAuthFields({
+            username: "",
+            password: "",
+        });
+    };
+
     const onChange = (e) => {
         const { name, value } = e.target;
-        setAuthFields(() => {
+        setAuthFields((prev) => {
             return {
+                ...prev,
                 [name]: value,
             };
         });
@@ -80,16 +83,30 @@ const Welcome = () => {
                         placeholder='Username'
                         ref={unRef}
                         onChange={onChange}
+                        type='text'
                     />
-                    <button
-                        ref={loginRef}
-                        onClick={() => {
-                            setAuthState("Log In");
-                            triggerAuth();
-                        }}
-                    >
-                        <p ref={pRefLogin}>Log In</p>
-                    </button>
+                    {authState === "" ? (
+                        <>
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setAuthState("Log In");
+                                    triggerAuth();
+                                }}
+                            >
+                                <p>Log In</p>
+                            </button>
+                            <button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setAuthState("Sign Up");
+                                    triggerAuth();
+                                }}
+                            >
+                                <p>Sign Up</p>
+                            </button>
+                        </>
+                    ) : null}
                     <AuthFields
                         value={authFields.password}
                         name='password'
@@ -98,19 +115,17 @@ const Welcome = () => {
                         onChange={onChange}
                         type='password'
                     />
-                    <button
-                        ref={signupRef}
-                        onClick={() => {
-                            setAuthState("Sign Up");
-                            triggerAuth();
-                        }}
-                    >
-                        <p ref={pRefSignup}>Sign Up</p>
-                    </button>
                     <AuthCTA ref={authCTARef}>
-                        <button>
+                        <Link
+                            to='/dashboard'
+                            style={AuthCTAButton}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                submit();
+                            }}
+                        >
                             <p>Go</p>
-                        </button>
+                        </Link>
                     </AuthCTA>
                 </AuthPanel>
             </AuthContainer>
@@ -185,7 +200,7 @@ const AuthContainer = styled.div`
         flex: 1;
     }
 `;
-const AuthPanel = styled.div`
+const AuthPanel = styled.form`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -272,29 +287,28 @@ const AuthCTA = styled.div`
 
     transition: 0.3s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
-
-    & > button {
-        width: 75px;
-        height: 100%;
-
-        font-size: 20px;
-        font-weight: 800;
-        margin-top: 5px;
-        margin-bottom: 5px;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border-radius: 5px;
-        background-color: #f2f2f2;
-        outline: none;
-        border: 2px solid white;
-
-        transition: 0.4s;
-        cursor: pointer;
-    }
 `;
+const AuthCTAButton = {
+    width: "75px",
+    height: "100%",
+
+    fontSize: "20px",
+    fontWeight: "800",
+    marginTop: "5px",
+    marginBottom: "5px",
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+
+    borderRadius: "5px",
+    backgroundColor: "#f2f2f2",
+    outline: "none",
+    border: "2px solid white",
+
+    transition: "0.4s",
+    cursor: "pointer",
+};
 const AuthFields = styled.input`
     width: 100%;
     padding: 20px 20px;

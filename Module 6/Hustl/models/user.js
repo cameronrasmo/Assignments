@@ -14,14 +14,14 @@ const userSchema = new Schema({
     },
     regDate: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
 });
 
 userSchema.pre("save", function (next) {
     const user = this;
     if (!user.isModified("password")) return next();
-    bcrypt.hash(user.password, 20, (err, hash) => {
+    bcrypt.hash(user.password, 10000, (err, hash) => {
         if (err) return next(err);
         user.password = hash;
         next();
@@ -41,4 +41,4 @@ userSchema.methods.withoutPassword = function () {
     return user;
 };
 
-module.exports = new mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

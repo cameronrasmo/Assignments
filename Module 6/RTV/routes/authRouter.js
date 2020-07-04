@@ -33,7 +33,7 @@ authRouter.route("/login").post((req, res, next) => {
     User.findOne({ username: req.body.username }, (err, found) => {
         if (err) {
             res.status(500);
-            return next(new Error("username or password incorrect"));
+            return next(err);
         }
         if (!found) {
             res.status(403);
