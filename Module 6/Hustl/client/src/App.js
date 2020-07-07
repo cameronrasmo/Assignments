@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/AuthProvider.js";
 import Welcome from "./components/Welcome.js";
+import Dashboard from "./components/Dashboard.js";
 
 const App = () => {
     const {
@@ -20,9 +21,7 @@ const App = () => {
                 ></Route>
                 <Route
                     path='/dashboard'
-                    render={() =>
-                        token ? <>doss cunt</> : <Redirect to='/' />
-                    }
+                    render={() => (token ? <Dashboard /> : <Redirect to='/' />)}
                 />
             </Switch>
         </Container>

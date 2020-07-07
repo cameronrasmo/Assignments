@@ -2,6 +2,8 @@ import React, { useRef, useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../context/AuthProvider.js";
 import logo from "../img/logo/logo.svg";
+import loginIcon from "../img/icons/loginIcon.svg";
+import signupIcon from "../img/icons/signupIcon.svg";
 
 const Welcome = () => {
     const { authorize, errState } = useContext(AuthContext);
@@ -64,9 +66,6 @@ const Welcome = () => {
             <ContentContainer>
                 <HeaderContainer>
                     <h4>Hustl</h4>
-                    <div>
-                        <img src={logo} alt='logo' />
-                    </div>
                 </HeaderContainer>
                 <GreetingContainer>
                     <h1>
@@ -83,6 +82,9 @@ const Welcome = () => {
                 </GreetingContainer>
             </ContentContainer>
             <AuthContainer>
+                <div>
+                    <img src={logo} alt='logo' />
+                </div>
                 <AuthPanel ref={authPanelRef}>
                     <h2>{authState === "" ? `Get HUSTLIN` : authState}</h2>
                     <AuthFields
@@ -103,6 +105,9 @@ const Welcome = () => {
                                 }}
                             >
                                 <p>Log In</p>
+                                <div>
+                                    <img src={loginIcon} alt='login' />
+                                </div>
                             </button>
                             <button
                                 onClick={(e) => {
@@ -112,6 +117,9 @@ const Welcome = () => {
                                 }}
                             >
                                 <p>Sign Up</p>
+                                <div>
+                                    <img src={signupIcon} alt='signup' />
+                                </div>
                             </button>
                         </>
                     ) : null}
@@ -133,7 +141,14 @@ const Welcome = () => {
                                 submit();
                             }}
                         >
-                            Go
+                            <img
+                                src={
+                                    authState === "Sign Up"
+                                        ? signupIcon
+                                        : loginIcon
+                                }
+                                alt='Go'
+                            />
                         </AuthCTAButton>
                     </AuthCTA>
                 </AuthPanel>
@@ -164,19 +179,6 @@ const HeaderContainer = styled.div`
 
     & > h4 {
         font-size: 15px;
-    }
-
-    & > div {
-        width: 70px;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-        margin-top: 5px;
-        margin-right: 15px;
-        & > img {
-            width: 100%;
-            height: 100%;
-        }
     }
 
     @media (min-width: 1024px) {
@@ -222,10 +224,34 @@ const AuthContainer = styled.div`
     justify-content: flex-end;
     padding: 0px;
 
+    & > div {
+        width: 60px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+
+        opacity: 1;
+
+        margin-top: 10px;
+        margin-right: 15px;
+
+        transition: 0.2s;
+        transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+        & > img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
     @media (min-width: 1024px) {
         padding: 80px;
         justify-content: center;
         flex: 1;
+        & > div {
+            margin-top: 60px;
+            margin-right: 60px;
+        }
     }
 `;
 const AuthPanel = styled.form`
@@ -235,15 +261,15 @@ const AuthPanel = styled.form`
 
     padding: 30px;
     position: relative;
-    bottom: 25px;
+    bottom: 15px;
     opacity: 0;
 
     border-radius: 5px 5px 0px 0px;
-    box-shadow: 0px 25px 25px 0px #222222;
+    box-shadow: 0px 10px 10px 0px #222222;
 
     background: linear-gradient(75deg, #3a3648, #222222);
 
-    transition: 0.4s;
+    transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     & > h2 {
@@ -263,7 +289,7 @@ const AuthPanel = styled.form`
 
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: space-between;
 
         border-radius: 5px;
         background-color: #f2f2f2;
@@ -272,6 +298,18 @@ const AuthPanel = styled.form`
 
         transition: 0.4s;
         cursor: pointer;
+
+        & > div {
+            height: 55px;
+            padding: 0px 20px;
+
+            display: flex;
+            align-items: center;
+
+            & > img {
+                height: 80%;
+            }
+        }
 
         & > p {
             padding: 10px 30px;
@@ -333,6 +371,10 @@ const AuthCTAButton = styled.button`
     font-size: 20px;
     font-weight: 800;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     border-radius: 5px;
     background-color: #f2f2f2;
     outline: none;
@@ -342,6 +384,12 @@ const AuthCTAButton = styled.button`
     transition: 0.4s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
     cursor: pointer;
+
+    & > img {
+        width: 45px;
+        height: 45px;
+        margin-left: 3px;
+    }
 
     &:hover {
         background-color: white;

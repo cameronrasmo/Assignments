@@ -29,8 +29,16 @@ const AuthProvider = (props) => {
                 setErrState(err.response.data.errMsg);
             });
     };
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.reload();
+    };
     return (
-        <AuthContext.Provider value={{ authorize, userState, errState }}>
+        <AuthContext.Provider
+            value={{ authorize, userState, errState, logout }}
+        >
             {props.children}
         </AuthContext.Provider>
     );
