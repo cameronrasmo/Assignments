@@ -5,19 +5,32 @@ const AuthContext = createContext();
 
 const AuthProvider = (props) => {
     const initUserState = {
-        user: "",
-        token: "",
+        user: JSON.parse(localStorage.getItem("user")) || "",
+        token: localStorage.getItem("token") || "",
     };
     const [userState, setUserState] = useState(initUserState);
+    const [errState, setErrState] = useState("");
 
     const authorize = (type, body) => {
-        console.log(type, body);
         Axios.post(`/auth/${type}`, body)
-            .then((res) => console.log(res.data))
-            .catch((err) => console.log(err));
+            .then((res) => {
+                const { token, user } = res.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("user", JSON.stringify(user));
+                setUserState((prev) => {
+                    return {
+                        ...prev,
+                        user,
+                        token,
+                    };
+                });
+            })
+            .catch((err) => {
+                setErrState(err.response.data.errMsg);
+            });
     };
     return (
-        <AuthContext.Provider value={{ authorize, userState }}>
+        <AuthContext.Provider value={{ authorize, userState, errState }}>
             {props.children}
         </AuthContext.Provider>
     );

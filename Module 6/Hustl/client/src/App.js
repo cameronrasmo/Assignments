@@ -1,23 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { Switch, Route } from "react-router-dom";
-
+import { Switch, Route, Redirect } from "react-router-dom";
+import { AuthContext } from "./context/AuthProvider.js";
 import Welcome from "./components/Welcome.js";
 
 const App = () => {
+    const {
+        userState: { token },
+    } = useContext(AuthContext);
     return (
-        <Switch>
-            <Route exact path='/'>
-                <Container>
-                    <Welcome />
-                </Container>
-            </Route>
-            <Route path='/dashboard'>
-                <Container>
-                    <div>ya doss cunt</div>
-                </Container>
-            </Route>
-        </Switch>
+        <Container>
+            <Switch>
+                <Route
+                    exact
+                    path='/'
+                    render={() =>
+                        token ? <Redirect to='/dashboard' /> : <Welcome />
+                    }
+                ></Route>
+                <Route
+                    path='/dashboard'
+                    render={() =>
+                        token ? <>doss cunt</> : <Redirect to='/' />
+                    }
+                />
+            </Switch>
+        </Container>
     );
 };
 

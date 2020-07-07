@@ -1,10 +1,10 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider.js";
+import logo from "../img/logo/logo.svg";
 
 const Welcome = () => {
-    const { authorize } = useContext(AuthContext);
+    const { authorize, errState } = useContext(AuthContext);
 
     const [authState, setAuthState] = useState("");
     const [authFields, setAuthFields] = useState({
@@ -12,7 +12,7 @@ const Welcome = () => {
         password: "",
     });
 
-    const authRef = useRef(null);
+    const authPanelRef = useRef(null);
     const authCTARef = useRef(null);
     const unRef = useRef(null);
     const pwRef = useRef(null);
@@ -36,7 +36,6 @@ const Welcome = () => {
 
     const submit = () => {
         const type = authState === "Sign Up" ? "signup" : "login";
-        console.log(type, authFields);
         authorize(type, authFields);
         setAuthFields({
             username: "",
@@ -54,11 +53,20 @@ const Welcome = () => {
         });
     };
 
+    useEffect(() => {
+        authPanelRef.current.style.bottom = "0px";
+        authPanelRef.current.style.opacity = 1;
+        authPanelRef.current.style.boxShadow = "0px 4px 5px 0px #22222275";
+    }, []);
+
     return (
         <Container>
             <ContentContainer>
                 <HeaderContainer>
                     <h4>Hustl</h4>
+                    <div>
+                        <img src={logo} alt='logo' />
+                    </div>
                 </HeaderContainer>
                 <GreetingContainer>
                     <h1>
@@ -74,8 +82,8 @@ const Welcome = () => {
                     </p>
                 </GreetingContainer>
             </ContentContainer>
-            <AuthContainer ref={authRef}>
-                <AuthPanel>
+            <AuthContainer>
+                <AuthPanel ref={authPanelRef}>
                     <h2>{authState === "" ? `Get HUSTLIN` : authState}</h2>
                     <AuthFields
                         value={authFields.username}
@@ -116,16 +124,17 @@ const Welcome = () => {
                         type='password'
                     />
                     <AuthCTA ref={authCTARef}>
-                        <Link
-                            to='/dashboard'
-                            style={AuthCTAButton}
+                        <div>
+                            {errState === "" ? null : <div>{errState}</div>}
+                        </div>
+                        <AuthCTAButton
                             onClick={(e) => {
                                 e.preventDefault();
                                 submit();
                             }}
                         >
-                            <p>Go</p>
-                        </Link>
+                            Go
+                        </AuthCTAButton>
                     </AuthCTA>
                 </AuthPanel>
             </AuthContainer>
@@ -151,14 +160,33 @@ const ContentContainer = styled.div`
 `;
 const HeaderContainer = styled.div`
     padding: 30px;
+    display: flex;
 
     & > h4 {
         font-size: 15px;
     }
 
+    & > div {
+        width: 70px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        margin-top: 5px;
+        margin-right: 15px;
+        & > img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
     @media (min-width: 1024px) {
         padding-top: 80px;
         padding-left: 80px;
+
+        & > div {
+            margin-top: 55px;
+            margin-right: 80px;
+        }
     }
 `;
 const GreetingContainer = styled.div`
@@ -206,13 +234,16 @@ const AuthPanel = styled.form`
     flex-direction: column;
 
     padding: 30px;
+    position: relative;
+    bottom: 25px;
+    opacity: 0;
 
     border-radius: 5px 5px 0px 0px;
-    box-shadow: 0px 4px 4px 0px #22222250;
+    box-shadow: 0px 25px 25px 0px #222222;
 
     background: linear-gradient(75deg, #3a3648, #222222);
 
-    transition: 0.3s;
+    transition: 0.4s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     & > h2 {
@@ -220,7 +251,7 @@ const AuthPanel = styled.form`
         margin-bottom: 5px;
     }
 
-    & button {
+    & > button {
         width: 100%;
         flex: 1;
 
@@ -281,34 +312,51 @@ const AuthCTA = styled.div`
     width: 100%;
     height: 0px;
     display: none;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     opacity: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
 
     transition: 0.3s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    & > div > div {
+        color: #f2f2f2;
+    }
 `;
-const AuthCTAButton = {
-    width: "75px",
-    height: "100%",
+const AuthCTAButton = styled.button`
+    width: 75px;
+    height: 100%;
 
-    fontSize: "20px",
-    fontWeight: "800",
-    marginTop: "5px",
-    marginBottom: "5px",
+    font-size: 20px;
+    font-weight: 800;
 
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    outline: none;
+    border: 2px solid white;
+    text-decoration: none;
 
-    borderRadius: "5px",
-    backgroundColor: "#f2f2f2",
-    outline: "none",
-    border: "2px solid white",
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+    cursor: pointer;
 
-    transition: "0.4s",
-    cursor: "pointer",
-};
+    &:hover {
+        background-color: white;
+        border: 2px solid #f2f2f225;
+        color: #222222;
+        transition: 0.3s;
+    }
+
+    &:active {
+        background-color: #f2f2f225;
+        border: 2px solid #f2f2f225;
+        color: #f2f2f250;
+        transition: 0s;
+    }
+`;
 const AuthFields = styled.input`
     width: 100%;
     padding: 20px 20px;
