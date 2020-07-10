@@ -1,39 +1,116 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../context/AuthProvider.js";
+import logo from "../img/logo/logo.svg";
+import addIcon from "../img/icons/addIcon.svg";
+import Project from "./Project.js";
 
 const Sidebar = () => {
-    const { logout } = useContext(AuthContext);
+    const {
+        logout,
+        userState: {
+            user: { username },
+        },
+    } = useContext(AuthContext);
+
+    const sidebarHeaderContainerRef = useRef(null);
+    const sidebarContainerRef = useRef(null);
+    const projectsContainerRef = useRef(null);
+
+    const scrollListen = (e) => {
+        const { scrollTop } = e.target;
+        if (scrollTop > 5) {
+            sidebarHeaderContainerRef.current.style.backgroundColor = "#fff";
+            sidebarHeaderContainerRef.current.style.boxShadow =
+                "0px 4px 5px 0px #22222225";
+        } else {
+            sidebarHeaderContainerRef.current.style.background = "none";
+            sidebarHeaderContainerRef.current.style.boxShadow = "none";
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 5) {
+                sidebarHeaderContainerRef.current.style.backgroundColor =
+                    "#fff";
+                sidebarHeaderContainerRef.current.style.boxShadow =
+                    "0px 4px 5px 0px #22222225";
+            } else {
+                sidebarHeaderContainerRef.current.style.background = "none";
+                sidebarHeaderContainerRef.current.style.boxShadow = "none";
+            }
+        });
+        setTimeout(() => {
+            sidebarContainerRef.current.style.left = "0px";
+            sidebarContainerRef.current.style.opacity = 1;
+        }, 150);
+    }, []);
+
     return (
-        <SidebarContainer>
-            <SidebarHeaderContainer>
-                <h4>Hustl</h4>
+        <SidebarContainer ref={sidebarContainerRef}>
+            <SidebarHeaderContainer ref={sidebarHeaderContainerRef}>
+                <Logo>
+                    <img src={logo} alt='logo' />
+                </Logo>
                 <button onClick={logout}>Log Out</button>
             </SidebarHeaderContainer>
+            <ProjectsContainer
+                ref={projectsContainerRef}
+                onScroll={scrollListen}
+            >
+                <ProjectHeaderContainer>
+                    <p>Hello, {username}</p>
+                    <div>
+                        <h1>Projects</h1>
+                        <button>
+                            <img src={addIcon} alt='+' />
+                        </button>
+                    </div>
+                </ProjectHeaderContainer>
+                <Project />
+                <Project />
+                <Project />
+                <Project />
+                <Project />
+            </ProjectsContainer>
         </SidebarContainer>
     );
 };
 
 const SidebarContainer = styled.div`
     width: 100%;
-    height: 100vh;
+
     position: absolute;
+    left: -15px;
+    opacity: 0;
 
     display: flex;
     flex-direction: column;
 
-    background: linear-gradient(#ffffff, #dbdbdb);
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    @media (min-width: 1024px) {
+        height: 100vh;
+        position: relative;
+        flex: 1;
+        box-shadow: 5px 0px 5px 0px #22222225;
+    }
 `;
 const SidebarHeaderContainer = styled.div`
-    padding: 35px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0px 4px 5px 0px #22222275;
+    box-shadow: none;
+    background-color: none;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
 
-    & > h4 {
-        font-size: 15px;
-    }
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     & > button {
         padding: 6px 13px;
@@ -58,6 +135,99 @@ const SidebarHeaderContainer = styled.div`
 
         &:active {
             background-color: #22222275;
+            transition: 0s;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        position: relative;
+        padding-left: 20px;
+        padding-right: 30px;
+    }
+    @media (min-width: 1480px) {
+        padding-left: 30px;
+        padding-right: 40px;
+    }
+`;
+const Logo = styled.div`
+    width: 60px;
+
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
+`;
+const ProjectsContainer = styled.div`
+    flex: 1;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 20%;
+
+    @media (min-width: 1024px) {
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-top: 0;
+        overflow: scroll;
+    }
+    @media (min-width: 1480px) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+`;
+const ProjectHeaderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+
+    & > p {
+        color: #22222295;
+    }
+
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    & > div > h1 {
+        font-size: 50px;
+    }
+
+    & > div > button {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 5px;
+        outline: none;
+        border: 2px solid white;
+        background-color: #f2f2f2;
+
+        transition: 0.2s;
+        transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+        cursor: pointer;
+
+        & img {
+            width: 50%;
+            height: 50%;
+        }
+
+        &:hover {
+            background-color: #e2e2e2;
+        }
+
+        &:active {
+            background-color: #c2c2c2;
             transition: 0s;
         }
     }

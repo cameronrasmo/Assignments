@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthProvider.js";
 import logo from "../img/logo/logo.svg";
 import loginIcon from "../img/icons/loginIcon.svg";
 import signupIcon from "../img/icons/signupIcon.svg";
+import logodim from "../img/logo/3dlogo.png";
 
 const Welcome = () => {
     const { authorize, errState } = useContext(AuthContext);
@@ -153,6 +154,7 @@ const Welcome = () => {
                     </AuthCTA>
                 </AuthPanel>
             </AuthContainer>
+            <img src={logodim} alt='3d logo' />
         </Container>
     );
 };
@@ -164,8 +166,26 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
 
+    z-index: 0;
+
+    background: linear-gradient(#ffffff, #dbdbdb);
+
+    & > img {
+        position: absolute;
+        display: none;
+        left: 0px;
+        bottom: 0px;
+        z-index: -1;
+
+        width: 700px;
+    }
+
     @media (min-width: 1024px) {
         flex-direction: row;
+
+        & > img {
+            display: inline-block;
+        }
     }
 `;
 const ContentContainer = styled.div`
