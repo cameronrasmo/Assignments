@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthProvider.js";
 import logo from "../img/logo/logo.svg";
 import addIcon from "../img/icons/addIcon.svg";
 import Project from "./Project.js";
+import { ProjectContext } from "../context/ProjectProvider.js";
 
 const Sidebar = () => {
     const {
@@ -12,6 +13,8 @@ const Sidebar = () => {
             user: { username },
         },
     } = useContext(AuthContext);
+
+    const { getProjects, projectState } = useContext(ProjectContext);
 
     const sidebarHeaderContainerRef = useRef(null);
     const sidebarContainerRef = useRef(null);
@@ -30,6 +33,7 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
+        getProjects();
         window.addEventListener("scroll", () => {
             if (window.scrollY > 5) {
                 sidebarHeaderContainerRef.current.style.backgroundColor =
@@ -68,11 +72,9 @@ const Sidebar = () => {
                         </button>
                     </div>
                 </ProjectHeaderContainer>
-                <Project />
-                <Project />
-                <Project />
-                <Project />
-                <Project />
+                {projectState.map((project) => {
+                    return <Project {...project} />;
+                })}
             </ProjectsContainer>
         </SidebarContainer>
     );

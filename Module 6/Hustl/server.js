@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const app = express();
 const port = process.env.PORT || 5000;
+const expressJwt = require("express-jwt");
 require("dotenv").config();
 
 app.use(express.json());
@@ -22,6 +23,11 @@ mongoose.connect(
 );
 
 app.use("/auth", require("./routes/authRouter.js"));
+app.use(
+    "/api",
+    expressJwt({ secret: process.env.SECRET, algorithms: ["HS256"] })
+);
+app.use("/api/projects", require("./routes/projectRouter.js"));
 
 app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {

@@ -1,60 +1,86 @@
 import React from "react";
 import styled from "styled-components";
+import arrow from "../img/icons/arrow.svg";
 
-const Project = () => {
+const Project = ({ title, color, backlog, inProgress, completed }) => {
+    const ProjectContainer = styled.div`
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 30px 20px;
+        position: relative;
+        bottom: 0px;
+
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        border-radius: 5px;
+
+        box-shadow: 0px 4px 7px 0px #22222275;
+
+        background: linear-gradient(135deg, ${color[0]}, ${color[1]});
+
+        transition: 0.4s;
+        transition-timing-function: cubic-bezier(0, 0, 0.006, 1);
+
+        cursor: pointer;
+
+        & > img {
+            position: absolute;
+
+            margin: 20px 23px;
+
+            width: 30px;
+            height: 30px;
+
+            bottom: 0px;
+            right: 0px;
+
+            transition: 0.2s;
+            transition-timing-function: cubic-bezier(0, 0, 0.006, 1);
+        }
+
+        &:hover {
+            opacity: 0.9;
+            box-shadow: 0px 5px 6px 0px #22222255;
+            background: linear-gradient(-45deg, ${color[0]}, ${color[1]});
+            & > img {
+                margin: 20px 20px;
+            }
+        }
+
+        &:active {
+            background: linear-gradient(-45deg, ${color[0]}, ${color[1]});
+            opacity: 1;
+            transition: 0s;
+            bottom: -1px;
+            box-shadow: 0px 2px 2px 0px #22222255;
+            & > img {
+                transition: 0s;
+                opacity: .8;
+                margin: 20px 25px;
+            }
+        }
+        }
+    `;
     return (
         <ProjectContainer>
             <Progress>
                 <strong>30%</strong> complete
             </Progress>
-            <Header>Project Title</Header>
+            <Header>{title}</Header>
             <DetailsContainer>
                 <p>items in backlog</p>
                 <p>items in progress</p>
                 <p>items completed</p>
             </DetailsContainer>
+            <img src={arrow} alt='>' />
         </ProjectContainer>
     );
 };
 
-const ProjectContainer = styled.div`
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-
-    padding: 30px 20px;
-    position: relative;
-    bottom: 0px;
-
-    margin-top: 30px;
-    margin-bottom: 30px;
-
-    border-radius: 5px;
-
-    box-shadow: 0px 4px 7px 0px #22222275;
-
-    background: linear-gradient(135deg, #3a3648, #754d4d);
-
-    transition: 0.4s;
-    transition-timing-function: cubic-bezier(0, 0, 0.006, 1);
-
-    cursor: pointer;
-
-    &:hover {
-        opacity: 0.9;
-        box-shadow: 0px 5px 6px 0px #22222255;
-        background: linear-gradient(-45deg, #3a3648, #754d4d);
-    }
-
-    &:active {
-        background: linear-gradient(-45deg, #3a3648, #754d4d);
-        opacity: 1;
-        transition: 0s;
-        bottom: -1px;
-        box-shadow: 0px 2px 2px 0px #22222255;
-    }
-`;
 const Progress = styled.h4`
     font-weight: 300;
     opacity: 0.75;
