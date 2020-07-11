@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import arrow from "../img/icons/arrow.svg";
+import { ProjectContext } from "../context/ProjectProvider.js";
+import { Link } from "react-router-dom";
 
-const Project = ({ title, color, backlog, inProgress, completed }) => {
+const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
+    const { getProject } = useContext(ProjectContext);
+
+    const lower = title.split(" ").join("").toLowerCase();
+
     const ProjectContainer = styled.div`
         width: 100%;
 
@@ -66,18 +72,24 @@ const Project = ({ title, color, backlog, inProgress, completed }) => {
         }
     `;
     return (
-        <ProjectContainer>
-            <Progress>
-                <strong>30%</strong> complete
-            </Progress>
-            <Header>{title}</Header>
-            <DetailsContainer>
-                <p>items in backlog</p>
-                <p>items in progress</p>
-                <p>items completed</p>
-            </DetailsContainer>
-            <img src={arrow} alt='>' />
-        </ProjectContainer>
+        <Link to={`/dashboard/${lower}`} style={{ textDecoration: "none" }}>
+            <ProjectContainer
+                onClick={() => {
+                    getProject(_id);
+                }}
+            >
+                <Progress>
+                    <strong>30%</strong> complete
+                </Progress>
+                <Header>{title}</Header>
+                <DetailsContainer>
+                    <p>items in backlog</p>
+                    <p>items in progress</p>
+                    <p>items completed</p>
+                </DetailsContainer>
+                <img src={arrow} alt='>' />
+            </ProjectContainer>
+        </Link>
     );
 };
 

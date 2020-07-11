@@ -11,6 +11,15 @@ userAxios.interceptors.request.use((config) => {
 
 const ProjectProvider = (props) => {
     const [projectState, setProjectState] = useState([]);
+    const [selected, setSelected] = useState(false);
+    const [project, setProject] = useState({
+        title: "",
+        description: "",
+        color: [],
+        backlog: [],
+        inProgress: [],
+        completed: [],
+    });
 
     const getProjects = () => {
         userAxios
@@ -21,8 +30,17 @@ const ProjectProvider = (props) => {
             .catch((err) => console.log(err));
     };
 
+    const getProject = (id) => {
+        setSelected(true);
+        userAxios.get(`/api/projects/${id}`).then((res) => {
+            setProject(res.data);
+        });
+    };
+
     return (
-        <ProjectContext.Provider value={{ projectState, getProjects }}>
+        <ProjectContext.Provider
+            value={{ projectState, getProjects, selected, project, getProject }}
+        >
             {props.children}
         </ProjectContext.Provider>
     );

@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthProvider.js";
 import logo from "../img/logo/logo.svg";
 import loginIcon from "../img/icons/loginIcon.svg";
 import signupIcon from "../img/icons/signupIcon.svg";
-import logodim from "../img/logo/3dlogo.png";
+import logodim from "../img/icons/yeets.png";
 
 const Welcome = () => {
     const { authorize, errState } = useContext(AuthContext);
@@ -177,7 +177,7 @@ const Container = styled.div`
         bottom: 0px;
         z-index: -1;
 
-        width: 700px;
+        width: 90%;
     }
 
     @media (min-width: 1024px) {

@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
-import { Route, Link } from "react-router-dom";
+import React, { useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import Sidebar from "./Sidebar";
+import ProjectFull from "../components/ProjectFull.js";
+import { ProjectContext } from "../context/ProjectProvider.js";
 
 const Dashboard = () => {
     const pRef = useRef(null);
+    const { project, selected } = useContext(ProjectContext);
 
     useEffect(() => {
         setTimeout(() => {
@@ -16,9 +18,13 @@ const Dashboard = () => {
     return (
         <DashboardContainer>
             <Sidebar />
-            <PromptArea>
-                <p ref={pRef}>Pick a project or make one!</p>
-            </PromptArea>
+            {selected ? (
+                <ProjectFull />
+            ) : (
+                <PromptArea>
+                    <p ref={pRef}>Pick a project or make one!</p>
+                </PromptArea>
+            )}
         </DashboardContainer>
     );
 };
