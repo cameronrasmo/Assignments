@@ -363,7 +363,7 @@ const AuthPanel = styled.form`
     }
 
     @media (min-width: 1920px) {
-        max-width: 70%;
+        max-width: 60%;
     }
 `;
 const AuthCTA = styled.div`

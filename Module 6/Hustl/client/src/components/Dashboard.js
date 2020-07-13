@@ -18,13 +18,13 @@ const Dashboard = () => {
     return (
         <DashboardContainer>
             <Sidebar />
-            {selected ? (
-                <ProjectFull />
-            ) : (
-                <PromptArea>
+            <PromptArea>
+                {selected ? (
+                    <ProjectFull />
+                ) : (
                     <p ref={pRef}>Pick a project or make one!</p>
-                </PromptArea>
-            )}
+                )}
+            </PromptArea>
         </DashboardContainer>
     );
 };

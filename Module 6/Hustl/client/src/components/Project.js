@@ -72,24 +72,22 @@ const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
         }
     `;
     return (
-        <Link to={`/dashboard/${lower}`} style={{ textDecoration: "none" }}>
-            <ProjectContainer
-                onClick={() => {
-                    getProject(_id);
-                }}
-            >
-                <Progress>
-                    <strong>30%</strong> complete
-                </Progress>
-                <Header>{title}</Header>
-                <DetailsContainer>
-                    <p>items in backlog</p>
-                    <p>items in progress</p>
-                    <p>items completed</p>
-                </DetailsContainer>
-                <img src={arrow} alt='>' />
-            </ProjectContainer>
-        </Link>
+        <ProjectContainer
+            onClick={() => {
+                getProject(_id);
+            }}
+        >
+            <Progress>
+                <strong>30%</strong> complete
+            </Progress>
+            <Header>{title}</Header>
+            <DetailsContainer>
+                <p>items in backlog</p>
+                <p>items in progress</p>
+                <p>items completed</p>
+            </DetailsContainer>
+            <img src={arrow} alt='>' />
+        </ProjectContainer>
     );
 };
 

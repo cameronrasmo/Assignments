@@ -99,6 +99,10 @@ const SidebarContainer = styled.div`
         flex: 1;
         box-shadow: 5px 0px 5px 0px #22222225;
     }
+
+    @media (min-width: 2300px) {
+        flex: 0.7;
+    }
 `;
 const SidebarHeaderContainer = styled.div`
     padding: 20px;
