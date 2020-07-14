@@ -104,6 +104,7 @@ const Progress = styled.h4`
 `;
 const Header = styled.h1`
     font-size: 30px;
+    line-height: 1.3;
     color: #f2f2f2;
 `;
 const DetailsContainer = styled.div`

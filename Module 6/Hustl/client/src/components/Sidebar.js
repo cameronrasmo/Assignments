@@ -14,7 +14,7 @@ const Sidebar = () => {
         },
     } = useContext(AuthContext);
 
-    const { getProjects, projectState } = useContext(ProjectContext);
+    const { getProjects, projectState, selected } = useContext(ProjectContext);
 
     const sidebarHeaderContainerRef = useRef(null);
     const sidebarContainerRef = useRef(null);
@@ -50,6 +50,16 @@ const Sidebar = () => {
             sidebarContainerRef.current.style.opacity = 1;
         }, 150);
     }, []);
+
+    useEffect(() => {
+        if (selected && window.innerWidth < 1024) {
+            sidebarContainerRef.current.style.left = "-100%";
+            sidebarContainerRef.current.style.opacity = 0;
+        } else {
+            sidebarContainerRef.current.style.left = "0px";
+            sidebarContainerRef.current.style.opacity = 1;
+        }
+    }, [selected]);
 
     return (
         <SidebarContainer ref={sidebarContainerRef}>
@@ -89,6 +99,10 @@ const SidebarContainer = styled.div`
 
     display: flex;
     flex-direction: column;
+
+    background-color: #f2f2f2;
+
+    z-index: 1;
 
     transition: 0.4s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);

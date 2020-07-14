@@ -3,10 +3,13 @@ import styled from "styled-components";
 import Sidebar from "./Sidebar";
 import ProjectFull from "../components/ProjectFull.js";
 import { ProjectContext } from "../context/ProjectProvider.js";
+import menuIcon from "../img/icons/menuIcon.svg";
 
 const Dashboard = () => {
     const pRef = useRef(null);
-    const { project, selected } = useContext(ProjectContext);
+    const menuRef = useRef(null);
+
+    const { project, selected, setSelected } = useContext(ProjectContext);
 
     useEffect(() => {
         setTimeout(() => {
@@ -15,10 +18,28 @@ const Dashboard = () => {
         }, 350);
     }, []);
 
+    useEffect(() => {
+        if (selected) {
+            menuRef.current.style.opacity = 1;
+            menuRef.current.style.zIndex = 1;
+        } else {
+            menuRef.current.style.opacity = 0;
+            menuRef.current.style.zIndex = 0;
+        }
+    }, [selected]);
+
     return (
         <DashboardContainer>
             <Sidebar />
             <PromptArea>
+                <Menu
+                    ref={menuRef}
+                    onClick={() => {
+                        setSelected(false);
+                    }}
+                >
+                    <img src={menuIcon} alt='borgar' />
+                </Menu>
                 {selected ? (
                     <ProjectFull />
                 ) : (
@@ -40,6 +61,7 @@ const PromptArea = styled.div`
     align-items: center;
     justify-content: center;
     flex: 1;
+    position: relative;
 
     & > p {
         font-size: 22px;
@@ -68,6 +90,33 @@ const PromptArea = styled.div`
 
     @media (min-width: 1480px) {
         flex: 3;
+    }
+`;
+const Menu = styled.div`
+    width: 50px;
+    height: 50px;
+    margin: 20px;
+
+    position: absolute;
+    left: 0px;
+    top: 0px;
+
+    opacity: 0;
+
+    z-index: 1;
+
+    cursor: pointer;
+
+    transition: 0.8s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    & > img {
+        width: 100%;
+        height: 100%;
+    }
+
+    @media (min-width: 1024px) {
+        display: none;
     }
 `;
 

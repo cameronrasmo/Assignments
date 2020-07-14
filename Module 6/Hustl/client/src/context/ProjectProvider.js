@@ -39,7 +39,14 @@ const ProjectProvider = (props) => {
 
     return (
         <ProjectContext.Provider
-            value={{ projectState, getProjects, selected, project, getProject }}
+            value={{
+                projectState,
+                getProjects,
+                selected,
+                setSelected,
+                project,
+                getProject,
+            }}
         >
             {props.children}
         </ProjectContext.Provider>
