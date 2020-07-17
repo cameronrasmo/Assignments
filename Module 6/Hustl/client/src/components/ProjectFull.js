@@ -41,12 +41,9 @@ const ProjectFull = () => {
         });
     };
 
-    const edit = () => {
-        setEditState(true);
-        submitButtonRef.current.style.height = "100px";
-    };
-
     useEffect(() => {
+        setEditState(false);
+
         setFieldState({ title, description });
         containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]} )`;
         containerRef.current.style.opacity = 1;
@@ -70,13 +67,9 @@ const ProjectFull = () => {
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
+                        setEditState(false);
                         updateProject(_id, fieldState);
                         getProjects();
-                        setEditState(false);
-                        submitButtonRef.current.style.height = "75px";
-                    }}
-                    onFocus={() => {
-                        edit();
                     }}
                 >
                     <TitleDesc>
@@ -84,24 +77,36 @@ const ProjectFull = () => {
                             value={fieldState.title}
                             name='title'
                             onChange={onChangeFields}
+                            placeholder='Title'
+                            onFocus={() => {
+                                setEditState(true);
+                            }}
                         />
                         <DescInput
                             value={fieldState.description}
                             name='description'
                             onChange={onChangeFields}
+                            placeholder='Description'
+                            onFocus={() => {
+                                setEditState(true);
+                            }}
                         />
                     </TitleDesc>
                     <ButtonContainer>
-                        <button type='submit' ref={submitButtonRef}>
-                            {editState ? "Submit Edit" : "Complete!"}
-                        </button>
+                        {editState ? (
+                            <SubmitChangesButton type='submit'>
+                                Submit Changes
+                            </SubmitChangesButton>
+                        ) : (
+                            <CompletedButton>Complete!</CompletedButton>
+                        )}
                     </ButtonContainer>
                 </form>
             </Header>
             <BoardContainer>
-                <Board />
-                <Board />
-                <Board />
+                <Board type='Backlog' project={project} />
+                <Board type='In-Progress' project={project} />
+                <Board type='Completed' project={project} />
             </BoardContainer>
         </Container>
     );
@@ -116,12 +121,13 @@ const Container = styled.div`
     align-items: center;
     flex-direction: column;
 
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
     padding-top: 20vh;
     padding-bottom: 5vh;
     position: relative;
     z-index: 0;
+    overflow: scroll;
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
@@ -161,12 +167,17 @@ const Header = styled.div`
     & > form {
         width: 100%;
         display: flex;
+        flex-direction: column;
     }
 
     @media (min-width: 1024px) {
         flex-direction: row;
         padding-left: 10px;
         padding-right: 10px;
+
+        & > form {
+            flex-direction: row;
+        }
     }
 `;
 const TitleDesc = styled.div`
@@ -179,10 +190,10 @@ const TitleDesc = styled.div`
     @media (min-width: 1024px) {
         flex: 5;
         align-self: center;
-        & > h1 > textarea {
+        & > textarea {
             width: 75%;
         }
-        & > h1 > input {
+        & > input {
             width: 75%;
         }
         & > p {
@@ -194,14 +205,18 @@ const TitleDesc = styled.div`
 const TitleInput = styled.input`
     width: 100%;
     color: #f2f2f2;
-    font-size: 39px;
+    font-size: 27px;
     font-weight: 700;
     background: none;
     outline: none;
     border: 2px solid #f2f2f200;
     border-radius: 5px;
     transition: 0.2s;
+
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+    &::placeholder {
+        color: #f2f2f250;
+    }
 
     &:hover {
         border: 2px solid #f2f2f230;
@@ -210,12 +225,16 @@ const TitleInput = styled.input`
     &:focus {
         border: 2px solid #f2f2f270;
     }
+
+    @media (min-width: 1024px) {
+        font-size: 39px;
+    }
 `;
 const DescInput = styled.textarea`
     resize: none;
     color: #f2f2f2;
     background: none;
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 400;
     width: 100%;
     height: 75px;
@@ -228,6 +247,10 @@ const DescInput = styled.textarea`
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
+    &::placeholder {
+        color: #f2f2f250;
+    }
+
     &:hover {
         border: 2px solid #f2f2f230;
     }
@@ -238,6 +261,7 @@ const DescInput = styled.textarea`
 
     @media (min-width: 1024px) {
         width: 60%;
+        font-size: 16px;
     }
 `;
 const ButtonContainer = styled.div`
@@ -246,44 +270,76 @@ const ButtonContainer = styled.div`
     align-items: center;
     justify-content: flex-start;
 
-    & > button {
-        width: 100%;
-        height: 75px;
-
-        background: none;
-        border: 2px solid #f2f2f2;
-
-        color: #f2f2f2;
-
-        border-radius: 5px;
-
-        font-size: 15px;
-        font-weight: 800;
-
-        cursor: pointer;
-
-        outline: none;
-
-        transition: 0.2s;
-        transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
-
-        &:hover {
-            background-color: #f2f2f2;
-            color: #222222;
-        }
-
-        &:active {
-            background-color: #d2d2d2;
-            transition: 0s;
-        }
-    }
-
     @media (min-width: 1024px) {
         justify-content: flex-end;
 
         & > button {
             width: 125px;
         }
+    }
+`;
+const CompletedButton = styled.button`
+    width: 100%;
+    height: 75px;
+
+    background: none;
+    border: 2px solid #f2f2f2;
+
+    color: #f2f2f2;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    &:hover {
+        background-color: #f2f2f2;
+        color: #222222;
+    }
+
+    &:active {
+        background-color: #d2d2d2;
+        transition: 0s;
+    }
+`;
+const SubmitChangesButton = styled.button`
+    width: 100%;
+    height: 75px;
+
+    background-color: #f2f2f2;
+    border: 2px solid #f2f2f2;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    color: #222222;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    &:hover {
+        background-color: #d2d2d2;
+        color: #222222;
+    }
+
+    &:active {
+        background-color: #d2d2d2;
+        transition: 0s;
     }
 `;
 const BoardContainer = styled.div`

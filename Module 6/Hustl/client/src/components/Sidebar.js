@@ -217,7 +217,7 @@ const ProjectHeaderContainer = styled.div`
         align-items: center;
     }
     & > div > h1 {
-        font-size: 50px;
+        font-size: 35px;
     }
 
     & > div > button {
@@ -249,6 +249,12 @@ const ProjectHeaderContainer = styled.div`
         &:active {
             background-color: #c2c2c2;
             transition: 0s;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        & > div > h1 {
+            font-size: 50px;
         }
     }
 `;

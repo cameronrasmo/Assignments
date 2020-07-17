@@ -114,9 +114,13 @@ const Progress = styled.h4`
     }
 `;
 const Header = styled.h1`
-    font-size: 30px;
+    font-size: 27px;
     line-height: 1.3;
     color: #f2f2f2;
+
+    @media (min-width: 1024px) {
+        font-size: 30px;
+    }
 `;
 const DetailsContainer = styled.div`
     margin-top: 15px;
