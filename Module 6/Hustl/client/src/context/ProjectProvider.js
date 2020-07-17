@@ -37,6 +37,15 @@ const ProjectProvider = (props) => {
         });
     };
 
+    const updateProject = (id, data) => {
+        userAxios
+            .put(`/api/projects/${id}`, data)
+            .then((res) => {
+                setProject(res.data);
+            })
+            .catch((err) => console.log(err));
+    };
+    console.log(selected);
     return (
         <ProjectContext.Provider
             value={{
@@ -45,7 +54,9 @@ const ProjectProvider = (props) => {
                 selected,
                 setSelected,
                 project,
+                setProject,
                 getProject,
+                updateProject,
             }}
         >
             {props.children}

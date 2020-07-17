@@ -20,15 +20,31 @@ projectRouter.route("/all").get((req, res, next) => {
     });
 });
 
-projectRouter.route("/:projectID").get((req, res, next) => {
-    Project.findOne({ _id: req.params.projectID }, (err, found) => {
-        if (err) {
-            res.status(500);
-            return next(err);
-        }
-        res.status(200).send(found);
+projectRouter
+    .route("/:projectID")
+    .get((req, res, next) => {
+        Project.findOne({ _id: req.params.projectID }, (err, found) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.status(200).send(found);
+        });
+    })
+    .put((req, res, next) => {
+        Project.findOneAndUpdate(
+            { _id: req.params.projectID },
+            req.body,
+            { new: true },
+            (err, updated) => {
+                if (err) {
+                    res.status(500);
+                    return next(err);
+                }
+                res.status(201).send(updated);
+            }
+        );
     });
-});
 
 projectRouter.route("/").post((req, res, next) => {
     const newProject = new Project(req.body);
