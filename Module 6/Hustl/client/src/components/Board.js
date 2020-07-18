@@ -43,6 +43,8 @@ const Board = ({ type, project }) => {
             </Header>
             <TaskContainer>
                 <Task />
+                <Task />
+                <Task />
             </TaskContainer>
         </OutlineContainer>
     );
