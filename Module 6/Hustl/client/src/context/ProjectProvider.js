@@ -45,7 +45,7 @@ const ProjectProvider = (props) => {
             })
             .catch((err) => console.log(err));
     };
-    console.log(selected);
+
     return (
         <ProjectContext.Provider
             value={{

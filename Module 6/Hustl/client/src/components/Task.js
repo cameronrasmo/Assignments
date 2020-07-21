@@ -6,16 +6,22 @@ import submitChanges from "../img/icons/submitChanges.svg";
 const Task = () => {
     const textAreaRef = useRef(null);
     const formRef = useRef(null);
+    const containerRef = useRef(null);
 
     const [editState, setEditState] = useState(false);
 
     const onTaskChange = (e) => {
-        formRef.current.style.height = "25px";
-        formRef.current.style.height = `${e.target.scrollHeight}px`;
+        // textAreaRef.current.style.height = "25px";
+        textAreaRef.current.style.height = `${e.target.scrollHeight}px`;
     };
 
     return (
-        <Container>
+        <Container
+            ref={containerRef}
+            onClick={() => {
+                textAreaRef.current.focus();
+            }}
+        >
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -27,11 +33,24 @@ const Task = () => {
                     ref={textAreaRef}
                     placeholder='Task'
                     onChange={onTaskChange}
-                    onFocus={() => {
+                    onFocus={(e) => {
                         setEditState(true);
+                        containerRef.current.style.backgroundColor = "#f2f2f2";
+                        textAreaRef.current.style.height = `${e.target.scrollHeight}px`;
+                        textAreaRef.current.style.cursor = "text";
+                        containerRef.current.style.boxShadow =
+                            "0px 5px 5px 0px #22222255";
                     }}
-                    onBlur={() => {
+                    onBlur={(e) => {
                         setEditState(false);
+                        containerRef.current.style.backgroundColor =
+                            "#f2f2f2e6";
+                        textAreaRef.current.style.height = "25px";
+
+                        textAreaRef.current.style.height = `${e.target.scrollHeight}px`;
+
+                        textAreaRef.current.style.cursor = "pointer";
+                        containerRef.current.style.boxShadow = "none";
                     }}
                 ></textarea>
 
@@ -60,7 +79,7 @@ const Container = styled.div`
     position: relative;
     bottom: 0px;
 
-    background-color: #f2f2f2;
+    background-color: #f2f2f2e6;
     border-radius: 5px;
 
     cursor: pointer;
@@ -69,7 +88,10 @@ const Container = styled.div`
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     & > form {
-        height: 25px;
+        width: 100%;
+
+        transition: 0.3s;
+        transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
     }
 
     & > form > textarea {
@@ -79,13 +101,16 @@ const Container = styled.div`
         resize: none;
         border: none;
         height: 100%;
+        width: 80%;
+        height: 25px;
         background: none;
         outline: none;
+        cursor: pointer;
     }
 
     &:hover {
         bottom: 1px;
-        box-shadow: 0px 5px 5px 0px #22222225;
+        box-shadow: 0px 5px 5px 0px #22222255;
     }
 `;
 const MoveButton = styled.button`

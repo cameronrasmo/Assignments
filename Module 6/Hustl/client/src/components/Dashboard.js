@@ -9,7 +9,9 @@ const Dashboard = () => {
     const pRef = useRef(null);
     const menuRef = useRef(null);
 
-    const { project, selected, setSelected } = useContext(ProjectContext);
+    const { project, projectState, selected, setSelected } = useContext(
+        ProjectContext
+    );
 
     useEffect(() => {
         setTimeout(() => {

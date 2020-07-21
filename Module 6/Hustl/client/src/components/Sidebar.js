@@ -229,7 +229,7 @@ const ProjectHeaderContainer = styled.div`
 
         border-radius: 5px;
         outline: none;
-        border: 2px solid white;
+        border: none;
         background-color: #f2f2f2;
 
         transition: 0.2s;

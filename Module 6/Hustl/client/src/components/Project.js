@@ -117,6 +117,8 @@ const Header = styled.h1`
     font-size: 27px;
     line-height: 1.3;
     color: #f2f2f2;
+    max-width: 350px;
+    word-wrap: break-word;
 
     @media (min-width: 1024px) {
         font-size: 30px;

@@ -29,10 +29,20 @@ const ProjectFull = () => {
 
     const containerRef = useRef(null);
     const headerRef = useRef(null);
-    const submitButtonRef = useRef(null);
+    const titleInputRef = useRef(null);
+    const descInputRef = useRef(null);
 
     const onChangeFields = (e) => {
         const { name, value } = e.target;
+        let { scrollHeight } = e.target;
+
+        if (name === "title") {
+            titleInputRef.current.style.height = "65px";
+            titleInputRef.current.style.height = `${scrollHeight}px`;
+        } else if (name === "description") {
+            descInputRef.current.style.height = "65px";
+            descInputRef.current.style.height = `${scrollHeight}px`;
+        }
         setFieldState((prev) => {
             return {
                 ...prev,
@@ -43,23 +53,28 @@ const ProjectFull = () => {
 
     useEffect(() => {
         setEditState(false);
+        getProjects();
 
         setFieldState({ title, description });
         containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]} )`;
         containerRef.current.style.opacity = 1;
 
         setTimeout(() => {
+            titleInputRef.current.style.height = `${titleInputRef.current.scrollHeight}px`;
+            descInputRef.current.style.height = `${descInputRef.current.scrollHeight}px`;
             headerRef.current.style.transition = "0.2s";
             headerRef.current.style.opacity = 1;
             headerRef.current.style.left = "0px";
         }, 50);
 
         return () => {
+            titleInputRef.current.style.height = "65px";
+            descInputRef.current.style.height = `25px`;
             headerRef.current.style.transition = "0s";
             headerRef.current.style.opacity = 0;
             headerRef.current.style.left = "-10px";
         };
-    }, [project]);
+    }, [_id]);
 
     return (
         <Container ref={containerRef}>
@@ -69,26 +84,40 @@ const ProjectFull = () => {
                         e.preventDefault();
                         setEditState(false);
                         updateProject(_id, fieldState);
-                        getProjects();
+                        setTimeout(() => {
+                            getProjects();
+                        }, 150);
                     }}
                 >
                     <TitleDesc>
                         <TitleInput
+                            ref={titleInputRef}
                             value={fieldState.title}
                             name='title'
                             onChange={onChangeFields}
                             placeholder='Title'
-                            onFocus={() => {
+                            onFocus={(e) => {
                                 setEditState(true);
+                            }}
+                            onBlur={() => {
+                                setEditState(false);
+                                updateProject(_id, fieldState);
+                                getProjects();
                             }}
                         />
                         <DescInput
+                            ref={descInputRef}
                             value={fieldState.description}
                             name='description'
                             onChange={onChangeFields}
                             placeholder='Description'
                             onFocus={() => {
                                 setEditState(true);
+                            }}
+                            onBlur={() => {
+                                setEditState(false);
+                                updateProject(_id, fieldState);
+                                getProjects();
                             }}
                         />
                     </TitleDesc>
@@ -202,8 +231,11 @@ const TitleDesc = styled.div`
         }
     }
 `;
-const TitleInput = styled.input`
+const TitleInput = styled.textarea`
     width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    resize: none;
     color: #f2f2f2;
     font-size: 27px;
     font-weight: 700;
@@ -211,7 +243,8 @@ const TitleInput = styled.input`
     outline: none;
     border: 2px solid #f2f2f200;
     border-radius: 5px;
-    transition: 0.2s;
+    transition: 0s;
+    overflow: hidden;
 
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
     &::placeholder {
@@ -234,17 +267,20 @@ const DescInput = styled.textarea`
     resize: none;
     color: #f2f2f2;
     background: none;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     width: 100%;
     height: 75px;
     line-height: 1.3;
     padding-bottom: 10px;
+    overflow: hidden;
+    padding-top: 5px;
+    padding-bottom: 15px;
 
     outline: none;
     border: 2px solid #f2f2f200;
     border-radius: 5px;
-    transition: 0.2s;
+    transition: 0.2s height 0s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     &::placeholder {
