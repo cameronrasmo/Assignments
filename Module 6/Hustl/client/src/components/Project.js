@@ -6,41 +6,56 @@ import { Link } from "react-router-dom";
 
 const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
     const { getProject, setSelected } = useContext(ProjectContext);
+    const containerRef = useRef(null);
     const projectContainerRef = useRef(null);
 
     const lower = title.split(" ").join("").toLowerCase();
 
     useEffect(() => {
         projectContainerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]})`;
+        setTimeout(() => {
+            containerRef.current.style.opacity = 1;
+            containerRef.current.style.bottom = "0px";
+        }, 25);
     }, []);
 
     return (
-        <ProjectContainer
-            ref={projectContainerRef}
-            onMouseOver={() => {
-                projectContainerRef.current.style.background = `linear-gradient(-45deg, ${color[0]}, ${color[1]})`;
-            }}
-            onMouseLeave={() => {
-                projectContainerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]})`;
-            }}
-            onClick={() => {
-                getProject(_id);
-            }}
-        >
-            <Progress>
-                <strong>30%</strong> complete
-            </Progress>
-            <Header>{title}</Header>
-            <DetailsContainer>
-                <p>items in backlog</p>
-                <p>items in progress</p>
-                <p>items completed</p>
-            </DetailsContainer>
-            <img src={arrow} alt='>' />
-        </ProjectContainer>
+        <Container ref={containerRef}>
+            <ProjectContainer
+                ref={projectContainerRef}
+                onMouseOver={() => {
+                    projectContainerRef.current.style.background = `linear-gradient(-45deg, ${color[0]}, ${color[1]})`;
+                }}
+                onMouseLeave={() => {
+                    projectContainerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]})`;
+                }}
+                onClick={() => {
+                    getProject(_id);
+                }}
+            >
+                <Progress>
+                    <strong>30%</strong> complete
+                </Progress>
+                <Header>{title}</Header>
+                <DetailsContainer>
+                    <p>items in backlog</p>
+                    <p>items in progress</p>
+                    <p>items completed</p>
+                </DetailsContainer>
+                <img src={arrow} alt='>' />
+            </ProjectContainer>
+        </Container>
     );
 };
 
+const Container = styled.div`
+    opacity: 0;
+    position: relative;
+    bottom: -15px;
+
+    transition: 0.2s;
+    transition-timing-function: cubic-bezier(0, 0, 0.006, 1);
+`;
 const ProjectContainer = styled.div`
     width: 100%;
 
@@ -49,7 +64,6 @@ const ProjectContainer = styled.div`
 
     padding: 30px 20px;
     position: relative;
-    bottom: 0px;
 
     margin-top: 30px;
     margin-bottom: 30px;
@@ -60,7 +74,7 @@ const ProjectContainer = styled.div`
 
     background: linear-gradient(135deg, #f2f2f2, #d2d2d2);
 
-    transition: 0.4s;
+    transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.006, 1);
 
     cursor: pointer;

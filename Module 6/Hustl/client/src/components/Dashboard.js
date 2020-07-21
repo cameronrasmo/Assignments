@@ -79,6 +79,14 @@ const PromptArea = styled.div`
         transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
     }
 
+    @media (prefers-color-scheme: dark) {
+        background-color: #111111;
+
+        & > p {
+            color: #f2f2f275;
+        }
+    }
+
     @media (min-width: 1024px) {
         display: flex;
         align-items: center;

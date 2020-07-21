@@ -6,14 +6,13 @@ import Task from "./Task.js";
 const Board = ({ type, project }) => {
     const outlineContainerRef = useRef(null);
     const timeoutEval = (type) => {
-        if (type === "Backlog") {
-            return 50;
-        }
-        if (type === "In-Progress") {
-            return 75;
-        }
-        if (type === "Completed") {
-            return 100;
+        switch (type) {
+            case "Backlog":
+                return 50;
+            case "In-Progress":
+                return 75;
+            case "Completed":
+                return 100;
         }
     };
 
@@ -41,11 +40,7 @@ const Board = ({ type, project }) => {
                     </button>
                 ) : null}
             </Header>
-            <TaskContainer>
-                <Task />
-                <Task />
-                <Task />
-            </TaskContainer>
+            <TaskContainer></TaskContainer>
         </OutlineContainer>
     );
 };

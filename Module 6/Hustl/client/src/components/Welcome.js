@@ -180,6 +180,10 @@ const Container = styled.div`
         width: 90%;
     }
 
+    @media (prefers-color-scheme: dark) {
+        background: linear-gradient(#222222, #444444);
+    }
+
     @media (min-width: 1024px) {
         flex-direction: row;
 
@@ -199,6 +203,12 @@ const HeaderContainer = styled.div`
 
     & > h4 {
         font-size: 15px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        & > h4 {
+            color: #f2f2f2;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -227,6 +237,15 @@ const GreetingContainer = styled.div`
     & > p {
         font-size: 15px;
         font-weight: 400;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        & > h1 {
+            color: #f2f2f2;
+        }
+        & > p {
+            color: #f2f2f2;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -287,7 +306,7 @@ const AuthPanel = styled.form`
     border-radius: 5px 5px 0px 0px;
     box-shadow: 0px 10px 10px 0px #222222;
 
-    background: linear-gradient(75deg, #3a3648, #222222);
+    background: linear-gradient(45deg, #3a3648, #222222);
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
@@ -350,6 +369,10 @@ const AuthPanel = styled.form`
             color: #f2f2f250;
             transition: 0s;
         }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        background: linear-gradient(45deg, #222222, #111111);
     }
 
     @media (min-width: 1024px) {

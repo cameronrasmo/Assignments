@@ -153,7 +153,7 @@ const MoveButton = styled.button`
         }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 1480px) {
         & > img {
             transform: rotate(0deg);
         }

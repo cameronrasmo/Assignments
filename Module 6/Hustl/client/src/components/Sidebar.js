@@ -14,7 +14,14 @@ const Sidebar = () => {
         },
     } = useContext(AuthContext);
 
-    const { getProjects, projectState, selected } = useContext(ProjectContext);
+    const {
+        getProjects,
+        projectState,
+        selected,
+        setSelected,
+        newProject,
+        darkTheme,
+    } = useContext(ProjectContext);
 
     const sidebarHeaderContainerRef = useRef(null);
     const sidebarContainerRef = useRef(null);
@@ -23,7 +30,11 @@ const Sidebar = () => {
     const scrollListen = (e) => {
         const { scrollTop } = e.target;
         if (scrollTop > 5) {
-            sidebarHeaderContainerRef.current.style.backgroundColor = "#fff";
+            darkTheme.matches
+                ? (sidebarHeaderContainerRef.current.style.backgroundColor =
+                      "#222")
+                : (sidebarHeaderContainerRef.current.style.backgroundColor =
+                      "#fff");
             sidebarHeaderContainerRef.current.style.boxShadow =
                 "0px 4px 5px 0px #22222225";
         } else {
@@ -36,8 +47,11 @@ const Sidebar = () => {
         getProjects();
         window.addEventListener("scroll", () => {
             if (window.scrollY > 5) {
-                sidebarHeaderContainerRef.current.style.backgroundColor =
-                    "#fff";
+                darkTheme.matches
+                    ? (sidebarHeaderContainerRef.current.style.backgroundColor =
+                          "#222")
+                    : (sidebarHeaderContainerRef.current.style.backgroundColor =
+                          "#fff");
                 sidebarHeaderContainerRef.current.style.boxShadow =
                     "0px 4px 5px 0px #22222225";
             } else {
@@ -77,7 +91,13 @@ const Sidebar = () => {
                     <p>Hello, {username}</p>
                     <div>
                         <h1>Projects</h1>
-                        <button>
+                        <button
+                            onClick={() => {
+                                newProject();
+                                setSelected(true);
+                                getProjects();
+                            }}
+                        >
                             <img src={addIcon} alt='+' />
                         </button>
                     </div>
@@ -106,6 +126,10 @@ const SidebarContainer = styled.div`
 
     transition: 0.4s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    @media (prefers-color-scheme: dark) {
+        background-color: #222222;
+    }
 
     @media (min-width: 1024px) {
         height: 100vh;
@@ -159,6 +183,15 @@ const SidebarHeaderContainer = styled.div`
         }
     }
 
+    @media (prefers-color-scheme: dark) {
+        background-color: #222222;
+
+        & > button {
+            color: #222222;
+            background-color: #f2f2f2;
+        }
+    }
+
     @media (min-width: 1024px) {
         position: relative;
         padding-left: 20px;
@@ -190,6 +223,19 @@ const ProjectsContainer = styled.div`
     padding-left: 20px;
     padding-right: 20px;
     margin-top: 20%;
+
+    @media (prefers-color-scheme: dark) {
+        &::-webkit-scrollbar {
+            background-color: #222222;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #333333;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-corner {
+            background-color: #222222;
+        }
+    }
 
     @media (min-width: 1024px) {
         padding-left: 30px;
@@ -249,6 +295,24 @@ const ProjectHeaderContainer = styled.div`
         &:active {
             background-color: #c2c2c2;
             transition: 0s;
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        & > p {
+            color: #f2f2f295;
+        }
+
+        & > div > h1 {
+            color: #f2f2f2;
+        }
+
+        & > div > button {
+            background-color: #222222;
+
+            &:hover {
+                background-color: #333333;
+            }
         }
     }
 

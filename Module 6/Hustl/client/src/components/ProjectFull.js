@@ -9,6 +9,7 @@ const ProjectFull = () => {
         setProject,
         getProjects,
         updateProject,
+        darkTheme,
         project,
         project: {
             title,
@@ -51,12 +52,14 @@ const ProjectFull = () => {
         });
     };
 
+    let alphaCode = darkTheme.matches ? "cc" : "";
+
     useEffect(() => {
         setEditState(false);
         getProjects();
 
         setFieldState({ title, description });
-        containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]} )`;
+        containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}${alphaCode}, ${color[1]}${alphaCode} )`;
         containerRef.current.style.opacity = 1;
 
         setTimeout(() => {
@@ -160,6 +163,19 @@ const Container = styled.div`
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
+
+    @media (prefers-color-scheme: dark) {
+        &::-webkit-scrollbar {
+            background-color: #f2f2f200;
+        }
+        &::-webkit-scrollbar-corner {
+            background-color: #f2f2f200;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #33333350;
+            border-radius: 10px;
+        }
+    }
 
     @media (min-width: 1024px) {
         flex: 2;

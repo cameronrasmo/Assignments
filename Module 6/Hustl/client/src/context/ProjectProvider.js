@@ -21,12 +21,21 @@ const ProjectProvider = (props) => {
         completed: [],
     });
 
+    const darkTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
     const getProjects = () => {
         userAxios
             .get("/api/projects/all")
             .then((res) => {
                 setProjectState(res.data);
             })
+            .catch((err) => console.log(err));
+    };
+
+    const newProject = () => {
+        userAxios
+            .post("/api/projects")
+            .then((res) => setProject(res.data))
             .catch((err) => console.log(err));
     };
 
@@ -57,6 +66,8 @@ const ProjectProvider = (props) => {
                 setProject,
                 getProject,
                 updateProject,
+                newProject,
+                darkTheme,
             }}
         >
             {props.children}
