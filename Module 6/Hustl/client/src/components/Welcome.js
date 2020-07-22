@@ -1,13 +1,16 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../context/AuthProvider.js";
+import { ProjectContext } from "../context/ProjectProvider.js";
 import logo from "../img/logo/logo.svg";
+import logoDarkMode from "../img/logo/logoDarkMode.svg";
 import loginIcon from "../img/icons/loginIcon.svg";
 import signupIcon from "../img/icons/signupIcon.svg";
 import logodim from "../img/icons/yeets.png";
 
 const Welcome = () => {
     const { authorize, errState } = useContext(AuthContext);
+    const { darkTheme } = useContext(ProjectContext);
 
     const [authState, setAuthState] = useState("");
     const [authFields, setAuthFields] = useState({
@@ -84,7 +87,10 @@ const Welcome = () => {
             </ContentContainer>
             <AuthContainer>
                 <div>
-                    <img src={logo} alt='logo' />
+                    <img
+                        src={darkTheme.matches ? logoDarkMode : logo}
+                        alt='logo'
+                    />
                 </div>
                 <AuthPanel ref={authPanelRef}>
                     <h2>{authState === "" ? `Get HUSTLIN` : authState}</h2>

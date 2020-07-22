@@ -10,6 +10,11 @@ userAxios.interceptors.request.use((config) => {
 });
 
 const ProjectProvider = (props) => {
+    const initTaskState = {
+        backlog: [],
+        inProgress: [],
+        completed: [],
+    };
     const [projectState, setProjectState] = useState([]);
     const [selected, setSelected] = useState(false);
     const [project, setProject] = useState({
@@ -20,6 +25,7 @@ const ProjectProvider = (props) => {
         inProgress: [],
         completed: [],
     });
+    const [taskState, setTaskState] = useState(initTaskState);
 
     const darkTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -55,6 +61,20 @@ const ProjectProvider = (props) => {
             .catch((err) => console.log(err));
     };
 
+    const getTasks = (projectId) => {
+        userAxios.get(`/api/task/${projectId}`).then((res) => {
+            // console.log(res.data);
+            const backlog = res.data.filter((task) => task.board === "backlog");
+            const inProgress = res.data.filter(
+                (task) => task.board === "inProgress"
+            );
+            const completed = res.data.filter(
+                (task) => task.board === "completed"
+            );
+            setTaskState({ backlog, inProgress, completed });
+        });
+    };
+
     return (
         <ProjectContext.Provider
             value={{
@@ -68,6 +88,8 @@ const ProjectProvider = (props) => {
                 updateProject,
                 newProject,
                 darkTheme,
+                getTasks,
+                taskState,
             }}
         >
             {props.children}

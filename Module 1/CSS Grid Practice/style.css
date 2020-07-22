@@ -1,8 +1,9 @@
-html, body{
+html,
+body {
     background-color: #525252;
 }
 
-.exercise{
+.exercise {
     margin: auto;
     padding: 20px;
 
@@ -11,8 +12,7 @@ html, body{
     box-shadow: 0px 20px 50px 0px #363636;
 }
 
-
-#exercise-one{
+#exercise-one {
     width: 40%;
     height: 200px;
     display: grid;
@@ -23,33 +23,32 @@ html, body{
     position: relative;
     top: 200px;
 }
-.exercise > div{
+.exercise > div {
     border-radius: 5px;
 }
 
-#red-one{
+#red-one {
     background-color: red;
     grid-column: 1/3;
 }
-#blue-one{
+#blue-one {
     background-color: blue;
     grid-column: 3/5;
 }
-#green-one{
+#green-one {
     background-color: green;
     grid-column: 1/2;
 }
-#purple-one{
+#purple-one {
     background-color: purple;
     grid-column: 2/5;
 }
-#yellow-one{
+#yellow-one {
     background-color: yellow;
     grid-column: 1/-1;
 }
 
-
-#exercise-two{
+#exercise-two {
     width: 40%;
     height: 500px;
     display: grid;
@@ -61,29 +60,29 @@ html, body{
     top: 400px;
 }
 
-#red-two{
+#red-two {
     background-color: red;
     grid-column: 1/5;
 }
-#blue-two{
+#blue-two {
     background-color: blue;
     grid-column: 1/3;
     grid-row: 2/4;
 }
-#green-two{
+#green-two {
     background-color: green;
     grid-column: 3/5;
 }
-#purple-two-l{
+#purple-two-l {
     background-color: purple;
     grid-column: 3/4;
 }
-#purple-two-r{
+#purple-two-r {
     background-color: purple;
     grid-column: 4/5;
 }
 
-#exercise-three{
+#exercise-three {
     width: 40%;
     height: 400px;
     display: grid;
@@ -97,85 +96,85 @@ html, body{
     z-index: 2;
 }
 
-#exercise-three > div{
+#exercise-three > div {
     text-align: left;
     padding: 15px;
 }
 
-#header{
+#header {
     background-color: grey;
     grid-column: 1/2;
 }
-#sidebar{
+#sidebar {
     background-color: grey;
     grid-column: 1/2;
 }
-#content{
+#content {
     background-color: grey;
     grid-column: 1/2;
 }
-#sidebar-two{
+#sidebar-two {
     background-color: grey;
     grid-column: 1/2;
 }
-#footer{
+#footer {
     background-color: grey;
     grid-column: 1/2;
 }
 
 /* tablet media query */
-@media(min-width: 768px){
-    #exercise-three{
+@media (min-width: 768px) {
+    #exercise-three {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: repeat(5, 1fr);
     }
 
-    #header{
+    #header {
         grid-column: 1/5;
         grid-row: 1/2;
     }
-    #sidebar{
+    #sidebar {
         grid-column: 1/2;
         grid-row: 2/4;
     }
-    #content{
+    #content {
         grid-column: 2/5;
         grid-row: 2/4;
     }
-    #sidebar-two{
+    #sidebar-two {
         grid-column: 1/5;
         grid-row: 4/5;
     }
-    #footer{
+    #footer {
         grid-column: 1/5;
         grid-row: 5/6;
     }
 }
 
 /* laptop media query */
-@media(min-width: 1366px){
-    #exercise-three{
+@media (min-width: 1366px) {
+    #exercise-three {
         grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
     }
 
-    #header{
+    #header {
         grid-column: 1/6;
         grid-row: 1/2;
     }
-    #sidebar{
+    #sidebar {
         grid-column: 1/2;
         grid-row: 2/4;
     }
-    #content{
+    #content {
         grid-column: 2/5;
         grid-row: 2/4;
     }
-    #sidebar-two{
+    #sidebar-two {
         grid-column: 5/6;
         grid-row: 2/4;
     }
-    #footer{
+    #footer {
         grid-column: 1/6;
         grid-row: 4/6;
     }

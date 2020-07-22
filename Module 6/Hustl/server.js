@@ -28,6 +28,7 @@ app.use(
     expressJwt({ secret: process.env.SECRET, algorithms: ["HS256"] })
 );
 app.use("/api/projects", require("./routes/projectRouter.js"));
+app.use("/api/task", require("./routes/taskRouter.js"));
 
 app.use((err, req, res, next) => {
     if (err.name === "UnauthorizedError") {

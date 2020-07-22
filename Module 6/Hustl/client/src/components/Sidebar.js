@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../context/AuthProvider.js";
 import logo from "../img/logo/logo.svg";
+import logoDarkMode from "../img/logo/logoDarkMode.svg";
 import addIcon from "../img/icons/addIcon.svg";
+import addIconLight from "../img/icons/addIconLight.svg";
 import Project from "./Project.js";
 import { ProjectContext } from "../context/ProjectProvider.js";
 
@@ -79,7 +81,10 @@ const Sidebar = () => {
         <SidebarContainer ref={sidebarContainerRef}>
             <SidebarHeaderContainer ref={sidebarHeaderContainerRef}>
                 <Logo>
-                    <img src={logo} alt='logo' />
+                    <img
+                        src={darkTheme.matches ? logoDarkMode : logo}
+                        alt='logo'
+                    />
                 </Logo>
                 <button onClick={logout}>Log Out</button>
             </SidebarHeaderContainer>
@@ -98,7 +103,10 @@ const Sidebar = () => {
                                 getProjects();
                             }}
                         >
-                            <img src={addIcon} alt='+' />
+                            <img
+                                src={darkTheme.matches ? addIconLight : addIcon}
+                                alt='+'
+                            />
                         </button>
                     </div>
                 </ProjectHeaderContainer>

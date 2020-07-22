@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import addIconLight from "../img/icons/addIconLight.svg";
+import { ProjectContext } from "../context/ProjectProvider.js";
 import Task from "./Task.js";
 
 const Board = ({ type, project }) => {
+    const { getTasks, taskState } = useContext(ProjectContext);
+
     const outlineContainerRef = useRef(null);
     const timeoutEval = (type) => {
         switch (type) {
@@ -17,6 +20,7 @@ const Board = ({ type, project }) => {
     };
 
     useEffect(() => {
+        getTasks(project._id);
         setTimeout(() => {
             outlineContainerRef.current.style.transition = "0.2s";
             outlineContainerRef.current.style.left = "0px";
@@ -30,6 +34,8 @@ const Board = ({ type, project }) => {
         };
     }, [project]);
 
+    const displayed = taskState.backlog.map((task) => task.title);
+
     return (
         <OutlineContainer ref={outlineContainerRef}>
             <Header>
@@ -40,7 +46,7 @@ const Board = ({ type, project }) => {
                     </button>
                 ) : null}
             </Header>
-            <TaskContainer></TaskContainer>
+            <TaskContainer>{displayed}</TaskContainer>
         </OutlineContainer>
     );
 };
