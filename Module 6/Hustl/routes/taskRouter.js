@@ -20,7 +20,7 @@ taskRouter.route("/:projectID").get((req, res, next) => {
         }
         res.status(200).send(found);
     });
-});
+})
 
 taskRouter.route("/add/:projectID").post((req, res, next) => {
     const newTask = new Task(req.body);
@@ -33,5 +33,15 @@ taskRouter.route("/add/:projectID").post((req, res, next) => {
         res.status(201).send(saved);
     });
 });
+
+taskRouter.route("/:taskID").put((req, res, next) => {
+    Task.findOneAndUpdate({ _id: req.params.taskID }, req.body, { new: true }, (err, updated) => {
+        if (err) {
+            res.status(500);
+            return next(err);
+        }
+        res.status(201).send(updated);
+    })
+})
 
 module.exports = taskRouter;

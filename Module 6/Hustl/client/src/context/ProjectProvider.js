@@ -75,6 +75,10 @@ const ProjectProvider = (props) => {
         });
     };
 
+    const updateTask = (taskId, data) => {
+        userAxios.put(`/api/task/${taskId}`, data);
+    }
+
     return (
         <ProjectContext.Provider
             value={{
@@ -90,6 +94,7 @@ const ProjectProvider = (props) => {
                 darkTheme,
                 getTasks,
                 taskState,
+                updateTask
             }}
         >
             {props.children}

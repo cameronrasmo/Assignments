@@ -1,19 +1,27 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import arrow from "../img/icons/arrow.svg";
 import submitChanges from "../img/icons/submitChanges.svg";
+import { ProjectContext } from "../context/ProjectProvider.js";
 
-const Task = () => {
+const Task = ({ title, _id, board }) => {
+    const { darkTheme, updateTask } = useContext(ProjectContext);
     const textAreaRef = useRef(null);
     const formRef = useRef(null);
     const containerRef = useRef(null);
 
     const [editState, setEditState] = useState(false);
+    const [taskState, setTaskState] = useState({ title: "", board: "" });
 
     const onTaskChange = (e) => {
         // textAreaRef.current.style.height = "25px";
         textAreaRef.current.style.height = `${e.target.scrollHeight}px`;
+        setTaskState({ title: e.target.value })
     };
+
+    useEffect(() => {
+        setTaskState({ title, board });
+    }, []);
 
     return (
         <Container
@@ -33,6 +41,7 @@ const Task = () => {
                     ref={textAreaRef}
                     placeholder='Task'
                     onChange={onTaskChange}
+                    value={taskState.title}
                     onFocus={(e) => {
                         setEditState(true);
                         containerRef.current.style.backgroundColor = "#f2f2f2";
@@ -51,6 +60,7 @@ const Task = () => {
 
                         textAreaRef.current.style.cursor = "pointer";
                         containerRef.current.style.boxShadow = "none";
+                        updateTask(_id, taskState);
                     }}
                 ></textarea>
 
@@ -59,10 +69,10 @@ const Task = () => {
                         <img src={submitChanges} alt='Edit' />
                     </SubmitChangesButton>
                 ) : (
-                    <MoveButton type='submit'>
-                        <img src={arrow} alt='>' />
-                    </MoveButton>
-                )}
+                        <MoveButton type='submit'>
+                            <img src={arrow} alt='>' />
+                        </MoveButton>
+                    )}
             </form>
         </Container>
     );

@@ -5,7 +5,7 @@ import { ProjectContext } from "../context/ProjectProvider.js";
 import Task from "./Task.js";
 
 const Board = ({ type, project }) => {
-    const { getTasks, taskState } = useContext(ProjectContext);
+    const { taskState } = useContext(ProjectContext);
 
     const outlineContainerRef = useRef(null);
     const timeoutEval = (type) => {
@@ -16,11 +16,26 @@ const Board = ({ type, project }) => {
                 return 75;
             case "Completed":
                 return 100;
+            default:
+                return 25;
+        }
+    };
+
+    const displayed = () => {
+        if (type === "Backlog") {
+            return taskState.backlog.map((task) => <Task {...task} />);
+        } else if (type === "In-Progress") {
+            return taskState.inProgress.map((task) => (
+                <Task {...task} />
+            ));
+        } else if (type === "Completed") {
+            return taskState.completed.map((task) => (
+                <Task {...task} />
+            ));
         }
     };
 
     useEffect(() => {
-        getTasks(project._id);
         setTimeout(() => {
             outlineContainerRef.current.style.transition = "0.2s";
             outlineContainerRef.current.style.left = "0px";
@@ -34,8 +49,6 @@ const Board = ({ type, project }) => {
         };
     }, [project]);
 
-    const displayed = taskState.backlog.map((task) => task.title);
-
     return (
         <OutlineContainer ref={outlineContainerRef}>
             <Header>
@@ -46,7 +59,7 @@ const Board = ({ type, project }) => {
                     </button>
                 ) : null}
             </Header>
-            <TaskContainer>{displayed}</TaskContainer>
+            <TaskContainer>{displayed()}</TaskContainer>
         </OutlineContainer>
     );
 };

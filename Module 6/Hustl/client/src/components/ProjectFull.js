@@ -11,6 +11,7 @@ const ProjectFull = () => {
         updateProject,
         darkTheme,
         project,
+        getTasks,
         project: {
             title,
             description,
@@ -57,6 +58,7 @@ const ProjectFull = () => {
     useEffect(() => {
         setEditState(false);
         getProjects();
+        getTasks(_id);
 
         setFieldState({ title, description });
         containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}${alphaCode}, ${color[1]}${alphaCode} )`;
