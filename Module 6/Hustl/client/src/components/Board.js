@@ -5,7 +5,7 @@ import { ProjectContext } from "../context/ProjectProvider.js";
 import Task from "./Task.js";
 
 const Board = ({ type, project }) => {
-    const { taskState } = useContext(ProjectContext);
+    const { addTask, getProject } = useContext(ProjectContext);
 
     const outlineContainerRef = useRef(null);
     const timeoutEval = (type) => {
@@ -23,14 +23,14 @@ const Board = ({ type, project }) => {
 
     const displayed = () => {
         if (type === "Backlog") {
-            return taskState.backlog.map((task) => <Task {...task} />);
+            return project.backlog.map((task) => <Task _id={task} />);
         } else if (type === "In-Progress") {
-            return taskState.inProgress.map((task) => (
-                <Task {...task} />
+            return project.inProgress.map((task) => (
+                <Task _id={task} />
             ));
         } else if (type === "Completed") {
-            return taskState.completed.map((task) => (
-                <Task {...task} />
+            return project.completed.map((task) => (
+                <Task _id={task} />
             ));
         }
     };
@@ -47,14 +47,18 @@ const Board = ({ type, project }) => {
             outlineContainerRef.current.style.left = "-10px";
             outlineContainerRef.current.style.opacity = 0;
         };
-    }, [project]);
+    }, [project._id]);
 
     return (
         <OutlineContainer ref={outlineContainerRef}>
             <Header>
                 <h3>{type}</h3>
                 {type === "Backlog" ? (
-                    <button>
+                    <button onClick={() => {
+                        console.log(project._id)
+                        addTask(project._id, { title: "Task", board: "backlog" });
+                        getProject(project._id);
+                    }}>
                         <img src={addIconLight} alt='+' />
                     </button>
                 ) : null}

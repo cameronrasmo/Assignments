@@ -58,7 +58,6 @@ const ProjectFull = () => {
     useEffect(() => {
         setEditState(false);
         getProjects();
-        getTasks(_id);
 
         setFieldState({ title, description });
         containerRef.current.style.background = `linear-gradient(135deg, ${color[0]}${alphaCode}, ${color[1]}${alphaCode} )`;
@@ -132,8 +131,8 @@ const ProjectFull = () => {
                                 Submit Changes
                             </SubmitChangesButton>
                         ) : (
-                            <CompletedButton>Complete!</CompletedButton>
-                        )}
+                                <CompletedButton>Complete!</CompletedButton>
+                            )}
                     </ButtonContainer>
                 </form>
             </Header>

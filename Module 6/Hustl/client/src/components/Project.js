@@ -4,7 +4,7 @@ import arrow from "../img/icons/arrow.svg";
 import { ProjectContext } from "../context/ProjectProvider.js";
 import { Link } from "react-router-dom";
 
-const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
+const Project = ({ title, color, backlog, inProgress, completed, _id, }) => {
     const { getProject, setSelected } = useContext(ProjectContext);
     const containerRef = useRef(null);
     const projectContainerRef = useRef(null);
@@ -38,9 +38,9 @@ const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
                 </Progress>
                 <Header>{title}</Header>
                 <DetailsContainer>
-                    <p>items in backlog</p>
-                    <p>items in progress</p>
-                    <p>items completed</p>
+                    <p>{backlog.length} items in backlog</p>
+                    <p>{inProgress.length} items in progress</p>
+                    <p>{completed.length} items completed</p>
                 </DetailsContainer>
                 <img src={arrow} alt='>' />
             </ProjectContainer>

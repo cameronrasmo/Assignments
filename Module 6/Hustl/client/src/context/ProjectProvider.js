@@ -25,7 +25,6 @@ const ProjectProvider = (props) => {
         inProgress: [],
         completed: [],
     });
-    const [taskState, setTaskState] = useState(initTaskState);
 
     const darkTheme = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -61,22 +60,8 @@ const ProjectProvider = (props) => {
             .catch((err) => console.log(err));
     };
 
-    const getTasks = (projectId) => {
-        userAxios.get(`/api/task/${projectId}`).then((res) => {
-            // console.log(res.data);
-            const backlog = res.data.filter((task) => task.board === "backlog");
-            const inProgress = res.data.filter(
-                (task) => task.board === "inProgress"
-            );
-            const completed = res.data.filter(
-                (task) => task.board === "completed"
-            );
-            setTaskState({ backlog, inProgress, completed });
-        });
-    };
-
-    const updateTask = (taskId, data) => {
-        userAxios.put(`/api/task/${taskId}`, data);
+    const addTask = (projectId, data) => {
+        userAxios.post(`/api/task/add/${projectId}`, data).then(res => console.log(res));
     }
 
     return (
@@ -92,9 +77,7 @@ const ProjectProvider = (props) => {
                 updateProject,
                 newProject,
                 darkTheme,
-                getTasks,
-                taskState,
-                updateTask
+                addTask
             }}
         >
             {props.children}

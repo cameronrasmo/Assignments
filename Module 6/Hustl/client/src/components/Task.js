@@ -1,17 +1,25 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import arrow from "../img/icons/arrow.svg";
+import taskArrow from "../img/icons/taskArrow.svg";
 import submitChanges from "../img/icons/submitChanges.svg";
 import { ProjectContext } from "../context/ProjectProvider.js";
+import Axios from "axios";
 
-const Task = ({ title, _id, board }) => {
-    const { darkTheme, updateTask } = useContext(ProjectContext);
+const userAxios = Axios.create();
+userAxios.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+});
+
+const Task = ({ _id }) => {
+    const { darkTheme, project } = useContext(ProjectContext);
     const textAreaRef = useRef(null);
     const formRef = useRef(null);
     const containerRef = useRef(null);
 
     const [editState, setEditState] = useState(false);
-    const [taskState, setTaskState] = useState({ title: "", board: "" });
+    const [taskState, setTaskState] = useState({ title: "", board: "", _id: "" });
 
     const onTaskChange = (e) => {
         // textAreaRef.current.style.height = "25px";
@@ -19,9 +27,28 @@ const Task = ({ title, _id, board }) => {
         setTaskState({ title: e.target.value })
     };
 
+    const getTask = (taskId) => {
+        userAxios.get(`/api/task/${taskId}`).then(res => setTaskState(prev => {
+            console.log(res.data)
+            return { title: res.data[0].title, board: res.data[0].board, _id: res.data[0]._id }
+        }));
+    }
+
+    const updateTask = (taskId, data) => {
+        userAxios.put(`/api/task/${taskId}`, data).then(res => setTaskState(prev => {
+            return { title: res.data.title, board: res.data.board, _id: res.data._id }
+        }));
+    }
+
     useEffect(() => {
-        setTaskState({ title, board });
-    }, []);
+        getTask(_id);
+        containerRef.current.style.bottom = "0px";
+        containerRef.current.style.opacity = 1;
+        setTimeout(() => {
+            textAreaRef.current.focus();
+            textAreaRef.current.blur();
+        }, 50)
+    }, [project.backlog, project.inProgress, project.completed]);
 
     return (
         <Container
@@ -35,6 +62,7 @@ const Task = ({ title, _id, board }) => {
                     e.preventDefault();
                     setEditState(false);
                 }}
+                style={taskState.board === "completed" ? { width: "100%" } : { width: "90%" }}
                 ref={formRef}
             >
                 <textarea
@@ -60,19 +88,14 @@ const Task = ({ title, _id, board }) => {
 
                         textAreaRef.current.style.cursor = "pointer";
                         containerRef.current.style.boxShadow = "none";
-                        updateTask(_id, taskState);
                     }}
                 ></textarea>
 
-                {editState ? (
-                    <SubmitChangesButton type='submit'>
-                        <img src={submitChanges} alt='Edit' />
-                    </SubmitChangesButton>
-                ) : (
-                        <MoveButton type='submit'>
-                            <img src={arrow} alt='>' />
-                        </MoveButton>
-                    )}
+                <SubmitChangesButton onClick={() => {
+                    updateTask(_id, taskState);
+                }}>
+                    <img src={editState ? submitChanges : taskArrow} alt='Edit' />
+                </SubmitChangesButton>
             </form>
         </Container>
     );
@@ -87,7 +110,8 @@ const Container = styled.div`
     flex-direction: row;
 
     position: relative;
-    bottom: 0px;
+    bottom: -15px;
+    opacity: 0;
 
     background-color: #f2f2f2e6;
     border-radius: 5px;
@@ -98,7 +122,7 @@ const Container = styled.div`
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
 
     & > form {
-        width: 100%;
+        width: 90%;
 
         transition: 0.3s;
         transition-timing-function: cubic-bezier(0, 0, 0.056, 1);
@@ -133,9 +157,11 @@ const MoveButton = styled.button`
     outline: none;
     border: none;
 
+
     cursor: pointer;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 

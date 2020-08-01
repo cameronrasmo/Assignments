@@ -34,9 +34,9 @@ const Sidebar = () => {
         if (scrollTop > 5) {
             darkTheme.matches
                 ? (sidebarHeaderContainerRef.current.style.backgroundColor =
-                      "#222")
+                    "#222")
                 : (sidebarHeaderContainerRef.current.style.backgroundColor =
-                      "#fff");
+                    "#fff");
             sidebarHeaderContainerRef.current.style.boxShadow =
                 "0px 4px 5px 0px #22222225";
         } else {
@@ -51,9 +51,9 @@ const Sidebar = () => {
             if (window.scrollY > 5) {
                 darkTheme.matches
                     ? (sidebarHeaderContainerRef.current.style.backgroundColor =
-                          "#222")
+                        "#222")
                     : (sidebarHeaderContainerRef.current.style.backgroundColor =
-                          "#fff");
+                        "#fff");
                 sidebarHeaderContainerRef.current.style.boxShadow =
                     "0px 4px 5px 0px #22222225";
             } else {
