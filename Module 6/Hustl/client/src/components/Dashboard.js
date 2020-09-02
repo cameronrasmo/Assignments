@@ -17,7 +17,7 @@ const Dashboard = () => {
         setTimeout(() => {
             pRef.current.style.opacity = 1;
             pRef.current.style.top = "0px";
-        }, 350);
+        }, 250);
     }, []);
 
     useEffect(() => {

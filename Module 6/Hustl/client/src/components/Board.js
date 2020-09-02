@@ -5,10 +5,10 @@ import { ProjectContext } from "../context/ProjectProvider.js";
 import Task from "./Task.js";
 
 const Board = ({ type, project }) => {
-    const { addTask, getProject } = useContext(ProjectContext);
+    const { addTask, getProject, getProjects } = useContext(ProjectContext);
 
     const outlineContainerRef = useRef(null);
-    const timeoutEval = (type) => {
+    const timeoutEval = type => {
         switch (type) {
             case "Backlog":
                 return 50;
@@ -23,14 +23,14 @@ const Board = ({ type, project }) => {
 
     const displayed = () => {
         if (type === "Backlog") {
-            return project.backlog.map((task) => <Task _id={task} />);
+            return project.backlog.map(task => <Task _id={task} key={task} />);
         } else if (type === "In-Progress") {
-            return project.inProgress.map((task) => (
-                <Task _id={task} />
+            return project.inProgress.map(task => (
+                <Task _id={task} key={task} />
             ));
         } else if (type === "Completed") {
-            return project.completed.map((task) => (
-                <Task _id={task} />
+            return project.completed.map(task => (
+                <Task _id={task} key={task} />
             ));
         }
     };
@@ -54,11 +54,16 @@ const Board = ({ type, project }) => {
             <Header>
                 <h3>{type}</h3>
                 {type === "Backlog" ? (
-                    <button onClick={() => {
-                        console.log(project._id)
-                        addTask(project._id, { title: "Task", board: "backlog" });
-                        getProject(project._id);
-                    }}>
+                    <button
+                        onClick={() => {
+                            addTask(project._id, {
+                                title: "",
+                                board: "backlog",
+                            });
+                            getProject(project._id);
+                            getProjects();
+                        }}
+                    >
                         <img src={addIconLight} alt='+' />
                     </button>
                 ) : null}

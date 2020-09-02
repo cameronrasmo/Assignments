@@ -1,15 +1,17 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import Axios from "axios";
+import { AuthContext } from "./AuthProvider.js";
 
 const ProjectContext = createContext();
 const userAxios = Axios.create();
-userAxios.interceptors.request.use((config) => {
+userAxios.interceptors.request.use(config => {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
 
-const ProjectProvider = (props) => {
+const ProjectProvider = props => {
+    const { userState } = useContext(AuthContext);
     const initTaskState = {
         backlog: [],
         inProgress: [],
@@ -27,26 +29,26 @@ const ProjectProvider = (props) => {
     });
 
     const darkTheme = window.matchMedia("(prefers-color-scheme: dark)");
-
+    console.log(userState);
     const getProjects = () => {
         userAxios
-            .get("/api/projects/all")
-            .then((res) => {
+            .get(`/api/projects/${userState.user._id}/all`)
+            .then(res => {
                 setProjectState(res.data);
             })
-            .catch((err) => console.log(err));
+            .catch(err => console.log(err));
     };
 
     const newProject = () => {
         userAxios
-            .post("/api/projects")
-            .then((res) => setProject(res.data))
-            .catch((err) => console.log(err));
+            .post(`/api/projects/${userState.user._id}`)
+            .then(res => setProject(res.data))
+            .catch(err => console.log(err));
     };
 
-    const getProject = (id) => {
+    const getProject = id => {
         setSelected(true);
-        userAxios.get(`/api/projects/${id}`).then((res) => {
+        userAxios.get(`/api/projects/${id}`).then(res => {
             setProject(res.data);
         });
     };
@@ -54,15 +56,32 @@ const ProjectProvider = (props) => {
     const updateProject = (id, data) => {
         userAxios
             .put(`/api/projects/${id}`, data)
-            .then((res) => {
+            .then(res => {
                 setProject(res.data);
             })
-            .catch((err) => console.log(err));
+            .catch(err => console.log(err));
+    };
+
+    const deleteProject = id => {
+        userAxios
+            .delete(`/api/projects/${id}`)
+            .then(res => console.log("Deleted"))
+            .catch(err => console.log(err));
     };
 
     const addTask = (projectId, data) => {
-        userAxios.post(`/api/task/add/${projectId}`, data).then(res => console.log(res));
-    }
+        userAxios.post(`/api/task/add/${projectId}`, data);
+    };
+
+    const moveTask = (projectId, taskId, nextBoard) => {
+        userAxios.put(`/api/task/${nextBoard}/${projectId}/${taskId}`);
+    };
+
+    const deleteTask = (projectId, taskId, board) => {
+        userAxios
+            .delete(`/api/task/${board}/${projectId}/${taskId}`)
+            .then(res => console.log(res));
+    };
 
     return (
         <ProjectContext.Provider
@@ -76,8 +95,11 @@ const ProjectProvider = (props) => {
                 getProject,
                 updateProject,
                 newProject,
+                deleteProject,
                 darkTheme,
-                addTask
+                addTask,
+                moveTask,
+                deleteTask,
             }}
         >
             {props.children}

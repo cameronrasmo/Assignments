@@ -1,15 +1,31 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import arrow from "../img/icons/arrow.svg";
+import trash from "../img/icons/trash.svg";
+import submitChanges from "../img/icons/submitChanges.svg";
 import { ProjectContext } from "../context/ProjectProvider.js";
 import { Link } from "react-router-dom";
 
-const Project = ({ title, color, backlog, inProgress, completed, _id, }) => {
-    const { getProject, setSelected } = useContext(ProjectContext);
+const Project = ({ title, color, backlog, inProgress, completed, _id }) => {
+    const {
+        getProject,
+        setSelected,
+        deleteProject,
+        getProjects,
+        darkTheme,
+    } = useContext(ProjectContext);
+    const [deleteHover, setDeleteHover] = useState(false);
     const containerRef = useRef(null);
     const projectContainerRef = useRef(null);
 
     const lower = title.split(" ").join("").toLowerCase();
+
+    const percentage =
+        Math.round(
+            (completed.length /
+                (backlog.length + inProgress.length + completed.length)) *
+                100
+        ) || 0;
 
     useEffect(() => {
         projectContainerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]})`;
@@ -30,11 +46,13 @@ const Project = ({ title, color, backlog, inProgress, completed, _id, }) => {
                     projectContainerRef.current.style.background = `linear-gradient(135deg, ${color[0]}, ${color[1]})`;
                 }}
                 onClick={() => {
-                    getProject(_id);
+                    if (!deleteHover) {
+                        getProject(_id);
+                    }
                 }}
             >
                 <Progress>
-                    <strong>30%</strong> complete
+                    <strong>{percentage}%</strong> complete
                 </Progress>
                 <Header>{title}</Header>
                 <DetailsContainer>
@@ -43,11 +61,49 @@ const Project = ({ title, color, backlog, inProgress, completed, _id, }) => {
                     <p>{completed.length} items completed</p>
                 </DetailsContainer>
                 <img src={arrow} alt='>' />
+                <DeleteContainer
+                    onMouseOver={() => setDeleteHover(true)}
+                    onMouseLeave={() => setDeleteHover(false)}
+                    onClick={() => {
+                        deleteProject(_id);
+                        setSelected(false);
+                        getProjects();
+                    }}
+                >
+                    <img src={trash} />
+                </DeleteContainer>
             </ProjectContainer>
         </Container>
     );
 };
 
+const DeleteContainer = styled.div`
+    position: absolute;
+    bottom: 0px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    margin: 16px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    z-index: 2;
+
+    transition: 0.2s;
+
+    & > img {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        top: 1px;
+    }
+
+    @media (max-width: 1024px) {
+        opacity: 1;
+    }
+`;
 const Container = styled.div`
     opacity: 0;
     position: relative;
@@ -100,6 +156,9 @@ const ProjectContainer = styled.div`
         background: linear-gradient(-45deg);
         & > img {
             margin: 20px 20px;
+        }
+        ${DeleteContainer} {
+            opacity: 1;
         }
     }
 

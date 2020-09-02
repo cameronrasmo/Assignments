@@ -12,6 +12,7 @@ const ProjectFull = () => {
         darkTheme,
         project,
         getTasks,
+        finishProject,
         project: {
             title,
             description,
@@ -34,7 +35,7 @@ const ProjectFull = () => {
     const titleInputRef = useRef(null);
     const descInputRef = useRef(null);
 
-    const onChangeFields = (e) => {
+    const onChangeFields = e => {
         const { name, value } = e.target;
         let { scrollHeight } = e.target;
 
@@ -45,7 +46,7 @@ const ProjectFull = () => {
             descInputRef.current.style.height = "65px";
             descInputRef.current.style.height = `${scrollHeight}px`;
         }
-        setFieldState((prev) => {
+        setFieldState(prev => {
             return {
                 ...prev,
                 [name]: value,
@@ -84,7 +85,7 @@ const ProjectFull = () => {
         <Container ref={containerRef}>
             <Header ref={headerRef}>
                 <form
-                    onSubmit={(e) => {
+                    onSubmit={e => {
                         e.preventDefault();
                         setEditState(false);
                         updateProject(_id, fieldState);
@@ -100,7 +101,7 @@ const ProjectFull = () => {
                             name='title'
                             onChange={onChangeFields}
                             placeholder='Title'
-                            onFocus={(e) => {
+                            onFocus={e => {
                                 setEditState(true);
                             }}
                             onBlur={() => {
@@ -125,15 +126,6 @@ const ProjectFull = () => {
                             }}
                         />
                     </TitleDesc>
-                    <ButtonContainer>
-                        {editState ? (
-                            <SubmitChangesButton type='submit'>
-                                Submit Changes
-                            </SubmitChangesButton>
-                        ) : (
-                                <CompletedButton>Complete!</CompletedButton>
-                            )}
-                    </ButtonContainer>
                 </form>
             </Header>
             <BoardContainer>
@@ -347,7 +339,11 @@ const CompletedButton = styled.button`
 
     cursor: pointer;
 
+    opacity: ${props => (props.inactive ? 1 : 0)};
+
     outline: none;
+
+    z-index: ${props => (props.inactive ? 5 : -10)};
 
     transition: 0.2s;
     transition-timing-function: cubic-bezier(0, 0, 0.056, 1);

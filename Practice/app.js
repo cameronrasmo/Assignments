@@ -1,7 +1,3 @@
-function HelloWorld(name) {
-    alert("Hello " + name);
-}
-
-const names = "Kaitlin";
-
-HelloWorld(names);
+document.addEventListener("keydown", function (event) {
+    console.log(event);
+});

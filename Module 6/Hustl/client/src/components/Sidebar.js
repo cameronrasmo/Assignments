@@ -29,14 +29,14 @@ const Sidebar = () => {
     const sidebarContainerRef = useRef(null);
     const projectsContainerRef = useRef(null);
 
-    const scrollListen = (e) => {
+    const scrollListen = e => {
         const { scrollTop } = e.target;
         if (scrollTop > 5) {
             darkTheme.matches
                 ? (sidebarHeaderContainerRef.current.style.backgroundColor =
-                    "#222")
+                      "#222")
                 : (sidebarHeaderContainerRef.current.style.backgroundColor =
-                    "#fff");
+                      "#fff");
             sidebarHeaderContainerRef.current.style.boxShadow =
                 "0px 4px 5px 0px #22222225";
         } else {
@@ -51,9 +51,9 @@ const Sidebar = () => {
             if (window.scrollY > 5) {
                 darkTheme.matches
                     ? (sidebarHeaderContainerRef.current.style.backgroundColor =
-                        "#222")
+                          "#222")
                     : (sidebarHeaderContainerRef.current.style.backgroundColor =
-                        "#fff");
+                          "#fff");
                 sidebarHeaderContainerRef.current.style.boxShadow =
                     "0px 4px 5px 0px #22222225";
             } else {
@@ -110,7 +110,7 @@ const Sidebar = () => {
                         </button>
                     </div>
                 </ProjectHeaderContainer>
-                {projectState.map((project) => {
+                {projectState.map(project => {
                     return <Project {...project} />;
                 })}
             </ProjectsContainer>

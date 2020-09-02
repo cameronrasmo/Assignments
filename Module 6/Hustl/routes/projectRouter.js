@@ -1,5 +1,6 @@
 const express = require("express");
 const Project = require("../models/project.js");
+const Task = require("../models/task.js");
 
 const projectRouter = express.Router();
 
@@ -13,8 +14,8 @@ const colors = [
     ["#977E58", "#77A67F"],
 ];
 
-projectRouter.route("/all").get((req, res, next) => {
-    Project.find((err, found) => {
+projectRouter.route("/:userID/all").get((req, res, next) => {
+    Project.find({ user: req.params.userID }, (err, found) => {
         if (err) {
             res.status(500);
             return next(err);
@@ -47,10 +48,47 @@ projectRouter
                 res.status(201).send(updated);
             }
         );
+    })
+    .delete((req, res, next) => {
+        Project.findOneAndDelete(
+            { _id: req.params.projectID },
+            (err, deleted) => {
+                Task.deleteMany(
+                    { project: req.params.projectID },
+                    (err, deleted) => {
+                        if (err) {
+                            res.status(500);
+                            return next(err);
+                        }
+                    }
+                );
+                if (err) {
+                    res.status(500);
+                    return next(err);
+                }
+                res.status(204).send(deleted);
+            }
+        );
     });
 
-projectRouter.route("/").post((req, res, next) => {
+projectRouter.route("/finished/:projectID").put((req, res, next) => {
+    Project.findOneAndUpdate(
+        { _id: req.params.projectID },
+        { finished: true },
+        { new: true },
+        (err, updated) => {
+            if (err) {
+                res.status(500);
+                return next(err);
+            }
+            res.status(201).send(updated);
+        }
+    );
+});
+
+projectRouter.route("/:userID").post((req, res, next) => {
     const newProject = new Project(req.body);
+    newProject.user = req.params.userID;
     newProject.color = colors[Math.floor(Math.random() * colors.length)];
     newProject.save((err, saved) => {
         if (err) {

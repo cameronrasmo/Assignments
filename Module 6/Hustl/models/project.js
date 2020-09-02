@@ -18,6 +18,11 @@ const ProjectSchema = new Schema({
     backlog: [{ type: Schema.Types.ObjectId, ref: "backlog" }],
     inProgress: [{ type: Schema.Types.ObjectId, ref: "inProgress" }],
     completed: [{ type: Schema.Types.ObjectId, ref: "completed" }],
+    user: { type: Schema.Types.ObjectId },
+    finished: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 module.exports = mongoose.model("Project", ProjectSchema);
